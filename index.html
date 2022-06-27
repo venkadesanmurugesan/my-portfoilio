@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./bootsrtapFiles/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="./img/venkadesh.jpg">
+  <title>Venkadesan|Portfolio</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+  <!-- <nav class="header_main navbar sticky-top navbar-expand-lg navbar-info p-3">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+      aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold " href="#about_div">ABOUT</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#experience_div">EXPERIENCE</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#education_div">EDUCATION</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#skills_div">SKILLS</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#interest_div">INTERSTS</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#projects_div">PROJECTS</a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="nav-link font-weight-bold" href="#contact_div">CONTACT</a>
+        </li>
+      </ul>
+    </div>
+  </nav> -->
+
+  <main class="container">
+
+    <section id="aboutSection">
+      <h1>About</h1>
+      <article class="row">
+        <article class="col-xl-3 col-lg-3 col-md-3 col-sm-6 p-0">
+          <img class="img-thumbnail" width="100%" height="100%" src="img/venkadesh.jpg" alt="venkadeshImg">
+        </article>
+        <article class="col-lg-9 col-xl-9 col-md-9 col-sm-6 p-0">
+          <ul>
+            <li id="about_name"></li>
+            <li id="about_desc"></li>
+          </ul>
+        </article>
+      </article>
+    </section>
+
+    <section id="educationSection">
+      <h1>Education</h1>
+      <ul>
+        <li id="clg_degree"></li>
+        <li id="clg_name"></li>
+        <li id="clg_year"></li>
+        <li id="clg_addr"></li>
+      </ul>
+      <ul>
+        <li id="hsc_degree"></li>
+        <li id="hsc_name"></li>
+        <li id="hsc_percentage"></li>
+        <li id="hsc_year"></li>
+        <li id="hsc_addr"></li>
+      </ul>
+      <ul>
+        <li id="sslc_degree"></li>
+        <li id="sslc_name"></li>
+        <li id="sslc_percentage"></li>
+        <li id="sslc_year"></li>
+        <li id="sslc_addr"></li>
+      </ul>
+    </section>
+
+    <section id="experienceSection">
+      <h1>Experiences</h1>
+      <article id="companies_article">
+
+      </article>
+      <!-- <ul id="first_company">
+        <li id="company_name"></li>
+        <li id="company_pos"></li>
+        <li id="company_exp_desc"></li>
+        <li><a target="_blank" rel="noopener noreferrer" id="company_link">Company Website</a></li>
+        <li id="company_addr"></li>
+      </ul> -->
+    </section>
+
+    <section id="skillsSection">
+      <h1>Skills</h1>
+      <ul id="skillsLists"></ul>
+    </section>
+  </main>
+
+  </footer>
+
+  <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
+  <script src="./bootsrtapFiles/bootstrap.min.js"></script>
+  <script src="./bootsrtapFiles/popper.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>

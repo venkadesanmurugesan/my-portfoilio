@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./bootsrtapFiles/bootstrap.min.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Form for Portfolio</title>
+    <script
+      src="https://kit.fontawesome.com/5f242455f7.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="./scripts/firebaseConf.js"></script>
+
+    <script src="./scripts/script.js"></script>
+
+    <script src="./scripts/signout.js"></script>
+
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    ></script>
+
+    <style>
+      .display_none {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="jumbotron pt-4">
+      <h2 class="text-center mb-4">
+        Welcome <span id="displayUserName"></span>
+      </h2>
+      <hr />
+      <button
+        type="button"
+        onclick="signout()"
+        class="btn btn-outline-secondary float-right"
+      >
+        Sign Out
+      </button>
+      <h2 class="mb-5">Enter the Portfolio Details</h2>
+
+      <ul class="nav nav-pills nav-fill" id="portfolio-tab-link" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="about-details-tab"
+            data-toggle="tab"
+            href="#about-details"
+            role="tab"
+            aria-controls="about-details"
+            aria-selected="true"
+            >About Details</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="education-details-tab"
+            data-toggle="tab"
+            href="#education-details"
+            role="tab"
+            aria-controls="education-details"
+            aria-selected="false"
+            >Education Details</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="experience-details-tab"
+            data-toggle="tab"
+            href="#experience-details"
+            role="tab"
+            aria-controls="experience-details"
+            aria-selected="false"
+            >Experience Details</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="skills-details-tab"
+            data-toggle="tab"
+            href="#skills-details"
+            role="tab"
+            aria-controls="skills-details"
+            aria-selected="false"
+            >Skill Details</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="contact-details-tab"
+            data-toggle="tab"
+            href="#contact-details"
+            role="tab"
+            aria-controls="contact-details"
+            aria-selected="false"
+            >Contact Details</a
+          >
+        </li>
+      </ul>
+
+      <section class="tab-content" id="portfolio-tab-form">
+        <article
+          class="tab-pane fade show active"
+          id="about-details"
+          role="tabpanel"
+          aria-labelledby="about-details-tab"
+        >
+          <form
+            id="about_form"
+            onsubmit=""
+            style="width: 80%"
+            class="card p-5 mt-5 ml-auto mr-auto"
+          >
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id=""
+                  >First and last name
+                  <h5 class="d-inline-block text-danger">*</h5></span
+                >
+              </div>
+              <input
+                name="about_fname"
+                id="about_fname"
+                type="text"
+                class="form-control"
+                placeholder="First Name"
+                required
+              />
+              <input
+                name="about_lname"
+                id="about_lname"
+                type="text"
+                class="form-control"
+                placeholder="Last Name"
+                required
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="about_description">Description</label>
+              <textarea
+                name="about_description"
+                class="form-control"
+                id="about_description"
+                rows="3"
+                placeholder="Enter About yourself"
+              ></textarea>
+            </div>
+
+            <button
+              onclick="about_btn(this.parentElement)"
+              type="button"
+              class="btn btn-primary"
+            >
+              Save
+            </button>
+          </form>
+        </article>
+
+        <article
+          class="tab-pane fade"
+          id="education-details"
+          role="tabpanel"
+          aria-labelledby="education-details-tab"
+        >
+          <form
+            onsubmit=";"
+            id="education_form"
+            style="width: 80%"
+            class="card p-5 mt-5 ml-auto mr-auto"
+            action=""
+          >
+            <table class="table table-bordered">
+              <thead class="alert-info">
+                <tr>
+                  <!-- <th>S.no</th> -->
+                  <th>Degree</th>
+                  <th>Institute Name</th>
+                  <th>Institute Address</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Edit & Delete</th>
+                </tr>
+              </thead>
+              <tbody id="eduDetailsResult"></tbody>
+            </table>
+            <button
+              data-toggle="modal"
+              data-target="#addEduFormModal"
+              onclick="addEdu()"
+              type="button"
+              class="btn float-right btn-secondary mb-4"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              Add +
+            </button>
+            <div id="edu_form_main">
+              <div
+                class="modal fade"
+                id="addEduFormModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="addEduFormModalTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addEduFormModalTitle">
+                        Add Your Education Details
+                      </h5>
+                      <button
+                        id="closeIconEduModal"
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div id="eduModalMain" class="modal-body">
+                      <div id="education_form_input">
+                        <div class="form-group mb-4">
+                          <label
+                            >Institute Name
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="institute_name"
+                            class="form-control institute_name"
+                            placeholder="Institute Name"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label
+                            >Degree
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="institute_degree"
+                            class="form-control institute_degree"
+                            placeholder="Degree"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label>Institute Address</label>
+                          <input
+                            type="text"
+                            name="institute_address"
+                            class="form-control institute_address"
+                            placeholder="Institute Address"
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >Start Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="edu_start_mon_start_year"
+                            type="month"
+                            list="edu_start_mon_list"
+                            class="form-control edu_start_mon"
+                            placeholder="Start Month"
+                            required
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >End Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="edu_end_mon_end_year"
+                            type="month"
+                            list="edu_end_mon_list"
+                            class="form-control edu_end_mon"
+                            placeholder="End Month"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        id="closeBtnEduModal"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        onclick="eduFormModal(this.parentElement.parentElement.children[1].children[0],event)"
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- edit modal for edu details-->
+              <div
+                class="modal fade"
+                id="editEduFormModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="editEduFormModalTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editEduFormModalTitle">
+                        Add Your Education Details
+                      </h5>
+                      <button
+                        id="closeIconEduModal"
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div id="eduModalMain" class="modal-body">
+                      <div id="education_form_input">
+                        <div class="form-group mb-4">
+                          <label
+                            >Institute Name
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="institute_name"
+                            class="form-control institute_name"
+                            placeholder="Institute Name"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label
+                            >Degree
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="institute_degree"
+                            class="form-control institute_degree"
+                            placeholder="Degree"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label>Institute Address</label>
+                          <input
+                            type="text"
+                            name="institute_address"
+                            class="form-control institute_address"
+                            placeholder="Institute Address"
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >Start Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="edu_start_mon_start_year"
+                            type="month"
+                            list="edu_start_mon_list"
+                            class="form-control edu_start_mon"
+                            placeholder="Start Month"
+                            required
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >End Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="edu_end_mon_end_year"
+                            type="month"
+                            list="edu_end_mon_list"
+                            class="form-control edu_end_mon"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        id="closeBtnEduModal"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </article>
+
+        <article
+          class="tab-pane fade"
+          id="experience-details"
+          role="tabpanel"
+          aria-labelledby="experience-details-tab"
+        >
+          <form
+            onsubmit=""
+            id="experience_form"
+            style="width: 80%"
+            class="card p-5 mt-5 ml-auto mr-auto"
+            action=""
+          >
+            <table class="table table-bordered">
+              <thead class="alert-info">
+                <tr>
+                  <!-- <th>S.no</th> -->
+                  <th>Your Position</th>
+                  <th>Employment type</th>
+                  <th>Organization Name</th>
+                  <th>Location</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Edit & Delete</th>
+                </tr>
+              </thead>
+              <tbody id="expDetailsResult"></tbody>
+            </table>
+            <button
+              data-toggle="modal"
+              data-target="#addExpFormModal"
+              onclick="addExp()"
+              type="button"
+              class="btn float-right btn-secondary mb-4"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              Add +
+            </button>
+
+            <div id="expModalForm">
+              <div
+                class="modal fade"
+                id="addExpFormModal"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="addExpFormModalTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="addExpFormModalTitle">
+                        Add Your Experience Details
+                      </h5>
+                      <button
+                        id="closeIconExpModal"
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div id="ExpModalMain" class="modal-body">
+                      <div id="experience_modal_form">
+                        <div class="form-group mb-4">
+                          <label for="position" class="form-label"
+                            >Your Position
+                            <h5 class="d-inline-block text-danger">*</h5>
+                          </label>
+                          <input
+                            class="form-control"
+                            list="pos_options"
+                            id="position"
+                            placeholder="Type Or search your Positions ..."
+                            required
+                          />
+                          <datalist id="pos_options">
+                            <option value="Network administrator"></option>
+                            <option value="User experience designer"></option>
+                            <option value="Systems analyst"></option>
+                            <option value="Full-stack developer"></option>
+                            <option value="Data scientist"></option>
+                          </datalist>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="emp_type"
+                            >Employment type
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <select
+                            id="emp_type"
+                            class="form-select form-control"
+                            aria-label="select Position of company"
+                            required
+                          >
+                            <option value="0"></option>
+                            <option value="1">Full-time</option>
+                            <option value="2">Part-time</option>
+                            <option value="3">Self-employed</option>
+                            <option value="4">Internship</option>
+                            <option value="5">Freelance</option>
+                            <option value="6">Trainee</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="organization_name"
+                            >Organization Name
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="organization_name"
+                            class="form-control"
+                            id="organization_name"
+                            placeholder="Organization Name"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="organization_location">Location</label>
+                          <input
+                            type="text"
+                            name="organization_location"
+                            class="form-control"
+                            id="organization_location"
+                            placeholder="Location"
+                          />
+                        </div>
+
+                        <div class="form-check mb-4">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="role_check"
+                          />
+                          <label class="form-check-label" for="role_check">
+                            I am currently working in this role
+                          </label>
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >Start Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="exp_start_mon_start_year"
+                            type="month"
+                            list="exp_start_mon_list"
+                            class="form-control exp_start_mon"
+                            placeholder="Start Month"
+                            required
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >End Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="exp_end_mon_end_year"
+                            type="month"
+                            list="exp_end_mon_list"
+                            class="form-control exp_end_mon"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        id="closeBtnExpModal"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        onclick="ExpFormModal()"
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="modal fade"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="editExpFormModalTitle"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editExpFormModalTitle">
+                        Add Your Experience Details
+                      </h5>
+                      <button
+                        id="closeIconExpModal"
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                        <div class="form-group mb-4">
+                          <label for="position" class="form-label"
+                            >Your Position
+                            <h5 class="d-inline-block text-danger">*</h5>
+                          </label>
+                          <input
+                            class="form-control"
+                            list="pos_options"
+                            id="position"
+                            placeholder="Type Or search your Positions ..."
+                            required
+                          />
+                          <datalist id="pos_options">
+                            <option value="Network administrator"></option>
+                            <option value="User experience designer"></option>
+                            <option value="Systems analyst"></option>
+                            <option value="Full-stack developer"></option>
+                            <option value="Data scientist"></option>
+                          </datalist>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="emp_type"
+                            >Employment type
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <select
+                            id="emp_type"
+                            class="form-select form-control"
+                            aria-label="select Position of company"
+                            required
+                          >
+                            <option value=""></option>
+                            <option value="1">Full-time</option>
+                            <option value="2">Part-time</option>
+                            <option value="3">Self-employed</option>
+                            <option value="4">Internship</option>
+                            <option value="5">Freelance</option>
+                            <option value="6">Trainee</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="organization_name"
+                            >Organization Name
+                            <h5 class="d-inline-block text-danger">*</h5></label
+                          >
+                          <input
+                            type="text"
+                            name="organization_name"
+                            class="form-control"
+                            id="organization_name"
+                            placeholder="Organization Name"
+                            required
+                          />
+                        </div>
+
+                        <div class="form-group mb-4">
+                          <label for="organization_location">Location</label>
+                          <input
+                            type="text"
+                            name="organization_location"
+                            class="form-control"
+                            id="organization_location"
+                            placeholder="Location"
+                          />
+                        </div>
+
+                        <div class="form-check mb-4">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="role_check"
+                          />
+                          <label class="form-check-label" for="role_check">
+                            I am currently working in this role
+                          </label>
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >Start Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="exp_start_mon_start_year"
+                            type="month"
+                            list="exp_start_mon_list"
+                            class="form-control exp_start_mon"
+                            placeholder="Start Month"
+                            required
+                          />
+                        </div>
+
+                        <div class="input-group mb-4">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id=""
+                              >End Date
+                              <h5 class="d-inline-block text-danger">*</h5>
+                            </span>
+                          </div>
+                          <input
+                            name="exp_end_mon_end_year"
+                            type="month"
+                            list="exp_end_mon_list"
+                            class="form-control exp_end_mon"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        id="closeBtnExpModal"
+                        type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button type="button" class="btn btn-primary">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </article>
+
+        <article
+          class="tab-pane fade"
+          id="skills-details"
+          role="tabpanel"
+          aria-labelledby="skills-details-tab"
+        >
+          <form
+            onsubmit=""
+            id="skills_form"
+            style="width: 80%"
+            class="card p-5 mt-5 ml-auto mr-auto"
+          >
+            <div class="form-group">
+              <!-- <label for="skills"
+                >Skills
+                <h5 class="d-inline-block text-danger">*</h5></label
+              > -->
+
+              <div id="showSkills" class="d-none">
+                <label for="">Your Skills</label>
+                <ul class="list-group mb-2 flex-wrap flex-row">
+                  <!-- <span class="badge badge-light p-1 mb-3">sdsd</span> -->
+                </ul>
+              </div>
+              <span
+                onclick="addSkills(this.nextElementSibling)"
+                style="cursor: pointer"
+                class="badge badge-dark p-2"
+                >Add +</span
+              >
+              <div class="input-group d-none mt-3">
+                <input
+                  type="text"
+                  name="skills"
+                  class="form-control"
+                  id="skillInput"
+                  placeholder="Enter the Skill"
+                  required
+                />
+                <div class="input-group-append">
+                  <span
+                    onclick="saveSkillData(this.parentElement.previousElementSibling.parentElement)"
+                    style="cursor: pointer"
+                    class="input-group-text bg-primary text-light"
+                    >Save</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- <button
+              onclick="addSkills();"
+              type="button"
+              class="btn float-right btn-secondary mb-4"
+            >
+              Add +
+            </button>
+            <button
+              onclick="skillsSaveToPostDatas()"
+              type="button"
+              class="btn btn-primary"
+            >
+              Save
+            </button> -->
+          </form>
+        </article>
+
+        <article
+          class="tab-pane fade"
+          id="contact-details"
+          role="tabpanel"
+          aria-labelledby="contact-details-tab"
+        >
+          <form
+            onsubmit=""
+            id="contact_form"
+            action=""
+            style="width: 80%"
+            class="card p-5 mt-5 ml-auto mr-auto"
+          >
+            <div class="form-group mb-4">
+              <label for="contact_facebook_id">Facebook ID</label>
+              <input
+                type="url"
+                name="contact_facebook_id"
+                class="form-control"
+                id="contact_facebook_id"
+                placeholder="Enter your Facebook ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_instagram_id">Instagram ID</label>
+              <input
+                type="url"
+                name="contact_instagram_id"
+                class="form-control"
+                id="contact_instagram_id"
+                placeholder="Enter your Instagram ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_linkedin_id">Linkedin ID</label>
+              <input
+                type="url"
+                name="contact_linkedin_id"
+                class="form-control"
+                id="contact_linkedin_id"
+                placeholder="Enter your Linkedin ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_twitter_id">Twitter ID</label>
+              <input
+                type="url"
+                name="contact_twitter_id"
+                class="form-control"
+                id="contact_twitter_id"
+                placeholder="Enter your Twitter ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_github_id">GitHub ID</label>
+              <input
+                type="url"
+                name="contact_github_id"
+                class="form-control"
+                id="contact_github_id"
+                placeholder="Enter your Github ID"
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_mail_id"
+                >Mail ID
+                <h5 class="d-inline-block text-danger">*</h5></label
+              >
+              <input
+                type="email"
+                name="contact_mail_id"
+                class="form-control"
+                id="contact_mail_id"
+                placeholder="Enter your Mail ID"
+                required
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_ph_number"
+                >Phone Number
+                <h5 class="d-inline-block text-danger">*</h5></label
+              >
+              <input
+                oninput="Javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="10"
+                type="number"
+                name="contact_ph_number"
+                class="form-control"
+                id="contact_ph_number"
+                placeholder="Enter your Phone Number"
+                required
+              />
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="contact_address"
+                >Address
+                <h5 class="d-inline-block text-danger">*</h5></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="contact_address"
+                name="contact_address"
+                placeholder="Enter your Current Address"
+                required
+              />
+            </div>
+
+            <button
+              onclick="contact_btn(this.parentElement)"
+              type="button"
+              class="btn btn-primary"
+            >
+              Save
+            </button>
+          </form>
+        </article>
+      </section>
+    </main>
+
+    <!-- <script>
+      let aboutNavTab = document.getElementById("about-details-tab");
+      let educationNavTab = document.getElementById("education-details-tab");
+      let experienceNavTab = document.getElementById("experience-details-tab");
+      let skillsNavTab = document.getElementById("skills-details-tab");
+      let contactNavTab = document.getElementById("contact-details-tab");
+      educationNavTab.classList.add("disabled");
+      experienceNavTab.classList.add("disabled");
+      skillsNavTab.classList.add("disabled");
+      contactNavTab.classList.add("disabled");
+      educationNavTab.style = "cursor: context-menu";
+      experienceNavTab.style = "cursor: context-menu";
+      skillsNavTab.style = "cursor: context-menu";
+      contactNavTab.style = "cursor: context-menu";
+    </script> -->
+
+    <!-- <script>
+      let idValue = document.getElementById("exp_main_form").children.length;
+      let experienceForm = document.getElementById(`experience_form${idValue}`);
+      let roleStatus =
+        experienceForm.children[4].getElementsByTagName("input")[0];
+      let expFormEndYearInput =
+        experienceForm.children[5].getElementsByTagName("input")[1];
+
+      roleStatus.addEventListener("click", () => {
+        if (roleStatus.checked === true) {
+          expFormEndYearInput.setAttribute("type", "text");
+          expFormEndYearInput.value = "Present";
+          expFormEndYearInput.disabled = true;
+        } else {
+          expFormEndYearInput.setAttribute("type", "number");
+          expFormEndYearInput.value = "";
+          expFormEndYearInput.disabled = false;
+        }
+      });
+    </script> -->
+
+    <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
+    <script src="./bootsrtapFiles/bootstrap.min.js"></script>
+    <script src="./bootsrtapFiles/popper.min.js"></script>
+    <script src="./scripts/aboutForm.js"></script>
+    <script src="./scripts/educationForm.js"></script>
+    <script src="./scripts/experienceForm.js"></script>
+    <script src="./scripts/skillsForm.js"></script>
+    <script src="./scripts/contactDetails.js"></script>
+  </body>
+</html>
