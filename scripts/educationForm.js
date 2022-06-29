@@ -4,28 +4,55 @@
 //   console.log("hi");
 // };
 // resetValuesModalForm();
-// function eduFormModalYearValidation(startdate, enddate) {
-//   let startDate = startdate.value;
-//   let EndDate = enddate.value;
-//   let startUpdateDate = new Date(startDate.replace(/-/g, "/"));
-//   let EndUpdateDate = new Date(EndDate.replace(/-/g, "/"));
-//   console.log(startUpdateDate, EndUpdateDate);
-//   console.log(startUpdateDate, EndUpdateDate);
-//   if (startUpdateDate < EndUpdateDate === true) {
-// document.getElementById("endYearCheckMsg").classList.add("display_none");
-//   document.getElementById(
-//     "addEduFormModal"
-//   ).children[0].children[0].children[2].children[1].disabled = false;
-// } else {
-//   alert("End Date Should be greater than Start Date!!!");
-//   document.getElementById(
-//     "eduModalMain"
-//   ).children[0].children[4].children[1].value = "";
-// document.getElementById("endYearCheckMsg").classList.remove("display_none");
-//   }
-// }
+function eduFormModalYearValidation(eduModalForm) {
+  let startDate = eduModalForm[3].value;
+  let endDate = eduModalForm[4].value;
+  // console.log(startDate);
+  if (startDate && endDate) {
+    let startUpdateDate = new Date(startDate.replace(/-/g, "/"));
+    let EndUpdateDate = new Date(endDate.replace(/-/g, "/"));
+    // console.log(startUpdateDate, EndUpdateDate);
+    if (startUpdateDate <= EndUpdateDate === true) {
+      document.getElementById("errMsgForYear").style.display = "none";
+      document.getElementById("errMsgForYearForEdit").style.display = "none";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = false;
+      // document.getElementById("endYearCheckMsg").classList.add("display_none");
+      // document.getElementById(
+      //   "addEduFormModal"
+      // ).children[0].children[0].children[2].children[1].disabled = false;
+    } else {
+      document.getElementById("errMsgForYear").style.display = "block";
+      document.getElementById("errMsgForYearForEdit").style.display = "block";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = true;
+      // alert("End Date Should be greater than Start Date!!!");
+      // document.getElementById(
+      //   "eduModalMain"
+      // ).children[0].children[4].children[1].value = "";
+      // document.getElementById("endYearCheckMsg").classList.remove("display_none");
+    }
+  }
+}
 
-// function addEdu() {
+function addEdu(eduModalForm) {
+  eduModalForm.forEach((item) => {
+    item.value = "";
+  });
+  document.querySelectorAll(".addEduErrMsg").forEach((addEduModalErrMsg) => {
+    addEduModalErrMsg.style.display = "none";
+  });
+  document.getElementById("errMsgForYear").style.display = "none";
+  eduModalForm[4].addEventListener("input", () => {
+    eduFormModalYearValidation(eduModalForm);
+  });
+  eduModalForm[3].addEventListener("input", () => {
+    eduFormModalYearValidation(eduModalForm);
+  });
+}
+//
 //   console.log(
 //     document.getElementById("eduModalMain").children[0].children[4].children[1]
 //   );
@@ -333,7 +360,6 @@
 //   //     alert("Please Check your Required Field !!!");
 //   //   }
 
-
 // get datas and show it in table
 let getDatasShow = () => {
   firebase.auth().onAuthStateChanged((user) => {
@@ -378,20 +404,19 @@ let getDatasShow = () => {
 };
 
 // post edu datas to db
-function postEduDatas(eduDatasUpdated,userId){
+function postEduDatas(eduDatasUpdated, userId) {
   db.collection("PortfolioDetails")
-            .doc(userId)
-            .set({ education_details: eduDatasUpdated }, { merge: true })
-            .then(() => {
-              console.log("Document successfully written!");
-              document.getElementById("eduDetailsResult").innerHTML = "";
-              getDatasShow();
-            })
-            .catch((error) => {
-              console.error("Error adding document: ", error);
-            });
+    .doc(userId)
+    .set({ education_details: eduDatasUpdated }, { merge: true })
+    .then(() => {
+      console.log("Document successfully written!");
+      document.getElementById("eduDetailsResult").innerHTML = "";
+      getDatasShow();
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
 }
-
 
 // delete data from table
 function eduDelDatas(eduTableDelBtn, iterateValue) {
@@ -410,9 +435,8 @@ function eduDelDatas(eduTableDelBtn, iterateValue) {
                 return eduData !== null;
               }
             );
-            postEduDatas(filteredEduArrDatasWithDel,user.uid);
+            postEduDatas(filteredEduArrDatasWithDel, user.uid);
             eduTableDelBtn.parentNode.parentNode.remove();
-           
           }
         }
       });
@@ -421,12 +445,22 @@ function eduDelDatas(eduTableDelBtn, iterateValue) {
 
 // edit data modal
 function eduEditModalSetDatas(eduEditBtn, iterateValue) {
+  document.getElementById("errMsgForYearForEdit").style.display = "none";
+
   let eduEditModal = document.getElementById("edu_form_main").children[1];
   eduEditModal.setAttribute("id", `editEduFormModal${iterateValue + 1}`);
   eduEditModal.children[0].children[0].children[2].children[1].setAttribute(
     "onclick",
     `eduEditModalSaveBtn(this,${iterateValue})`
   );
+  let eduEditModalInputs = eduEditModal.querySelectorAll("input");
+  console.log(eduEditModalInputs);
+  eduEditModalInputs[4].addEventListener("input", () => {
+    eduFormModalYearValidation(eduEditModalInputs);
+  });
+  eduEditModalInputs[3].addEventListener("input", () => {
+    eduFormModalYearValidation(eduEditModalInputs);
+  });
   firebase.auth().onAuthStateChanged((user) => {
     db.collection("PortfolioDetails")
       .doc(user.uid)
@@ -480,22 +514,37 @@ function eduEditModalSaveBtn(eduEditButton, iterateValue) {
             null
           ) {
             eduEditArrData[iterateValue] = eduEditModalUpdatedDatas;
-            postEduDatas(eduEditArrData,user.uid);
+            postEduDatas(eduEditArrData, user.uid);
             alert("Successfully Updated!!!");
-               
-                $(`#editEduFormModal${iterateValue + 1}`).modal("hide");
-           
+
+            $(`#editEduFormModal${iterateValue + 1}`).modal("hide");
           } else {
-            alert("Please Check Your Fields!!!");
+            let errArr = [];
+            if (eduEditModalInputs[0].value === "") {
+              errArr.push("Institute Name is required field");
+            } else {
+            }
+            if (eduEditModalInputs[1].value === "") {
+              errArr.push("Degree is required field");
+            } else {
+            }
+            if (eduEditModalInputs[3].value === "") {
+              errArr.push("Start Date is required field");
+            } else {
+            }
+            if (eduEditModalInputs[4].value === "") {
+              errArr.push("End Date is required field");
+            } else {
+            }
+            alert(errArr);
           }
         }
       });
   });
 }
 
-
 // education modal save button
-function eduFormModal(eduForm, e) {
+function eduAddFormModalSaveDatas(eduForm) {
   const userId = firebase.auth().currentUser.uid;
   if (userId) {
     var portfolioDatas = db.collection("PortfolioDetails").doc(userId);
@@ -505,31 +554,82 @@ function eduFormModal(eduForm, e) {
       .then((doc) => {
         let oldEduData = doc.data()["education_details"];
         if (
-          eduForm.children[0].children[1].value &&
-          eduForm.children[1].children[1].value &&
-          eduForm.children[3].children[1].value &&
-          eduForm.children[4].children[1].value !== ""
+          eduForm[0].value &&
+          eduForm[1].value &&
+          eduForm[3].value &&
+          eduForm[4].value !== ""
         ) {
+          // if (eduForm[0].value === "") {
+          //   document.getElementById(
+          //     "addEduModalInstituteErrMsg"
+          //   ).style.display = "none";
+          // } else if (eduForm[1].value === "") {
+          //   document.getElementById("addEduModalDegreeErrMsg").style.display =
+          //     "none";
+          // } else if (eduForm[3].value === "") {
+          //   document.getElementById(
+          //     "addEduModalStartDateErrMsg"
+          //   ).style.display = "none";
+          // } else if (eduForm[4].value === "") {
+          //   document.getElementById("addEduModalEndDateErrMsg").style.display =
+          //     "none";
+          // }
           let educationDetails = {
-            instituteName: eduForm.children[0].children[1].value,
-            degree: eduForm.children[1].children[1].value,
-            instituteAddress: eduForm.children[2].children[1].value,
-            startYearAndMonth: eduForm.children[3].children[1].value,
-            endYearAndMonth: eduForm.children[4].children[1].value,
+            instituteName: eduForm[0].value,
+            degree: eduForm[1].value,
+            instituteAddress: eduForm[2].value,
+            startYearAndMonth: eduForm[3].value,
+            endYearAndMonth: eduForm[4].value,
           };
           let newEduData = educationDetails;
           oldEduData.push(newEduData);
-          postEduDatas(oldEduData,userId);
+          postEduDatas(oldEduData, userId);
           $("#addEduFormModal").modal("hide");
 
-          eduForm.children[0].children[1].value = "";
-          eduForm.children[1].children[1].value = "";
-          eduForm.children[2].children[1].value = "";
-          eduForm.children[3].children[1].value = "";
-          eduForm.children[4].children[1].value = "";
-        
+          eduForm[0].value = "";
+          eduForm[1].value = "";
+          eduForm[2].value = "";
+          eduForm[3].value = "";
+          eduForm[4].value = "";
         } else {
-          alert("Please Check your Required Field !!!");
+          if (eduForm[0].value === "") {
+            document.getElementById(
+              "addEduModalInstituteErrMsg"
+            ).style.display = "block";
+          } else {
+            document.getElementById(
+              "addEduModalInstituteErrMsg"
+            ).style.display = "none";
+          }
+          if (eduForm[1].value === "") {
+            document.getElementById("addEduModalDegreeErrMsg").style.display =
+              "block";
+          } else {
+            document.getElementById("addEduModalDegreeErrMsg").style.display =
+              "none";
+          }
+          if (eduForm[3].value === "") {
+            document.getElementById(
+              "addEduModalStartDateErrMsg"
+            ).style.display = "block";
+          } else {
+            document.getElementById(
+              "addEduModalStartDateErrMsg"
+            ).style.display = "none";
+          }
+          if (eduForm[4].value === "") {
+            document.getElementById("addEduModalEndDateErrMsg").style.display =
+              "block";
+          } else {
+            document.getElementById("addEduModalEndDateErrMsg").style.display =
+              "none";
+          }
+
+          // document
+          //   .querySelectorAll(".addEduErrMsg")
+          //   .forEach((addEduModalErrMsg) => {
+          //     addEduModalErrMsg.style.display = "block";
+          //   });
         }
       })
       .catch((error) => {
@@ -541,24 +641,24 @@ function eduFormModal(eduForm, e) {
 }
 
 // education modal close button & icon
-document
-  .querySelectorAll("#closeIconEduModal,#closeBtnEduModal")
-  .forEach((item) => {
-    item.addEventListener("click", () => {
-      document.getElementById(
-        "education_form_input"
-      ).children[1].children[1].value = "";
-      document.getElementById(
-        "education_form_input"
-      ).children[0].children[1].value = "";
-      document.getElementById(
-        "education_form_input"
-      ).children[2].children[1].value = "";
-      document.getElementById(
-        "education_form_input"
-      ).children[3].children[1].value = "";
-      document.getElementById(
-        "education_form_input"
-      ).children[4].children[1].value = "";
-    });
-  });
+// document
+//   .querySelectorAll("#closeIconEduModal,#closeBtnEduModal")
+//   .forEach((item) => {
+//     item.addEventListener("click", () => {
+//       document.getElementById(
+//         "education_form_input"
+//       ).children[1].children[1].value = "";
+//       document.getElementById(
+//         "education_form_input"
+//       ).children[0].children[1].value = "";
+//       document.getElementById(
+//         "education_form_input"
+//       ).children[2].children[1].value = "";
+//       document.getElementById(
+//         "education_form_input"
+//       ).children[3].children[1].value = "";
+//       document.getElementById(
+//         "education_form_input"
+//       ).children[4].children[1].value = "";
+//     });
+//   });

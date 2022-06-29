@@ -21,7 +21,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="./scripts/firebaseConf.js"></script>
 
-    <script src="./scripts/script.js"></script>
+    <script src="./scripts/showDatas.js"></script>
 
     <script src="./scripts/signout.js"></script>
 
@@ -203,7 +203,7 @@
             <button
               data-toggle="modal"
               data-target="#addEduFormModal"
-              onclick="addEdu()"
+              onclick="addEdu(document.getElementById('addEduFormModal').querySelectorAll('input'))"
               type="button"
               class="btn float-right btn-secondary mb-4"
               data-keyboard="false"
@@ -250,6 +250,17 @@
                             placeholder="Institute Name"
                             required
                           />
+                          <p
+                            class="addEduErrMsg"
+                            id="addEduModalInstituteErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Institute Name is required field
+                          </p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -264,6 +275,17 @@
                             placeholder="Degree"
                             required
                           />
+                          <p
+                            class="addEduErrMsg"
+                            id="addEduModalDegreeErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Degree is required field
+                          </p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -276,39 +298,75 @@
                           />
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >Start Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >Start Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="edu_start_mon_start_year"
+                              type="month"
+                              list="edu_start_mon_list"
+                              class="form-control edu_start_mon"
+                              placeholder="Start Month"
+                              required
+                            />
                           </div>
-                          <input
-                            name="edu_start_mon_start_year"
-                            type="month"
-                            list="edu_start_mon_list"
-                            class="form-control edu_start_mon"
-                            placeholder="Start Month"
-                            required
-                          />
+                          <p
+                            class="addEduErrMsg"
+                            id="addEduModalStartDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Start Date is required field
+                          </p>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >End Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >End Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="edu_end_mon_end_year"
+                              type="month"
+                              list="edu_end_mon_list"
+                              class="form-control edu_end_mon"
+                              placeholder="End Month"
+                              required
+                            />
                           </div>
-                          <input
-                            name="edu_end_mon_end_year"
-                            type="month"
-                            list="edu_end_mon_list"
-                            class="form-control edu_end_mon"
-                            placeholder="End Month"
-                            required
-                          />
+                          <p
+                            class="addEduErrMsg"
+                            id="addEduModalEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            End Date is required field
+                          </p>
                         </div>
+                        <p
+                          id="errMsgForYear"
+                          style="
+                            color: red;
+                            float: right;
+                            font-family: system-ui;
+                          "
+                        >
+                          End date can’t be earlier than start date
+                        </p>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -321,7 +379,7 @@
                         Close
                       </button>
                       <button
-                        onclick="eduFormModal(this.parentElement.parentElement.children[1].children[0],event)"
+                        onclick="eduAddFormModalSaveDatas(this.parentElement.parentElement.children[1].children[0].querySelectorAll('input'))"
                         type="button"
                         class="btn btn-primary"
                       >
@@ -348,7 +406,7 @@
                         Add Your Education Details
                       </h5>
                       <button
-                        id="closeIconEduModal"
+                        id="closeIconEduEditModal"
                         type="button"
                         class="close"
                         data-dismiss="modal"
@@ -429,11 +487,21 @@
                             required
                           />
                         </div>
+                        <p
+                          id="errMsgForYearForEdit"
+                          style="
+                            color: red;
+                            float: right;
+                            font-family: system-ui;
+                          "
+                        >
+                          End date can’t be earlier than start date
+                        </p>
                       </div>
                     </div>
                     <div class="modal-footer">
                       <button
-                        id="closeBtnEduModal"
+                        id="closeBtnEduEditModal"
                         type="button"
                         class="btn btn-secondary"
                         data-dismiss="modal"
