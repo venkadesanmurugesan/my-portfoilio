@@ -13,21 +13,23 @@ function eduFormModalYearValidation(eduModalForm) {
     let EndUpdateDate = new Date(endDate.replace(/-/g, "/"));
     // console.log(startUpdateDate, EndUpdateDate);
     if (startUpdateDate <= EndUpdateDate === true) {
-      document.getElementById("errMsgForYear").style.display = "none";
-      document.getElementById("errMsgForYearForEdit").style.display = "none";
       document.getElementById(
         "addEduFormModal"
       ).children[0].children[0].children[2].children[1].disabled = false;
+      document.getElementById("errMsgForYear").style.display = "none";
+      document.getElementById("errMsgForYearForEdit").style.display = "none";
+
       // document.getElementById("endYearCheckMsg").classList.add("display_none");
       // document.getElementById(
       //   "addEduFormModal"
       // ).children[0].children[0].children[2].children[1].disabled = false;
     } else {
-      document.getElementById("errMsgForYear").style.display = "block";
-      document.getElementById("errMsgForYearForEdit").style.display = "block";
       document.getElementById(
         "addEduFormModal"
       ).children[0].children[0].children[2].children[1].disabled = true;
+      document.getElementById("errMsgForYear").style.display = "block";
+      document.getElementById("errMsgForYearForEdit").style.display = "block";
+
       // alert("End Date Should be greater than Start Date!!!");
       // document.getElementById(
       //   "eduModalMain"
@@ -41,6 +43,7 @@ function addEdu(eduModalForm) {
   eduModalForm.forEach((item) => {
     item.value = "";
   });
+
   document.querySelectorAll(".addEduErrMsg").forEach((addEduModalErrMsg) => {
     addEduModalErrMsg.style.display = "none";
   });
@@ -403,6 +406,68 @@ let getDatasShow = () => {
   });
 };
 
+function formValidation(eduForm) {
+  eduForm[0].addEventListener("input", () => {
+    if (eduForm[0].value === "") {
+      document.getElementById("addEduModalInstituteErrMsg").style.display =
+        "block";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = true;
+    } else {
+      document.getElementById("addEduModalInstituteErrMsg").style.display =
+        "none";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = false;
+    }
+  });
+
+  eduForm[1].addEventListener("input", () => {
+    if (eduForm[1].value === "") {
+      document.getElementById("addEduModalDegreeErrMsg").style.display =
+        "block";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = true;
+    } else {
+      document.getElementById("addEduModalDegreeErrMsg").style.display = "none";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = false;
+    }
+  });
+  eduForm[3].addEventListener("input", () => {
+    if (eduForm[3].value === "") {
+      document.getElementById("addEduModalStartDateErrMsg").style.display =
+        "block";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = true;
+    } else {
+      document.getElementById("addEduModalStartDateErrMsg").style.display =
+        "none";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = false;
+    }
+  });
+  eduForm[4].addEventListener("input", () => {
+    if (eduForm[4].value === "") {
+      document.getElementById("addEduModalEndDateErrMsg").style.display =
+        "block";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = true;
+    } else {
+      document.getElementById("addEduModalEndDateErrMsg").style.display =
+        "none";
+      document.getElementById(
+        "addEduFormModal"
+      ).children[0].children[0].children[2].children[1].disabled = false;
+    }
+  });
+}
 // post edu datas to db
 function postEduDatas(eduDatasUpdated, userId) {
   db.collection("PortfolioDetails")
@@ -592,44 +657,7 @@ function eduAddFormModalSaveDatas(eduForm) {
           eduForm[3].value = "";
           eduForm[4].value = "";
         } else {
-          if (eduForm[0].value === "") {
-            document.getElementById(
-              "addEduModalInstituteErrMsg"
-            ).style.display = "block";
-          } else {
-            document.getElementById(
-              "addEduModalInstituteErrMsg"
-            ).style.display = "none";
-          }
-          if (eduForm[1].value === "") {
-            document.getElementById("addEduModalDegreeErrMsg").style.display =
-              "block";
-          } else {
-            document.getElementById("addEduModalDegreeErrMsg").style.display =
-              "none";
-          }
-          if (eduForm[3].value === "") {
-            document.getElementById(
-              "addEduModalStartDateErrMsg"
-            ).style.display = "block";
-          } else {
-            document.getElementById(
-              "addEduModalStartDateErrMsg"
-            ).style.display = "none";
-          }
-          if (eduForm[4].value === "") {
-            document.getElementById("addEduModalEndDateErrMsg").style.display =
-              "block";
-          } else {
-            document.getElementById("addEduModalEndDateErrMsg").style.display =
-              "none";
-          }
-
-          // document
-          //   .querySelectorAll(".addEduErrMsg")
-          //   .forEach((addEduModalErrMsg) => {
-          //     addEduModalErrMsg.style.display = "block";
-          //   });
+          formValidation(eduForm);
         }
       })
       .catch((error) => {
