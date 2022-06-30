@@ -429,6 +429,17 @@
                             placeholder="Institute Name"
                             required
                           />
+                          <p
+                            class="editEduErrMsg"
+                            id="editEduModalInstituteErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Institute Name is required field
+                          </p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -443,6 +454,17 @@
                             placeholder="Degree"
                             required
                           />
+                          <p
+                            class="editEduErrMsg"
+                            id="editEduModalDegreeErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Degree is required field
+                          </p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -455,37 +477,63 @@
                           />
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >Start Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >Start Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="edu_start_mon_start_year"
+                              type="month"
+                              list="edu_start_mon_list"
+                              class="form-control edu_start_mon"
+                              placeholder="Start Month"
+                              required
+                            />
                           </div>
-                          <input
-                            name="edu_start_mon_start_year"
-                            type="month"
-                            list="edu_start_mon_list"
-                            class="form-control edu_start_mon"
-                            placeholder="Start Month"
-                            required
-                          />
+                          <p
+                            class="editEduErrMsg"
+                            id="editEduModalStartDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            Start Date is required field
+                          </p>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >End Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >End Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="edu_end_mon_end_year"
+                              type="month"
+                              list="edu_end_mon_list"
+                              class="form-control edu_end_mon"
+                              required
+                            />
                           </div>
-                          <input
-                            name="edu_end_mon_end_year"
-                            type="month"
-                            list="edu_end_mon_list"
-                            class="form-control edu_end_mon"
-                            required
-                          />
+                          <p
+                            class="editEduErrMsg"
+                            id="editEduModalEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          >
+                            End Date is required field
+                          </p>
                         </div>
                         <p
                           id="errMsgForYearForEdit"
@@ -605,6 +653,15 @@
                             <option value="Full-stack developer"></option>
                             <option value="Data scientist"></option>
                           </datalist>
+                          <p
+                            class="addExpModalErrMsg"
+                            id="addExpPosErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -618,7 +675,7 @@
                             aria-label="select Position of company"
                             required
                           >
-                            <option value="0"></option>
+                            <option value="null"></option>
                             <option value="1">Full-time</option>
                             <option value="2">Part-time</option>
                             <option value="3">Self-employed</option>
@@ -626,6 +683,15 @@
                             <option value="5">Freelance</option>
                             <option value="6">Trainee</option>
                           </select>
+                          <p
+                            class="addExpModalErrMsg"
+                            id="addExpEmpTypeErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -641,6 +707,15 @@
                             placeholder="Organization Name"
                             required
                           />
+                          <p
+                            class="addExpModalErrMsg"
+                            id="addExpOrganizationErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -665,38 +740,69 @@
                           </label>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >Start Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >Start Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="exp_start_mon_start_year"
+                              type="month"
+                              list="exp_start_mon_list"
+                              class="form-control exp_start_mon"
+                              placeholder="Start Month"
+                              required
+                            />
                           </div>
-                          <input
-                            name="exp_start_mon_start_year"
-                            type="month"
-                            list="exp_start_mon_list"
-                            class="form-control exp_start_mon"
-                            placeholder="Start Month"
-                            required
-                          />
+                          <p
+                            class="addExpModalErrMsg"
+                            id="addExpStartDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >End Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >End Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="exp_end_mon_end_year"
+                              type="month"
+                              list="exp_end_mon_list"
+                              class="form-control exp_end_mon"
+                              required
+                            />
                           </div>
-                          <input
-                            name="exp_end_mon_end_year"
-                            type="month"
-                            list="exp_end_mon_list"
-                            class="form-control exp_end_mon"
-                            required
-                          />
+                          <p
+                            class="addExpModalErrMsg"
+                            id="addExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
+                        <p
+                          class="addExpModalErrMsg"
+                          id="addExpYearErrMsg"
+                          style="
+                            color: red;
+                            float: right;
+                            font-family: system-ui;
+                          "
+                        ></p>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -764,6 +870,14 @@
                             <option value="Full-stack developer"></option>
                             <option value="Data scientist"></option>
                           </datalist>
+                          <p
+                            id="editExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -785,6 +899,14 @@
                             <option value="5">Freelance</option>
                             <option value="6">Trainee</option>
                           </select>
+                          <p
+                            id="editExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -800,6 +922,14 @@
                             placeholder="Organization Name"
                             required
                           />
+                          <p
+                            id="editExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
                         <div class="form-group mb-4">
@@ -824,38 +954,66 @@
                           </label>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >Start Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >Start Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="exp_start_mon_start_year"
+                              type="month"
+                              list="exp_start_mon_list"
+                              class="form-control exp_start_mon"
+                              placeholder="Start Month"
+                              required
+                            />
                           </div>
-                          <input
-                            name="exp_start_mon_start_year"
-                            type="month"
-                            list="exp_start_mon_list"
-                            class="form-control exp_start_mon"
-                            placeholder="Start Month"
-                            required
-                          />
+                          <p
+                            id="editExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
 
-                        <div class="input-group mb-4">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id=""
-                              >End Date
-                              <h5 class="d-inline-block text-danger">*</h5>
-                            </span>
+                        <div class="mb-4">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id=""
+                                >End Date
+                                <h5 class="d-inline-block text-danger">*</h5>
+                              </span>
+                            </div>
+                            <input
+                              name="exp_end_mon_end_year"
+                              type="month"
+                              list="exp_end_mon_list"
+                              class="form-control exp_end_mon"
+                              required
+                            />
                           </div>
-                          <input
-                            name="exp_end_mon_end_year"
-                            type="month"
-                            list="exp_end_mon_list"
-                            class="form-control exp_end_mon"
-                            required
-                          />
+                          <p
+                            id="editExpEndDateErrMsg"
+                            style="
+                              color: red;
+                              font-family: system-ui;
+                              margin-top: 5px;
+                            "
+                          ></p>
                         </div>
+                        <p
+                          id="editExpYearErrMsg"
+                          style="
+                            color: red;
+                            float: right;
+                            font-family: system-ui;
+                          "
+                        ></p>
                       </div>
                     </div>
                     <div class="modal-footer">

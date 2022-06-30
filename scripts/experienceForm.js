@@ -1,9 +1,100 @@
+// exp modal year validation
+function expFormModalYearValidation(expModalFormInput, eduModalSaveBtn) {
+  let startDate = expModalFormInput[4].value;
+  let endDate = expModalFormInput[5].value;
+  if (startDate && endDate) {
+    let startUpdateDate = new Date(startDate.replace(/-/g, "/"));
+    let EndUpdateDate = new Date(endDate.replace(/-/g, "/"));
+    if (startUpdateDate <= EndUpdateDate === true) {
+      eduModalSaveBtn.disabled = false;
+      document.getElementById("addExpYearErrMsg").innerHTML = "";
+    } else {
+      eduModalSaveBtn.disabled = true;
+      document.getElementById("addExpYearErrMsg").innerHTML =
+        "End date can’t be earlier than start date";
+    }
+  }
+}
+
+// form validation for edu modal inputs
+function expformValidation(expFormInputs) {
+  let expModalInput = expFormInputs.querySelectorAll("input");
+  expModalInput[0].addEventListener("input", () => {
+    if (expModalInput[0].value === "") {
+      document.getElementById("addExpPosErrMsg").innerHTML =
+        "Your Position Field is required";
+    } else {
+      document.getElementById("addExpPosErrMsg").innerHTML = "";
+    }
+  });
+  expFormInputs.children[1].children[1].addEventListener("input", () => {
+    if (expFormInputs.children[1].children[1].value === "null") {
+      document.getElementById("addExpEmpTypeErrMsg").innerHTML =
+        "Employment type Field is required";
+    } else {
+      document.getElementById("addExpEmpTypeErrMsg").innerHTML = "";
+    }
+  });
+  expModalInput[1].addEventListener("input", () => {
+    if (expModalInput[1].value === "") {
+      document.getElementById("addExpOrganizationErrMsg").innerHTML =
+        "Organization Name Field is required";
+    } else {
+      document.getElementById("addExpOrganizationErrMsg").innerHTML = "";
+    }
+  });
+  expModalInput[4].addEventListener("input", () => {
+    if (expModalInput[4].value === "") {
+      document.getElementById("addExpStartDateErrMsg").innerHTML =
+        "Start Date Field is required";
+    } else {
+      document.getElementById("addExpStartDateErrMsg").innerHTML = "";
+    }
+  });
+  expModalInput[5].addEventListener("input", () => {
+    if (expModalInput[5].value === "") {
+      document.getElementById("addExpEndDateErrMsg").innerHTML =
+        "End Date Field is required";
+    } else {
+      document.getElementById("addExpEndDateErrMsg").innerHTML = "";
+    }
+  });
+}
 // exp add btn work
 function addExp() {
+  document.getElementById(
+    "addExpFormModal"
+  ).children[0].children[0].children[2].children[1].disabled = false;
   let expModalFormInputs = document
     .getElementById("experience_modal_form")
     .querySelectorAll("input");
-  // console.log(expModalFormInputs[5]);
+  document
+    .querySelectorAll(".addExpModalErrMsg")
+    .forEach((addExpModalErrMsg) => {
+      addExpModalErrMsg.innerHTML = "";
+    });
+
+  expModalFormInputs[4].addEventListener("input", () => {
+    expFormModalYearValidation(
+      document
+        .getElementById("experience_modal_form")
+        .querySelectorAll("input"),
+      document.getElementById("addExpFormModal").children[0].children[0]
+        .children[2].children[1]
+    );
+  });
+  expModalFormInputs[5].addEventListener("input", () => {
+    expFormModalYearValidation(
+      document
+        .getElementById("experience_modal_form")
+        .querySelectorAll("input"),
+      document.getElementById("addExpFormModal").children[0].children[0]
+        .children[2].children[1]
+    );
+  });
+
+  expformValidation(document.getElementById("experience_modal_form"));
+
   checkBoxForEndYear(expModalFormInputs);
 }
 
@@ -15,9 +106,12 @@ function checkBoxForEndYear(checkbox) {
       let date = `${today.getFullYear()}-0${today.getMonth() + 1}`;
       checkbox[5].value = date;
       checkbox[5].disabled = true;
+      document.getElementById("addExpEndDateErrMsg").innerHTML = "";
     } else {
       checkbox[5].value = "";
       checkbox[5].disabled = false;
+      document.getElementById("addExpEndDateErrMsg").innerHTML =
+        "End Date Field is required";
     }
   });
 }
@@ -64,22 +158,22 @@ function showExpDatasOnTable() {
 }
 
 // post exp datas to db
-function postExpDatas(expDatasUpdated,userId){
+function postExpDatas(expDatasUpdated, userId) {
   db.collection("PortfolioDetails")
-  .doc(userId)
-  .set(
-    {
-      experience_details: expDatasUpdated,
-    },
-    { merge: true }
-  )
-  .then(() => {
-    document.getElementById("expDetailsResult").innerHTML = "";
-    showExpDatasOnTable();
-  });
+    .doc(userId)
+    .set(
+      {
+        experience_details: expDatasUpdated,
+      },
+      { merge: true }
+    )
+    .then(() => {
+      document.getElementById("expDetailsResult").innerHTML = "";
+      showExpDatasOnTable();
+    });
 }
 
-        // set exp data values to exp modal input
+// set exp data values to exp modal input
 function expEditModalSetDatas(expEditBtn) {
   let expEditBtnGetDataAttribute = expEditBtn
     .getAttribute("data-target")
@@ -200,12 +294,11 @@ function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
           expArrDatas[expEditModalSaveBtnGetDigitFromBtnId - 1] =
             expEditModalDatasWithEdit;
 
-          postExpDatas(expArrDatas,user.uid);
-          $(
-            `#editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`
-          ).modal("hide");
+          postExpDatas(expArrDatas, user.uid);
+          $(`#editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`).modal(
+            "hide"
+          );
           alert("Successfully Updated!!!");
-         
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
@@ -236,11 +329,9 @@ function expModalDeleteBtn(expTableDelBtn, indexValue) {
               return el !== null;
             });
 
-            postExpDatas(filteredExpArrDatas,user.uid)
-          
-              .catch((error) => {
-                console.error("Error writing document: ", error);
-              });
+            postExpDatas(filteredExpArrDatas, user.uid).catch((error) => {
+              console.error("Error writing document: ", error);
+            });
           } else {
             return 0;
           }
@@ -287,7 +378,7 @@ function setNewDatas() {
             };
             let newExpData = experienceDetails;
             oldExpData.push(newExpData);
-            postExpDatas(oldExpData,user.uid)
+            postExpDatas(oldExpData, user.uid);
             $("#addExpFormModal").modal("hide");
             emptyExpModalValues();
           }
@@ -297,7 +388,42 @@ function setNewDatas() {
         });
     });
   } else {
-    alert("Please Check Your Fields!!!");
+    if (expModalFormInputs[0].value === "") {
+      document.getElementById("addExpPosErrMsg").innerHTML =
+        "Your Position Field is required";
+    } else {
+      document.getElementById("addExpPosErrMsg").innerHTML = "";
+    }
+    if (
+      document.getElementById("experience_modal_form").children[1].children[1]
+        .options[
+        document.getElementById("experience_modal_form").children[1].children[1]
+          .selectedIndex
+      ].text === ""
+    ) {
+      document.getElementById("addExpEmpTypeErrMsg").innerHTML =
+        "Employment type Field is required";
+    } else {
+      document.getElementById("addExpEmpTypeErrMsg").innerHTML = "";
+    }
+    if (expModalFormInputs[1].value === "") {
+      document.getElementById("addExpOrganizationErrMsg").innerHTML =
+        "Organization Name Field is required";
+    } else {
+      document.getElementById("addExpOrganizationErrMsg").innerHTML = "";
+    }
+    if (expModalFormInputs[4].value === "") {
+      document.getElementById("addExpStartDateErrMsg").innerHTML =
+        "Start Date Field is required";
+    } else {
+      document.getElementById("addExpStartDateErrMsg").innerHTML = "";
+    }
+    if (expModalFormInputs[5].value === "") {
+      document.getElementById("addExpEndDateErrMsg").innerHTML =
+        "End Date Field is required";
+    } else {
+      document.getElementById("addExpEndDateErrMsg").innerHTML = "";
+    }
   }
 }
 
