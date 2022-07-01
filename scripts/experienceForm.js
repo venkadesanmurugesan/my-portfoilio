@@ -8,9 +8,12 @@ function expFormModalYearValidation(expModalFormInput, eduModalSaveBtn) {
     if (startUpdateDate <= EndUpdateDate === true) {
       eduModalSaveBtn.disabled = false;
       document.getElementById("addExpYearErrMsg").innerHTML = "";
+      document.getElementById("editExpYearErrMsg").innerHTML = "";
     } else {
       eduModalSaveBtn.disabled = true;
       document.getElementById("addExpYearErrMsg").innerHTML =
+        "End date can’t be earlier than start date";
+      document.getElementById("editExpYearErrMsg").innerHTML =
         "End date can’t be earlier than start date";
     }
   }
@@ -23,40 +26,59 @@ function expformValidation(expFormInputs) {
     if (expModalInput[0].value === "") {
       document.getElementById("addExpPosErrMsg").innerHTML =
         "Your Position Field is required";
+      document.getElementById("editExpPosErrMsg").innerHTML =
+        "Your Position Field is required";
     } else {
       document.getElementById("addExpPosErrMsg").innerHTML = "";
+      document.getElementById("editExpPosErrMsg").innerHTML = "";
     }
   });
   expFormInputs.children[1].children[1].addEventListener("input", () => {
-    if (expFormInputs.children[1].children[1].value === "null") {
+    if (
+      expFormInputs.children[1].children[1].options[
+        expFormInputs.children[1].children[1].selectedIndex
+      ].text === ""
+    ) {
       document.getElementById("addExpEmpTypeErrMsg").innerHTML =
+        "Employment type Field is required";
+      document.getElementById("editExpEmpTypeErrMsg").innerHTML =
         "Employment type Field is required";
     } else {
       document.getElementById("addExpEmpTypeErrMsg").innerHTML = "";
+      document.getElementById("editExpEmpTypeErrMsg").innerHTML = "";
     }
   });
   expModalInput[1].addEventListener("input", () => {
     if (expModalInput[1].value === "") {
       document.getElementById("addExpOrganizationErrMsg").innerHTML =
         "Organization Name Field is required";
+      document.getElementById("editExpOrganizationErrMsg").innerHTML =
+        "Organization Name Field is required";
     } else {
       document.getElementById("addExpOrganizationErrMsg").innerHTML = "";
+      document.getElementById("editExpOrganizationErrMsg").innerHTML = "";
     }
   });
   expModalInput[4].addEventListener("input", () => {
     if (expModalInput[4].value === "") {
       document.getElementById("addExpStartDateErrMsg").innerHTML =
         "Start Date Field is required";
+      document.getElementById("editExpStartDateErrMsg").innerHTML =
+        "Start Date Field is required";
     } else {
       document.getElementById("addExpStartDateErrMsg").innerHTML = "";
+      document.getElementById("editExpStartDateErrMsg").innerHTML = "";
     }
   });
   expModalInput[5].addEventListener("input", () => {
     if (expModalInput[5].value === "") {
       document.getElementById("addExpEndDateErrMsg").innerHTML =
         "End Date Field is required";
+      document.getElementById("editExpEndDateErrMsg").innerHTML =
+        "End Date Field is required";
     } else {
       document.getElementById("addExpEndDateErrMsg").innerHTML = "";
+      document.getElementById("editExpEndDateErrMsg").innerHTML = "";
     }
   });
 }
@@ -107,10 +129,13 @@ function checkBoxForEndYear(checkbox) {
       checkbox[5].value = date;
       checkbox[5].disabled = true;
       document.getElementById("addExpEndDateErrMsg").innerHTML = "";
+      document.getElementById("editExpEndDateErrMsg").innerHTML = "";
     } else {
       checkbox[5].value = "";
       checkbox[5].disabled = false;
       document.getElementById("addExpEndDateErrMsg").innerHTML =
+        "End Date Field is required";
+      document.getElementById("editExpEndDateErrMsg").innerHTML =
         "End Date Field is required";
     }
   });
@@ -186,7 +211,29 @@ function expEditModalSetDatas(expEditBtn) {
   expEditModalBtn.setAttribute("id", expEditBtnGetDataAttribute + "btn");
   expEditModalBtn.setAttribute("onclick", "expEditModalSaveAndUpdateBtn(this)");
 
+  document
+    .querySelectorAll(".editExpModalErrMsg")
+    .forEach((addExpModalErrMsg) => {
+      addExpModalErrMsg.innerHTML = "";
+    });
+  expformValidation(
+    expEditModal.children[0].children[0].children[1].children[0]
+  );
   checkBoxForEndYear(expEditModal.querySelectorAll("input"));
+
+  expEditModal.querySelectorAll("input")[4].addEventListener("input", () => {
+    expFormModalYearValidation(
+      expEditModal.querySelectorAll("input"),
+      expEditModal.children[0].children[0].children[2].children[1]
+    );
+  });
+  expEditModal.querySelectorAll("input")[5].addEventListener("input", () => {
+    expFormModalYearValidation(
+      expEditModal.querySelectorAll("input"),
+      expEditModal.children[0].children[0].children[2].children[1]
+    );
+  });
+
   firebase.auth().onAuthStateChanged((user) => {
     let porfolioDocRef = db.collection("PortfolioDetails").doc(user.uid);
     porfolioDocRef.get().then((doc) => {
