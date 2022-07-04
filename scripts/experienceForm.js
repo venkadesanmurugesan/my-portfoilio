@@ -14,7 +14,7 @@ function expFormModalYearValidation(expModalFormInput, eduModalSaveBtn) {
       document.getElementById("addExpYearErrMsg").innerHTML =
         "End date can’t be earlier than start date";
       document.getElementById("editExpYearErrMsg").innerHTML =
-        "End date can’t be earlier than start date";
+        "End date can’t be earlier  than start date";
     }
   }
 }
@@ -351,7 +351,6 @@ function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
           console.error("Error writing document: ", error);
         });
     } else {
-      alert("Please Check Your Fields!!!");
     }
   });
 }

@@ -1066,21 +1066,27 @@
                   <!-- <span class="badge badge-light p-1 mb-3">sdsd</span> -->
                 </ul>
               </div>
-              <span
-                onclick="addSkills(this.nextElementSibling)"
-                style="cursor: pointer"
-                class="badge badge-dark p-2"
-                >Add +</span
-              >
-              <div class="input-group d-none mt-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <span
+                  onclick="addSkills(document.getElementById('skillInput'),this.nextElementSibling)"
+                  style="cursor: pointer"
+                  class="badge badge-dark p-2"
+                  >Add +</span
+                >
+                <i
+                  style="cursor: pointer"
+                  class="fa-solid fa-square-xmark h3 mb-0 d-none"
+                ></i>
+              </div>
+              <div id="skillInput" class="input-group d-none mt-3">
                 <input
                   type="text"
                   name="skills"
                   class="form-control"
-                  id="skillInput"
                   placeholder="Enter the Skill"
                   required
                 />
+
                 <div class="input-group-append">
                   <span
                     onclick="saveSkillData(this.parentElement.previousElementSibling.parentElement)"
@@ -1090,21 +1096,11 @@
                   >
                 </div>
               </div>
+              <p
+                id="skillErrMsg"
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
-            <!-- <button
-              onclick="addSkills();"
-              type="button"
-              class="btn float-right btn-secondary mb-4"
-            >
-              Add +
-            </button>
-            <button
-              onclick="skillsSaveToPostDatas()"
-              type="button"
-              class="btn btn-primary"
-            >
-              Save
-            </button> -->
           </form>
         </article>
 
@@ -1189,6 +1185,15 @@
                 placeholder="Enter your Mail ID"
                 required
               />
+              <p
+                style="
+                  display: none;
+                  color: red;
+                  font-family: system-ui;
+                  margin-top: 5px;
+                "
+                id="contactMailIdErrMsg"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1206,6 +1211,15 @@
                 placeholder="Enter your Phone Number"
                 required
               />
+              <p
+                id="contactPhoneErrMsg"
+                style="
+                  display: none;
+                  color: red;
+                  font-family: system-ui;
+                  margin-top: 5px;
+                "
+              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1221,6 +1235,15 @@
                 placeholder="Enter your Current Address"
                 required
               />
+              <p
+                id="contactAddErrMsg"
+                style="
+                  display: none;
+                  color: red;
+                  font-family: system-ui;
+                  margin-top: 5px;
+                "
+              ></p>
             </div>
 
             <button

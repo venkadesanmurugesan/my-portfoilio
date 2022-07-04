@@ -67,6 +67,15 @@
                   id="signUpEmail"
                   required
                 />
+                <p
+                  id="signUpEmailErrMsg"
+                  style="
+                    display: none;
+                    color: red;
+                    font-family: system-ui;
+                    margin-top: 5px;
+                  "
+                ></p>
               </div>
               <div class="form-group">
                 <label for="signUpPassword">Password</label>
@@ -76,6 +85,22 @@
                   id="signUpPassword"
                   required
                 />
+                <p
+                  id="signUpPasswordErrMsg"
+                  style="
+                    display: none;
+                    color: red;
+                    font-family: system-ui;
+                    margin-top: 5px;
+                  "
+                ></p>
+              </div>
+              <div
+                style="display: none"
+                id="signUpCommonErr"
+                class="card mb-2 bg-danger text-white"
+              >
+                <p class="card-text p-1"></p>
               </div>
               <div class="sign-up">
                 Already a member?

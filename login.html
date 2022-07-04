@@ -66,6 +66,15 @@
                   id="loginEmail"
                   required
                 />
+                <p
+                  id="loginEmailErrMsg"
+                  style="
+                    display: none;
+                    color: red;
+                    font-family: system-ui;
+                    margin-top: 5px;
+                  "
+                ></p>
               </div>
               <div class="form-group">
                 <label for="loginPassword">Password</label>
@@ -78,10 +87,20 @@
                   id="loginPassword"
                   required
                 />
+                <p
+                  id="loginPasswordErrMsg"
+                  style="
+                    display: none;
+                    color: red;
+                    font-family: system-ui;
+                    margin-top: 5px;
+                  "
+                ></p>
               </div>
+
               <button
                 type="button"
-                onclick="signIn(document.getElementById('loginEmail').value,document.getElementById('loginPassword').value)"
+                onclick="signIn(document.getElementById('loginEmail'),document.getElementById('loginPassword'))"
                 class="btn btn-primary btn-block"
               >
                 Sign in

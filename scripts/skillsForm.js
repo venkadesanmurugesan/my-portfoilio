@@ -1,7 +1,32 @@
-function addSkills(skillInputElementParent) {
+function skillInputValidation(skillInputElementParent, skillErrMsg) {
+  skillInputElementParent.children[0].addEventListener("input", () => {
+    if (skillInputElementParent.children[0].value === "") {
+      skillErrMsg.innerText = "Skill is required field";
+    } else {
+      skillErrMsg.innerText = "";
+    }
+  });
+}
+
+function addSkills(skillInputElementParent, skillInputClosebtn) {
+  skillInputElementParent.children[0].value = "";
+
+  skillInputClosebtn.classList.remove("d-none");
+  skillInputClosebtn.classList.add("d-block");
   skillInputElementParent.classList.remove("d-none");
   skillInputElementParent.classList.add("d-flex");
-  skillInputElementParent.children[0].value = "";
+
+  skillInputClosebtn.addEventListener("click", () => {
+    document.getElementById("skillErrMsg").innerText = "";
+    skillInputElementParent.classList.remove("d-flex");
+    skillInputClosebtn.classList.remove("d-block");
+    skillInputClosebtn.classList.add("d-none");
+    skillInputElementParent.classList.add("d-none");
+  });
+  skillInputValidation(
+    skillInputElementParent,
+    document.getElementById("skillErrMsg")
+  );
 }
 
 // show skill datas in list
@@ -67,6 +92,29 @@ function delSkillDatas(skillDelIcon, skillDataIterateValue) {
   });
 }
 
+function saveSkillDatasWithValidation(skillInputElementParent, skillDatasArr) {
+  if (skillInputElementParent.children[0].value !== "") {
+    skillInputElementParent.classList.remove("d-flex");
+    skillInputElementParent.classList.add("d-none");
+    skillInputElementParent.previousElementSibling.children[1].classList.remove(
+      "d-block"
+    );
+    skillInputElementParent.previousElementSibling.children[1].classList.add(
+      "d-none"
+    );
+    skillDatasArr.push(skillInputElementParent.children[0].value);
+    postSkillDatas(skillDatasArr);
+    alert("your Skill is Added!!!");
+  } else {
+    if (skillInputElementParent.children[0].value === "") {
+      document.getElementById("skillErrMsg").innerText =
+        "Skill is required field";
+    } else {
+      document.getElementById("skillErrMsg").innerText = "";
+    }
+  }
+}
+
 // save skill datas
 function saveSkillData(skillInputElementParent) {
   firebase.auth().onAuthStateChanged((user) => {
@@ -74,16 +122,27 @@ function saveSkillData(skillInputElementParent) {
       var docRef = db.collection("PortfolioDetails").doc(user.uid);
       docRef.get().then((doc) => {
         if (doc.exists) {
-          if (skillInputElementParent.children[0].value !== "") {
-            skillInputElementParent.classList.remove("d-flex");
-            skillInputElementParent.classList.add("d-none");
-
-            let skillDatasArr = doc.data()["skills"];
-            skillDatasArr.push(skillInputElementParent.children[0].value);
-            postSkillDatas(skillDatasArr);
-            alert("your Skill is Added!!!");
+          var repeatSkillData;
+          for (let i = 0; i < doc.data()["skills"].length; i++) {
+            if (
+              doc.data()["skills"][i] ===
+              skillInputElementParent.children[0].value
+            ) {
+              repeatSkillData = "true";
+              break;
+            } else {
+              repeatSkillData = "false";
+            }
+          }
+          if (repeatSkillData === "true") {
+            document.getElementById("skillErrMsg").innerText =
+              "This skill is already on your profile";
           } else {
-            alert("You must Write Skill to Save!!!");
+            document.getElementById("skillErrMsg").innerText = "";
+            saveSkillDatasWithValidation(
+              skillInputElementParent,
+              doc.data()["skills"]
+            );
           }
         }
       });

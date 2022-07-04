@@ -1,8 +1,30 @@
-firebase.initializeApp({
-  apiKey: "AIzaSyD3CXtOxGXV2_AxiKWD3_68A0DZR6vJEWA",
-  authDomain: "portfolio-1-1925e.firebaseapp.com",
-  projectId: "portfolio-1-1925e",
-});
+window.onload = () => {
+  signUpInputEventValidation();
+};
+function signUpInputEventValidation() {
+  let emailInput = document.getElementById("signUpEmail");
+  let passwordInput = document.getElementById("signUpPassword");
+  emailInput.addEventListener("input", () => {
+    if (emailInput.value === "") {
+      document.getElementById("signUpEmailErrMsg").style.display = "block";
+      document.getElementById("signUpEmailErrMsg").innerText =
+        "Please Check your Email field";
+    } else {
+      document.getElementById("signUpEmailErrMsg").style.display = "none";
+      document.getElementById("signUpEmailErrMsg").innerText = "";
+    }
+  });
+  passwordInput.addEventListener("input", () => {
+    if (passwordInput.value === "") {
+      document.getElementById("signUpPasswordErrMsg").style.display = "block";
+      document.getElementById("signUpPasswordErrMsg").innerText =
+        "Please Check your Password field";
+    } else {
+      document.getElementById("signUpPasswordErrMsg").style.display = "none";
+      document.getElementById("signUpPasswordErrMsg").innerText = "";
+    }
+  });
+}
 function signUp(signUpEmail, signUpPassword) {
   if (signUpEmail && signUpPassword !== "") {
     firebase
@@ -10,13 +32,6 @@ function signUp(signUpEmail, signUpPassword) {
       .createUserWithEmailAndPassword(signUpEmail, signUpPassword)
       .then((userCredential) => {
         if (userCredential.user.uid) {
-          // let PortfolioDetails = {
-          //   about_details: {},
-          //   education_details: [],
-          //   experience_details: [],
-          //   skills: [],
-          //   contact_details: {},
-          // };
           db.collection("PortfolioDetails")
             .doc(userCredential.user.uid)
             .set(
@@ -30,8 +45,10 @@ function signUp(signUpEmail, signUpPassword) {
               { merge: true }
             )
             .then(() => {
-              console.log("Document successfully written!");
-              location.href = "login.html";
+              document.getElementById("signUpCommonErr").style.display = "none";
+              document.getElementById("signUpCommonErr").children[0].innerText =
+                "";
+              location.href = "form.html";
             })
             .catch((error) => {
               console.error("Error writing document: ", error);
@@ -39,12 +56,26 @@ function signUp(signUpEmail, signUpPassword) {
         }
       })
       .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        alert(errorMessage);
-        // ..
+        document.getElementById("signUpCommonErr").style.display = "block";
+        document.getElementById("signUpCommonErr").children[0].innerText =
+          error.message;
       });
   } else {
-    alert("Please Check Your fields");
+    if (signUpEmail === "") {
+      document.getElementById("signUpEmailErrMsg").style.display = "block";
+      document.getElementById("signUpEmailErrMsg").innerText =
+        "Please Check your Email field";
+    } else {
+      document.getElementById("signUpEmailErrMsg").style.display = "none";
+      document.getElementById("signUpEmailErrMsg").innerText = "";
+    }
+    if (signUpPassword === "") {
+      document.getElementById("signUpPasswordErrMsg").style.display = "block";
+      document.getElementById("signUpPasswordErrMsg").innerText =
+        "Please Check your Password field";
+    } else {
+      document.getElementById("signUpPasswordErrMsg").style.display = "none";
+      document.getElementById("signUpPasswordErrMsg").innerText = "";
+    }
   }
 }
