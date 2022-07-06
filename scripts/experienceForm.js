@@ -195,6 +195,7 @@ function postExpDatas(expDatasUpdated, userId) {
     .then(() => {
       document.getElementById("expDetailsResult").innerHTML = "";
       showExpDatasOnTable();
+      document.getElementById("preLoader").style.display = "none";
     });
 }
 
@@ -340,7 +341,7 @@ function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
 
           expArrDatas[expEditModalSaveBtnGetDigitFromBtnId - 1] =
             expEditModalDatasWithEdit;
-
+          document.getElementById("preLoader").style.display = "block";
           postExpDatas(expArrDatas, user.uid);
           $(`#editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`).modal(
             "hide"
@@ -374,7 +375,7 @@ function expModalDeleteBtn(expTableDelBtn, indexValue) {
             let filteredExpArrDatas = expArrDatasToClickDelBtn.filter((el) => {
               return el !== null;
             });
-
+            document.getElementById("preLoader").style.display = "block";
             postExpDatas(filteredExpArrDatas, user.uid).catch((error) => {
               console.error("Error writing document: ", error);
             });
@@ -424,6 +425,7 @@ function setNewDatas() {
             };
             let newExpData = experienceDetails;
             oldExpData.push(newExpData);
+            document.getElementById("preLoader").style.display = "block";
             postExpDatas(oldExpData, user.uid);
             $("#addExpFormModal").modal("hide");
             emptyExpModalValues();

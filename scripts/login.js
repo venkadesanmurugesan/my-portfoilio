@@ -37,12 +37,16 @@ function signIn(emailLogin, passLogin) {
       .auth()
       .signInWithEmailAndPassword(emailLogin.value, passLogin.value)
       .then((userCredential) => {
+        document.getElementById("loginCommonErr").style.display = "none";
+        document.getElementById("loginCommonErr").children[0].innerText = "";
+
         location.href = "form.html";
       })
       .catch((error) => {
-        alert(
-          "Login was unsuccessful, please check your username and password"
-        );
+        document.getElementById("loginCommonErr").style.display = "block";
+        document.getElementById("loginCommonErr").children[0].innerText =
+          "Login was unsuccessful, please check your username and password";
+
         return false;
       });
   } else {

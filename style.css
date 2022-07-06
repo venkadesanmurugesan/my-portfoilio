@@ -13,7 +13,9 @@ input[type="number"] {
 * {
   font-family: "Reem Kufi", sans-serif;
 }
-
+p {
+  margin-bottom: 0 !important;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -21,67 +23,21 @@ ul {
   list-style: none;
 }
 
-/* .header_main {
-  background-color: rgb(206, 88, 75);
-  margin-bottom: 50px;
-}
-.header_main ul li:hover {
-  background-color: rgb(231, 146, 137);
-  opacity: 0.6;
-  border-radius: 5px;
-}
-.about_div_icons a {
-  display: inline-block;
-  width: 3rem;
-  height: 3rem;
-  background-color: #495057;
-  color: white;
-  border-radius: 100%;
-  align-items: center;
-  display: inline-flex;
-  text-decoration: none;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-right: 1rem;
-}
-.about_div_icons a:hover {
-  background-color: rgb(206, 88, 75);
-  color: white;
-  text-decoration: none;
-}
-.skills_div .progress_row .progress {
-  margin: 5px auto;
-}
-.projects_div .project_img {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-.projects_div .project_img div {
-  margin-top: 1rem;
-  width: 400px;
-  height: 550px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  border: 2px solid grey;
-}
-.projects_div div img {
-  width: 100%;
-  object-fit: cover;
-  padding: 10px;
-  height: 80%;
-}
-.projects_div .project_img img:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-} */
-
 /* bootstrap class customize */
-
 .img-thumbnail {
   height: 100% !important;
   object-fit: cover;
 }
 
+/* loader */
+#preLoader {
+  background: url(./img/loader.webp) no-repeat center center;
+  background-size: 10%;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+}
 
 @media screen and (max-width: 575px) {
   .about_div_profile {

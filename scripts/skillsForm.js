@@ -61,6 +61,7 @@ function postSkillDatas(skillDatasToPost) {
       .then(() => {
         document.getElementById("showSkills").children[1].innerHTML = "";
         showSkillDatasInList();
+        document.getElementById("preLoader").style.display = "none";
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -83,7 +84,7 @@ function delSkillDatas(skillDelIcon, skillDataIterateValue) {
               return skillDatas !== null || "";
             }
           );
-
+          document.getElementById("preLoader").style.display = "block";
           postSkillDatas(delSkillArrDatasWithFiltered);
           alert("your Skill is Successfully Deleted!!!");
         });
@@ -103,6 +104,7 @@ function saveSkillDatasWithValidation(skillInputElementParent, skillDatasArr) {
       "d-none"
     );
     skillDatasArr.push(skillInputElementParent.children[0].value);
+    document.getElementById("preLoader").style.display = "block";
     postSkillDatas(skillDatasArr);
     alert("your Skill is Added!!!");
   } else {

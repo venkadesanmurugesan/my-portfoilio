@@ -57,8 +57,9 @@ function postContactDetails(contactObj, uid, contactForm) {
       contactForm.elements[5].value = "";
       contactForm.elements[6].value = "";
       contactForm.elements[7].value = "";
-      console.log("Document successfully written!");
+
       showContactDetails(contactObj, contactForm);
+      document.getElementById("preLoader").style.display = "none";
     })
     .catch((error) => {
       console.error("Error writing document: ", error);
@@ -91,6 +92,7 @@ function contact_btn(contactForm) {
                 phone_no: contactForm.elements[6].value,
                 address: contactForm.elements[7].value,
               };
+              document.getElementById("preLoader").style.display = "block";
               postContactDetails(contactObj, user.uid, contactForm);
               return true;
             } else {

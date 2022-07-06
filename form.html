@@ -37,6 +37,8 @@
     </style>
   </head>
   <body>
+    <div id="preLoader"></div>
+
     <main class="jumbotron pt-4">
       <h2 class="text-center mb-4">
         Welcome <span id="displayUserName"></span>
@@ -151,6 +153,16 @@
                 required
               />
             </div>
+
+            <p
+              id="firstAndLastNameErrMsg"
+              style="
+                display: none;
+                color: red;
+                font-family: system-ui;
+                margin-top: 5px;
+              "
+            ></p>
 
             <div class="form-group mb-4">
               <label for="about_description">Description</label>

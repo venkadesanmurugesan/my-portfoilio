@@ -149,9 +149,9 @@ function postEduDatas(eduDatasUpdated, userId) {
     .doc(userId)
     .set({ education_details: eduDatasUpdated }, { merge: true })
     .then(() => {
-      console.log("Document successfully written!");
       document.getElementById("eduDetailsResult").innerHTML = "";
       getDatasShow();
+      document.getElementById("preLoader").style.display = "none";
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -175,6 +175,7 @@ function eduDelDatas(eduTableDelBtn, iterateValue) {
                 return eduData !== null;
               }
             );
+            document.getElementById("preLoader").style.display = "block";
             postEduDatas(filteredEduArrDatasWithDel, user.uid);
             eduTableDelBtn.parentNode.parentNode.remove();
           }
@@ -269,6 +270,8 @@ function eduEditModalSaveBtn(eduEditButton, iterateValue) {
             null
           ) {
             eduEditArrData[iterateValue] = eduEditModalUpdatedDatas;
+            document.getElementById("preLoader").style.display = "block";
+
             postEduDatas(eduEditArrData, user.uid);
             alert("Successfully Updated!!!");
 
@@ -346,6 +349,8 @@ function eduAddFormModalSaveDatas(eduForm) {
           };
           let newEduData = educationDetails;
           oldEduData.push(newEduData);
+          document.getElementById("preLoader").style.display = "block";
+
           postEduDatas(oldEduData, userId);
           $("#addEduFormModal").modal("hide");
 

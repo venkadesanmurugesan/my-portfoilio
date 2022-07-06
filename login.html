@@ -78,7 +78,10 @@
               </div>
               <div class="form-group">
                 <label for="loginPassword">Password</label>
-                <a href="#" style="float: right; font-size: 12px"
+                <a
+                  target="_blank"
+                  href="./forgettenPassword.html"
+                  style="float: right; font-size: 12px"
                   >Forgot password?</a
                 >
                 <input
@@ -97,7 +100,13 @@
                   "
                 ></p>
               </div>
-
+              <div
+                style="display: none"
+                id="loginCommonErr"
+                class="card mb-2 bg-danger text-white"
+              >
+                <p class="card-text p-1"></p>
+              </div>
               <button
                 type="button"
                 onclick="signIn(document.getElementById('loginEmail'),document.getElementById('loginPassword'))"
