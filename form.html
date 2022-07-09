@@ -48,15 +48,24 @@
         </h2>
       </header>
       <hr />
-      <button
-        type="button"
-        onclick="signout()"
-        class="btn btn-outline-secondary float-right"
-      >
-        Sign Out
-      </button>
-      <h2 class="mb-5">Enter the Portfolio Details</h2>
-
+      <div class="d-flex justify-content-between mb-5">
+        <h2>Enter the Portfolio Details</h2>
+        <div class="d-flex align-items-center justify-content-center">
+          <button
+            type="button"
+            onclick="signout()"
+            class="btn btn-outline-secondary mr-2"
+          >
+            Sign Out
+          </button>
+          <a
+            target="_blank"
+            class="btn btn-primary"
+            href="./generateResumeDetails.html"
+            >Generate PDF</a
+          >
+        </div>
+      </div>
       <ul class="nav nav-pills nav-fill" id="portfolio-tab-link" role="tablist">
         <li class="nav-item">
           <a
@@ -1272,17 +1281,12 @@
           </form>
         </article>
       </section>
-
-      <a
-        target="_blank"
-        class="btn btn-primary float-right mt-4"
-        href="./generateResumeDetails.html"
-        >Generate PDF</a
-      >
     </main>
-    <div class="bg-light py-2">
+    <div class="bg-light py-2 footer">
       <div class="container text-center">
-        <p class="text-muted mb-0 py-2">&copy; by Venkadesan Murugesan</p>
+        <p class="text-muted mb-0 py-2">
+          &copy; Resume Builder builded by Venkadesan Murugesan
+        </p>
       </div>
     </div>
 

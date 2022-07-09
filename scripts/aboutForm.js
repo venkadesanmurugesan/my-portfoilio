@@ -17,7 +17,8 @@ function postAboutDetails(aboutDetails, uid, aboutForm) {
       aboutForm[2].value = "";
 
       document.getElementById("preLoader").style.display = "none";
-
+      // window.open("generateResumeDetails.html");
+      console.log(window);
       showAboutDetails(aboutForm, aboutDetails);
     })
     .catch((error) => {

@@ -53,16 +53,18 @@
       }
     </style>
   </head>
-  <body>
+  <body class="bgGradient">
     <div style="display: none" id="preLoader"></div>
-    <div class="global-container">
+    <div class="global-container bgGradient">
       <div class="card signUp-form">
         <div class="card-body">
-          <h3 class="card-title text-center">Sign Up</h3>
+          <h3 class="card-title text-center textColor">Sign Up</h3>
           <div class="card-text">
             <form>
               <div class="form-group">
-                <label for="signUpEmail">Email address</label>
+                <label for="signUpEmail" class="textColor h6"
+                  >Email address</label
+                >
                 <input
                   type="email"
                   class="form-control form-control-sm"
@@ -80,7 +82,9 @@
                 ></p>
               </div>
               <div class="form-group">
-                <label for="signUpPassword">Password</label>
+                <label for="signUpPassword" class="textColor h6"
+                  >Password</label
+                >
                 <input
                   type="password"
                   class="form-control form-control-sm"
@@ -106,11 +110,11 @@
               </div>
               <div class="sign-up">
                 Already a member?
-                <a href="./login.html">Log in</a>
+                <a class="textColor" href="./login.html">Log in</a>
               </div>
               <button
                 type="button"
-                class="btn btn-primary btn-block"
+                class="btnStyle"
                 onclick="signUp(document.getElementById('signUpEmail').value,document.getElementById('signUpPassword').value)"
               >
                 Sign Up

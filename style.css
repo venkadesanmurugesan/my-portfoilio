@@ -23,6 +23,35 @@ ul {
   list-style: none;
 }
 
+/* common class */
+:root {
+  --bgGradient: linear-gradient(315deg, #8989bb 0%, #a5a4cb 74%);
+  --textColor: #5d5da5;
+  --border: #8989bb;
+}
+.bgGradient {
+  background-color: var(--textColor);
+  background-image: var(--bgGradient);
+}
+.textColor {
+  color: var(--textColor) !important;
+}
+.btnStyle {
+  width: 100%;
+  padding: 5px;
+  border: 2px solid var(--border);
+  margin-top: 14px;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--textColor);
+  cursor: pointer;
+}
+
+.btnStyle:hover,
+.btnStyle:active {
+  box-shadow: inset -3.5em 0 0 0 var(--bgGradient),
+    inset 3.5em 0 0 0 var(--bgGradient);
+}
 /* bootstrap class customize */
 .img-thumbnail {
   height: 100% !important;
@@ -37,6 +66,24 @@ ul {
   width: 100%;
   position: fixed;
   z-index: 100;
+}
+
+/* pdf button */
+#downloadBtn {
+  position: relative;
+  width: 21cm;
+  margin: auto;
+}
+#downloadBtn button {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 @media screen and (max-width: 575px) {
