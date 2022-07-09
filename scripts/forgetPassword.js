@@ -18,6 +18,7 @@ let resetPasswordFunction = (email) => {
     .auth()
     .sendPasswordResetEmail(email)
     .then(() => {
+      document.getElementById("preLoader").style.display = "none";
       document.getElementById("resetPassCommonErr").style.display = "block";
       document
         .getElementById("resetPassCommonErr")
@@ -27,6 +28,7 @@ let resetPasswordFunction = (email) => {
         "Email has been sent to you, Please Check and verify";
     })
     .catch((error) => {
+      document.getElementById("preLoader").style.display = "none";
       var errorMessage = error.message;
       document.getElementById("resetPassCommonErr").style.display = "block";
       document
@@ -41,6 +43,7 @@ let resetPasswordFunction = (email) => {
 function resetPasswordBtn(resetEmailInput, resetEmailInputErrMsg) {
   let email = resetEmailInput.value;
   if (email !== "") {
+    document.getElementById("preLoader").style.display = "block";
     resetEmailInputErrMsg.style.display = "none";
     resetEmailInputErrMsg.innerHTML = "";
     resetPasswordFunction(email);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./bootsrtapFiles/bootstrap.min.css" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="icon" href="./img/venkadesh.jpg"> -->
+    <title id="titleForUser"></title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="./scripts/firebaseConf.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <style>
+      body {
+        background: rgb(204, 204, 204);
+      }
+      page {
+        background: white;
+        display: block;
+        margin: 0 auto;
+        margin: 0.5cm auto;
+        box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+      }
+      page[size="A4"] {
+        width: 21cm;
+      }
+    </style>
+  </head>
+
+  <body>
+    <page class="container" size="A4">
+      <p class="text-center h2 mt-2 mb-2" id="aboutName"></p>
+      <div class="text-center mb-3" id="mainContacts">
+        <p id="addressContact"></p>
+        <p id="mailAndPhoneContact"></p>
+      </div>
+      <hr />
+      <div class="aboutAndContactLink row">
+        <div id="aboutDesCol" class="col-lg-6 text-left"></div>
+        <div id="contactCol" class="col-lg-6 text-right"></div>
+      </div>
+      <hr />
+      <p class="h2">Education</p>
+      <div id="eduDetails"></div>
+      <hr />
+    </page>
+
+    <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
+    <script src="./bootsrtapFiles/bootstrap.min.js"></script>
+    <script src="./bootsrtapFiles/popper.min.js"></script>
+    <script src="./scripts/generatePdf.js"></script>
+  </body>
+</html>

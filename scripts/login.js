@@ -33,16 +33,19 @@ function loginInputEventValidation() {
 }
 function signIn(emailLogin, passLogin) {
   if (emailLogin.value && passLogin.value !== "") {
+    document.getElementById("preLoader").style.display = "block";
     firebase
       .auth()
       .signInWithEmailAndPassword(emailLogin.value, passLogin.value)
       .then((userCredential) => {
+        document.getElementById("preLoader").style.display = "none";
         document.getElementById("loginCommonErr").style.display = "none";
         document.getElementById("loginCommonErr").children[0].innerText = "";
 
         location.href = "form.html";
       })
       .catch((error) => {
+        document.getElementById("preLoader").style.display = "none";
         document.getElementById("loginCommonErr").style.display = "block";
         document.getElementById("loginCommonErr").children[0].innerText =
           "Login was unsuccessful, please check your username and password";

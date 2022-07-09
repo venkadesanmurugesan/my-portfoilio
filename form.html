@@ -39,10 +39,14 @@
   <body>
     <div id="preLoader"></div>
 
-    <main class="jumbotron pt-4">
-      <h2 class="text-center mb-4">
-        Welcome <span id="displayUserName"></span>
-      </h2>
+    <main class="jumbotron pt-4 bg-white">
+      <header
+        class="navbar navbar-default navbar-fixed-top w-100 justify-content-center"
+      >
+        <h2 class="text-center mb-4">
+          Welcome <span id="displayUserName"></span>
+        </h2>
+      </header>
       <hr />
       <button
         type="button"
@@ -1268,44 +1272,19 @@
           </form>
         </article>
       </section>
+
+      <a
+        target="_blank"
+        class="btn btn-primary float-right mt-4"
+        href="./generateResumeDetails.html"
+        >Generate PDF</a
+      >
     </main>
-
-    <!-- <script>
-      let aboutNavTab = document.getElementById("about-details-tab");
-      let educationNavTab = document.getElementById("education-details-tab");
-      let experienceNavTab = document.getElementById("experience-details-tab");
-      let skillsNavTab = document.getElementById("skills-details-tab");
-      let contactNavTab = document.getElementById("contact-details-tab");
-      educationNavTab.classList.add("disabled");
-      experienceNavTab.classList.add("disabled");
-      skillsNavTab.classList.add("disabled");
-      contactNavTab.classList.add("disabled");
-      educationNavTab.style = "cursor: context-menu";
-      experienceNavTab.style = "cursor: context-menu";
-      skillsNavTab.style = "cursor: context-menu";
-      contactNavTab.style = "cursor: context-menu";
-    </script> -->
-
-    <!-- <script>
-      let idValue = document.getElementById("exp_main_form").children.length;
-      let experienceForm = document.getElementById(`experience_form${idValue}`);
-      let roleStatus =
-        experienceForm.children[4].getElementsByTagName("input")[0];
-      let expFormEndYearInput =
-        experienceForm.children[5].getElementsByTagName("input")[1];
-
-      roleStatus.addEventListener("click", () => {
-        if (roleStatus.checked === true) {
-          expFormEndYearInput.setAttribute("type", "text");
-          expFormEndYearInput.value = "Present";
-          expFormEndYearInput.disabled = true;
-        } else {
-          expFormEndYearInput.setAttribute("type", "number");
-          expFormEndYearInput.value = "";
-          expFormEndYearInput.disabled = false;
-        }
-      });
-    </script> -->
+    <div class="bg-light py-2">
+      <div class="container text-center">
+        <p class="text-muted mb-0 py-2">&copy; by Venkadesan Murugesan</p>
+      </div>
+    </div>
 
     <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
     <script src="./bootsrtapFiles/bootstrap.min.js"></script>
