@@ -62,6 +62,7 @@ function postContactDetails(contactObj, uid, contactForm) {
       document.getElementById("preLoader").style.display = "none";
     })
     .catch((error) => {
+      document.getElementById("preLoader").style.display = "none";
       console.error("Error writing document: ", error);
     });
 }

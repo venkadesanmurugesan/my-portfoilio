@@ -196,6 +196,10 @@ function postExpDatas(expDatasUpdated, userId) {
       document.getElementById("expDetailsResult").innerHTML = "";
       showExpDatasOnTable();
       document.getElementById("preLoader").style.display = "none";
+    })
+    .catch((error) => {
+      document.getElementById("preLoader").style.display = "none";
+      console.error("Error adding document: ", error);
     });
 }
 

@@ -27,6 +27,7 @@ function signUpInputEventValidation() {
 }
 function signUp(signUpEmail, signUpPassword) {
   if (signUpEmail && signUpPassword !== "") {
+    document.getElementById("preLoader").style.display = "block";
     firebase
       .auth()
       .createUserWithEmailAndPassword(signUpEmail, signUpPassword)
@@ -45,17 +46,20 @@ function signUp(signUpEmail, signUpPassword) {
               { merge: true }
             )
             .then(() => {
+              document.getElementById("preLoader").style.display = "none";
               document.getElementById("signUpCommonErr").style.display = "none";
               document.getElementById("signUpCommonErr").children[0].innerText =
                 "";
               location.href = "form.html";
             })
             .catch((error) => {
+              document.getElementById("preLoader").style.display = "none";
               console.error("Error writing document: ", error);
             });
         }
       })
       .catch((error) => {
+        document.getElementById("preLoader").style.display = "none";
         document.getElementById("signUpCommonErr").style.display = "block";
         document.getElementById("signUpCommonErr").children[0].innerText =
           error.message;

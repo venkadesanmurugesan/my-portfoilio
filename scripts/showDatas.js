@@ -1,7 +1,7 @@
 var db = firebase.firestore();
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    var uid = user.uid;
+    uid = user.uid;
     console.log(uid);
     var docRef = db.collection("PortfolioDetails").doc(uid);
     docRef

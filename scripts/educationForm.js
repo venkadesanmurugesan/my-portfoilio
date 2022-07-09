@@ -154,6 +154,7 @@ function postEduDatas(eduDatasUpdated, userId) {
       document.getElementById("preLoader").style.display = "none";
     })
     .catch((error) => {
+      document.getElementById("preLoader").style.display = "none";
       console.error("Error adding document: ", error);
     });
 }
