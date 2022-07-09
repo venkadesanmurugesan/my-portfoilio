@@ -1,3 +1,6 @@
+var doc = new jsPDF();
+console.log(doc);
+
 function eduFormModalYearValidation(eduModalForm, eduModalSaveBtn) {
   let startDate = eduModalForm[3].value;
   let endDate = eduModalForm[4].value;
