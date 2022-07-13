@@ -41,7 +41,7 @@ function showSkillDatasInList() {
         for (let i = 0; i < SkillArrDatas.length; i++) {
           document.getElementById(
             "showSkills"
-          ).children[1].innerHTML += `<li class=list-group-item>${SkillArrDatas[i]} <i onclick=delSkillDatas(this,${i}) style=cursor:pointer class="fa-solid fa-square-xmark ml-2"></i></li>`;
+          ).children[1].innerHTML += `<li class=list-group-item>${SkillArrDatas[i]} <i onclick="delSkillDatas(this,${i})" style="cursor: pointer;" class="fa-solid fa-square-xmark ml-2"></i></li>`;
         }
       } else {
         document.getElementById("showSkills").classList.remove("d-block");

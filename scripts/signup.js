@@ -42,6 +42,7 @@ function signUp(signUpEmail, signUpPassword) {
                 experience_details: [],
                 skills: [],
                 contact_details: {},
+                themes: "DefaultTheme",
               },
               { merge: true }
             )

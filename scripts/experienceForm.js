@@ -380,13 +380,14 @@ function expModalDeleteBtn(expTableDelBtn, indexValue) {
               return el !== null;
             });
             document.getElementById("preLoader").style.display = "block";
-            postExpDatas(filteredExpArrDatas, user.uid).catch((error) => {
-              console.error("Error writing document: ", error);
-            });
+            postExpDatas(filteredExpArrDatas, user.uid);
           } else {
             return 0;
           }
         }
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
       });
   });
 }

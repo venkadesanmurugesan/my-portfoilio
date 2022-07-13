@@ -5,8 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Form</title>
+    <script
+      src="https://kit.fontawesome.com/5f242455f7.js"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./bootsrtapFiles/bootstrap.min.css" />
+    <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
+    <script src="./bootsrtapFiles/bootstrap.min.js"></script>
+    <script src="./bootsrtapFiles/popper.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -52,16 +59,18 @@
       }
     </style>
   </head>
-  <body>
+  <body class="bgGradient">
     <div style="display: none" id="preLoader"></div>
-    <div class="global-container">
+    <div class="global-container bgGradient">
       <div class="card login-form">
         <div class="card-body">
-          <h3 class="card-title text-center">Log in</h3>
+          <h3 class="card-title text-center textColor">Log in</h3>
           <div class="card-text">
             <form>
               <div class="form-group">
-                <label for="loginEmail">Email address</label>
+                <label for="loginEmail" class="textColor h6"
+                  >Email address</label
+                >
                 <input
                   type="email"
                   class="form-control form-control-sm"
@@ -79,8 +88,9 @@
                 ></p>
               </div>
               <div class="form-group">
-                <label for="loginPassword">Password</label>
+                <label for="loginPassword" class="textColor h6">Password</label>
                 <a
+                  class="textColor"
                   target="_blank"
                   href="./forgettenPassword.html"
                   style="float: right; font-size: 12px"
@@ -110,16 +120,21 @@
                 <p class="card-text p-1"></p>
               </div>
               <button
+                style="position: relative"
+                class="btnStyle"
                 type="button"
                 onclick="signIn(document.getElementById('loginEmail'),document.getElementById('loginPassword'))"
-                class="btn btn-primary btn-block"
               >
                 Sign in
+                <i
+                  style="position: absolute; right: 10px; top: 10px"
+                  class="fa-solid fa-arrow-right text-white"
+                ></i>
               </button>
 
               <div class="sign-up">
                 Don't have an account?
-                <a href="./signup.html">Create One</a>
+                <a href="./signup.html" class="textColor">Create One</a>
               </div>
             </form>
           </div>

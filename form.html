@@ -21,8 +21,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="./scripts/firebaseConf.js"></script>
 
-    <script src="./scripts/showDatas.js"></script>
-
     <script src="./scripts/signout.js"></script>
 
     <script
@@ -36,40 +34,294 @@
       }
     </style>
   </head>
-  <body>
+  <body class="">
+    <!-- page loader -->
     <div id="preLoader"></div>
 
-    <main class="jumbotron pt-4 bg-white">
-      <header
-        class="navbar navbar-default navbar-fixed-top w-100 justify-content-center"
+    <!-- start themes button -->
+    <div
+      style="position: fixed; z-index: 1; right: -9px; top: 50%"
+      class="btn-group dropleft"
+    >
+      <button
+        style="
+          border-top-left-radius: 50%;
+          border-bottom-left-radius: 50%;
+          backdrop-filter: blur(5px);
+          background-color: rgba(255, 255, 255, 0.5);
+          animation: blinkingBoxShadow 2s infinite alternate;
+        "
+        type="button"
+        class="btn-light btn textColor"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
       >
-        <h2 class="text-center mb-4">
-          Welcome <span id="displayUserName"></span>
-        </h2>
+        <i class="fa fa-sun-o" aria-hidden="true"></i>
+      </button>
+      <div id="themeDropdown" class="dropdown-menu">
+        <button class="dropdown-item textColor" type="button" id="darkThemeBtn">
+          Dark Theme
+        </button>
+
+        <button
+          class="dropdown-item textColor"
+          type="button"
+          id="lightThemeBtn"
+        >
+          Light Theme
+        </button>
+
+        <button
+          class="dropdown-item textColor"
+          type="button"
+          id="defaultThemeBtn"
+        >
+          Default Theme
+        </button>
+      </div>
+    </div>
+    <!-- end themes button -->
+
+    <!-- open update email modal  -->
+    <div
+      class="modal fade"
+      id="resetEmail"
+      tabindex="1"
+      role="dialog"
+      aria-labelledby="resetEmailCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title textColor" id="resetEmailLongTitle">
+              Enter Your update Email
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="resetEmailInput" class="textColor"
+                  >Email address</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="resetEmailInput"
+                  aria-describedby="resetEmailInputErr"
+                  placeholder="Enter email"
+                />
+                <p
+                  style="font-family: system-ui"
+                  id="resetEmailInputErr"
+                  class="form-text text-danger"
+                ></p>
+              </div>
+              <div
+                style="display: none"
+                id="resetEmailCommonErr"
+                class="card mb-2 text-white"
+              >
+                <p style="font-family: system-ui" class="card-text p-1"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              id=""
+              type="button"
+              class="btnStyle2 w-25"
+              data-dismiss="modal"
+            >
+              Close
+              <i class="fa fa-times small ml-1" aria-hidden="true"></i>
+            </button>
+            <button
+              onclick="updateEmail(document.getElementById('resetEmailInput'))"
+              style="position: relative"
+              type="button"
+              class="btnStyle mt-0 w-75"
+            >
+              Save changes
+              <i
+                style="position: absolute; right: 10px; top: 10px"
+                class="fa-solid fa-arrow-right text-white small ml-1"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--close update email modal  -->
+
+    <!-- open update password modal  -->
+    <div
+      class="modal fade"
+      id="resetPassword"
+      tabindex="1"
+      role="dialog"
+      aria-labelledby="resetEmailCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title textColor" id="resetPasswordLongTitle">
+              Enter Your update Password
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="resetPasswordInput" class="textColor"
+                  >New Password</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="resetPasswordInput"
+                  aria-describedby="resetPasswordInputErr"
+                  placeholder="Enter Password"
+                />
+                <p
+                  style="font-family: system-ui"
+                  id="resetPasswordInputErr"
+                  class="form-text text-danger"
+                ></p>
+              </div>
+              <div
+                style="display: none"
+                id="resetPasswordCommonErr"
+                class="card mb-2 text-white"
+              >
+                <p style="font-family: system-ui" class="card-text p-1"></p>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              id=""
+              type="button"
+              class="btnStyle2 w-25"
+              data-dismiss="modal"
+            >
+              Close
+              <i class="fa fa-times small ml-1" aria-hidden="true"></i>
+            </button>
+            <button
+              onclick="updatePassword(document.getElementById('resetPasswordInput'))"
+              style="position: relative"
+              type="button"
+              class="btnStyle mt-0 w-75"
+            >
+              Save changes
+              <i
+                style="position: absolute; right: 10px; top: 10px"
+                class="fa-solid fa-arrow-right text-white small ml-1"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--close update password modal  -->
+
+    <main style="background: none" class="jumbotron pt-4">
+      <header class="row align-items-center" id="headerForm">
+        <div class="col-lg-2 col-sm-12">
+          <!-- <a href="./form.html">
+            <img width="140px" src="./img/logoResumeBuilder.png" alt="" />
+          </a> -->
+        </div>
+        <div class="col-lg-8 col-sm-12">
+          <h2 class="text-center text-light">
+            Welcome <span id="displayUserName" class="textColor"></span>
+          </h2>
+        </div>
+        <div class="col-lg-2 col-sm-12">
+          <div class="btn-group dropleft float-right">
+            <button
+              type="button"
+              class="btn-light btn textColor"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fa fa-sliders" aria-hidden="true"></i> Options
+            </button>
+            <div class="dropdown-menu">
+              <a
+                target="_blank"
+                class="dropdown-item textColor"
+                href="./generateResumeDetails.html"
+              >
+                Generate PDF
+                <i class="fa fa-hand-o-right small" aria-hidden="true"></i>
+              </a>
+
+              <button
+                data-toggle="modal"
+                data-target="#resetEmail"
+                class="dropdown-item textColor"
+                type="button"
+                id="changeEmailDropdownItem"
+              >
+                Change Email
+              </button>
+
+              <button
+                id="changePasswordDropdownItem"
+                class="dropdown-item textColor"
+                type="button"
+                data-toggle="modal"
+                data-target="#resetPassword"
+              >
+                Change Password
+              </button>
+
+              <button
+                type="button"
+                onclick="signout()"
+                class="dropdown-item textColor"
+              >
+                <i class="fa fa-sign-out small" aria-hidden="true"></i>
+                Sign Out
+              </button>
+
+              <button id="deleteUserAccount" class="dropdown-item text-danger">
+                <i class="fa fa-trash-o small" aria-hidden="true"></i>
+                Delete Account
+              </button>
+            </div>
+          </div>
+        </div>
       </header>
       <hr />
-      <div class="d-flex justify-content-between mb-5">
-        <h2>Enter the Portfolio Details</h2>
-        <div class="d-flex align-items-center justify-content-center">
-          <button
-            type="button"
-            onclick="signout()"
-            class="btn btn-outline-secondary mr-2"
-          >
-            Sign Out
-          </button>
-          <a
-            target="_blank"
-            class="btn btn-primary"
-            href="./generateResumeDetails.html"
-            >Generate PDF</a
-          >
-        </div>
+      <div class="d-flex align-items-center mb-5" id="typingTextHeading">
+        <h2 class="text-white">Enter your</h2>
+        <h2 class="typingText textColor ml-2"></h2>
       </div>
       <ul class="nav nav-pills nav-fill" id="portfolio-tab-link" role="tablist">
         <li class="nav-item">
           <a
-            class="nav-link active"
+            class="nav-link active textColor"
             id="about-details-tab"
             data-toggle="tab"
             href="#about-details"
@@ -81,7 +333,7 @@
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link textColor"
             id="education-details-tab"
             data-toggle="tab"
             href="#education-details"
@@ -93,7 +345,7 @@
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link textColor"
             id="experience-details-tab"
             data-toggle="tab"
             href="#experience-details"
@@ -105,7 +357,7 @@
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link textColor"
             id="skills-details-tab"
             data-toggle="tab"
             href="#skills-details"
@@ -117,7 +369,7 @@
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link textColor"
             id="contact-details-tab"
             data-toggle="tab"
             href="#contact-details"
@@ -144,7 +396,7 @@
           >
             <div class="input-group mb-4">
               <div class="input-group-prepend">
-                <span class="input-group-text" id=""
+                <span class="textColor input-group-text" id=""
                   >First and last name
                   <h5 class="d-inline-block text-danger">*</h5></span
                 >
@@ -178,7 +430,9 @@
             ></p>
 
             <div class="form-group mb-4">
-              <label for="about_description">Description</label>
+              <label for="about_description" class="textColor"
+                >About yourself</label
+              >
               <textarea
                 name="about_description"
                 class="form-control"
@@ -189,11 +443,16 @@
             </div>
 
             <button
+              style="position: relative"
               onclick="about_btn(this.parentElement)"
               type="button"
-              class="btn btn-primary"
+              class="btnStyle"
             >
               Save
+              <i
+                style="position: absolute; right: 10px; top: 10px"
+                class="fa-solid fa-arrow-right text-white"
+              ></i>
             </button>
           </form>
         </article>
@@ -211,26 +470,28 @@
             class="card p-5 mt-5 ml-auto mr-auto"
             action=""
           >
-            <table class="table table-bordered">
-              <thead class="alert-info">
-                <tr>
-                  <!-- <th>S.no</th> -->
-                  <th>Degree</th>
-                  <th>Institute Name</th>
-                  <th>Institute Address</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Edit & Delete</th>
-                </tr>
-              </thead>
-              <tbody id="eduDetailsResult"></tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="bgGradient text-light">
+                  <tr>
+                    <!-- <th>S.no</th> -->
+                    <th>Degree</th>
+                    <th>Institute Name</th>
+                    <th>Institute Address</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Edit & Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="eduDetailsResult"></tbody>
+              </table>
+            </div>
             <button
               data-toggle="modal"
               data-target="#addEduFormModal"
               onclick="addEdu(document.getElementById('addEduFormModal').querySelectorAll('input'))"
               type="button"
-              class="btn float-right btn-secondary mb-4"
+              class="btnStyle2 mb-4"
               data-keyboard="false"
               data-backdrop="static"
             >
@@ -248,7 +509,10 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="addEduFormModalTitle">
+                      <h5
+                        class="modal-title textColor"
+                        id="addEduFormModalTitle"
+                      >
                         Add Your Education Details
                       </h5>
                       <button
@@ -264,7 +528,7 @@
                     <div id="eduModalMain" class="modal-body">
                       <div id="education_form_input">
                         <div class="form-group mb-4">
-                          <label
+                          <label class="textColor"
                             >Institute Name
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -289,7 +553,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label
+                          <label class="textColor"
                             >Degree
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -314,7 +578,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label>Institute Address</label>
+                          <label class="textColor">Institute Address</label>
                           <input
                             type="text"
                             name="institute_address"
@@ -326,7 +590,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >Start Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -356,7 +620,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >End Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -398,17 +662,26 @@
                       <button
                         id="closeBtnEduModal"
                         type="button"
-                        class="btn btn-secondary"
+                        class="btnStyle2 w-25"
                         data-dismiss="modal"
                       >
                         Close
+                        <i
+                          class="fa fa-times small ml-1"
+                          aria-hidden="true"
+                        ></i>
                       </button>
                       <button
+                        style="position: relative"
                         onclick="eduAddFormModalSaveDatas(this.parentElement.parentElement.children[1].children[0].querySelectorAll('input'))"
                         type="button"
-                        class="btn btn-primary"
+                        class="btnStyle mt-0 w-75"
                       >
                         Save
+                        <i
+                          style="position: absolute; right: 10px; top: 10px"
+                          class="fa-solid fa-arrow-right text-white small ml-1"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -427,8 +700,11 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="editEduFormModalTitle">
-                        Add Your Education Details
+                      <h5
+                        class="modal-title textColor"
+                        id="editEduFormModalTitle"
+                      >
+                        Edit Your Education Details
                       </h5>
                       <button
                         id="closeIconEduEditModal"
@@ -443,7 +719,7 @@
                     <div id="eduModalMain" class="modal-body">
                       <div id="education_form_input">
                         <div class="form-group mb-4">
-                          <label
+                          <label class="textColor"
                             >Institute Name
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -468,7 +744,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label
+                          <label class="textColor"
                             >Degree
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -493,7 +769,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label>Institute Address</label>
+                          <label class="textColor">Institute Address</label>
                           <input
                             type="text"
                             name="institute_address"
@@ -505,7 +781,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >Start Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -535,7 +811,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >End Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -576,13 +852,25 @@
                       <button
                         id="closeBtnEduEditModal"
                         type="button"
-                        class="btn btn-secondary"
+                        class="btnStyle2 w-25"
                         data-dismiss="modal"
                       >
                         Close
+                        <i
+                          class="fa fa-times small ml-1"
+                          aria-hidden="true"
+                        ></i>
                       </button>
-                      <button type="button" class="btn btn-primary">
+                      <button
+                        style="position: relative"
+                        type="button"
+                        class="btnStyle mt-0 w-75"
+                      >
                         Save
+                        <i
+                          style="position: absolute; right: 10px; top: 10px"
+                          class="fa-solid fa-arrow-right text-white small ml-1"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -605,27 +893,29 @@
             class="card p-5 mt-5 ml-auto mr-auto"
             action=""
           >
-            <table class="table table-bordered">
-              <thead class="alert-info">
-                <tr>
-                  <!-- <th>S.no</th> -->
-                  <th>Your Position</th>
-                  <th>Employment type</th>
-                  <th>Organization Name</th>
-                  <th>Location</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Edit & Delete</th>
-                </tr>
-              </thead>
-              <tbody id="expDetailsResult"></tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="bgGradient text-light">
+                  <tr>
+                    <!-- <th>S.no</th> -->
+                    <th>Your Position</th>
+                    <th>Employment type</th>
+                    <th>Organization Name</th>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Edit & Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="expDetailsResult"></tbody>
+              </table>
+            </div>
             <button
               data-toggle="modal"
               data-target="#addExpFormModal"
               onclick="addExp()"
               type="button"
-              class="btn float-right btn-secondary mb-4"
+              class="btnStyle2 mb-4"
               data-keyboard="false"
               data-backdrop="static"
             >
@@ -644,13 +934,16 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="addExpFormModalTitle">
+                      <h5
+                        class="modal-title textColor"
+                        id="addExpFormModalTitle"
+                      >
                         Add Your Experience Details
                       </h5>
                       <button
                         id="closeIconExpModal"
                         type="button"
-                        class="close"
+                        class="close textColor"
                         data-dismiss="modal"
                         aria-label="Close"
                       >
@@ -660,7 +953,7 @@
                     <div id="ExpModalMain" class="modal-body">
                       <div id="experience_modal_form">
                         <div class="form-group mb-4">
-                          <label for="position" class="form-label"
+                          <label for="position" class="form-label textColor"
                             >Your Position
                             <h5 class="d-inline-block text-danger">*</h5>
                           </label>
@@ -690,7 +983,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="emp_type"
+                          <label for="emp_type" class="textColor"
                             >Employment type
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -720,7 +1013,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="organization_name"
+                          <label for="organization_name" class="textColor"
                             >Organization Name
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -744,7 +1037,9 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="organization_location">Location</label>
+                          <label for="organization_location" class="textColor"
+                            >Location</label
+                          >
                           <input
                             type="text"
                             name="organization_location"
@@ -760,7 +1055,10 @@
                             type="checkbox"
                             id="role_check"
                           />
-                          <label class="form-check-label" for="role_check">
+                          <label
+                            class="form-check-label textColor"
+                            for="role_check"
+                          >
                             I am currently working in this role
                           </label>
                         </div>
@@ -768,7 +1066,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >Start Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -796,7 +1094,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >End Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -834,17 +1132,26 @@
                       <button
                         id="closeBtnExpModal"
                         type="button"
-                        class="btn btn-secondary"
+                        class="btnStyle2 w-25"
                         data-dismiss="modal"
                       >
                         Close
+                        <i
+                          class="fa fa-times small ml-1"
+                          aria-hidden="true"
+                        ></i>
                       </button>
                       <button
+                        style="position: relative"
                         onclick="ExpFormModal()"
                         type="button"
-                        class="btn btn-primary"
+                        class="btnStyle mt-0 w-75"
                       >
                         Save
+                        <i
+                          style="position: absolute; right: 10px; top: 10px"
+                          class="fa-solid fa-arrow-right text-white small ml-1"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -861,13 +1168,16 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="editExpFormModalTitle">
-                        Add Your Experience Details
+                      <h5
+                        class="modal-title textColor"
+                        id="editExpFormModalTitle"
+                      >
+                        Edit Your Experience Details
                       </h5>
                       <button
                         id="closeIconExpModal"
                         type="button"
-                        class="close"
+                        class="close textColor"
                         data-dismiss="modal"
                         aria-label="Close"
                       >
@@ -877,7 +1187,7 @@
                     <div class="modal-body">
                       <div>
                         <div class="form-group mb-4">
-                          <label for="position" class="form-label"
+                          <label for="position" class="form-label textColor"
                             >Your Position
                             <h5 class="d-inline-block text-danger">*</h5>
                           </label>
@@ -907,7 +1217,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="emp_type"
+                          <label for="emp_type" class="textColor"
                             >Employment type
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -937,7 +1247,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="organization_name"
+                          <label for="organization_name" class="textColor"
                             >Organization Name
                             <h5 class="d-inline-block text-danger">*</h5></label
                           >
@@ -961,7 +1271,9 @@
                         </div>
 
                         <div class="form-group mb-4">
-                          <label for="organization_location">Location</label>
+                          <label for="organization_location" class="textColor"
+                            >Location</label
+                          >
                           <input
                             type="text"
                             name="organization_location"
@@ -977,7 +1289,10 @@
                             type="checkbox"
                             id="role_check"
                           />
-                          <label class="form-check-label" for="role_check">
+                          <label
+                            class="form-check-label textColor"
+                            for="role_check"
+                          >
                             I am currently working in this role
                           </label>
                         </div>
@@ -985,7 +1300,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >Start Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -1013,7 +1328,7 @@
                         <div class="mb-4">
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id=""
+                              <span class="input-group-text textColor" id=""
                                 >End Date
                                 <h5 class="d-inline-block text-danger">*</h5>
                               </span>
@@ -1051,13 +1366,26 @@
                       <button
                         id="closeBtnExpModal"
                         type="button"
-                        class="btn btn-secondary"
+                        class="btnStyle2 w-25"
                         data-dismiss="modal"
                       >
                         Close
+                        <i
+                          class="fa fa-times small ml-1"
+                          aria-hidden="true"
+                        ></i>
                       </button>
-                      <button type="button" class="btn btn-primary">
+                      <button
+                        style="position: relative"
+                        onclick="ExpFormModal()"
+                        type="button"
+                        class="btnStyle mt-0 w-75"
+                      >
                         Save
+                        <i
+                          style="position: absolute; right: 10px; top: 10px"
+                          class="fa-solid fa-arrow-right text-white small ml-1"
+                        ></i>
                       </button>
                     </div>
                   </div>
@@ -1086,8 +1414,8 @@
               > -->
 
               <div id="showSkills" class="d-none">
-                <label for="">Your Skills</label>
-                <ul class="list-group mb-2 flex-wrap flex-row">
+                <label class="textColor" for="">Your Skills</label>
+                <ul class="list-group mb-3 flex-wrap flex-row">
                   <!-- <span class="badge badge-light p-1 mb-3">sdsd</span> -->
                 </ul>
               </div>
@@ -1095,11 +1423,11 @@
                 <span
                   onclick="addSkills(document.getElementById('skillInput'),this.nextElementSibling)"
                   style="cursor: pointer"
-                  class="badge badge-dark p-2"
+                  class="badge badge-dark p-2 bgGradient"
                   >Add +</span
                 >
                 <i
-                  style="cursor: pointer"
+                  style="cursor: pointer; color: #8989bb"
                   class="fa-solid fa-square-xmark h3 mb-0 d-none"
                 ></i>
               </div>
@@ -1116,9 +1444,9 @@
                   <span
                     onclick="saveSkillData(this.parentElement.previousElementSibling.parentElement)"
                     style="cursor: pointer"
-                    class="input-group-text bg-primary text-light"
-                    >Save</span
-                  >
+                    class="input-group-text btn bgGradient text-light"
+                    >Save
+                  </span>
                 </div>
               </div>
               <p
@@ -1143,7 +1471,9 @@
             class="card p-5 mt-5 ml-auto mr-auto"
           >
             <div class="form-group mb-4">
-              <label for="contact_facebook_id">Facebook ID</label>
+              <label for="contact_facebook_id" class="textColor"
+                >Facebook ID</label
+              >
               <input
                 type="url"
                 name="contact_facebook_id"
@@ -1151,10 +1481,15 @@
                 id="contact_facebook_id"
                 placeholder="Enter your Facebook ID"
               />
+              <p
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_instagram_id">Instagram ID</label>
+              <label for="contact_instagram_id" class="textColor"
+                >Instagram ID</label
+              >
               <input
                 type="url"
                 name="contact_instagram_id"
@@ -1162,10 +1497,15 @@
                 id="contact_instagram_id"
                 placeholder="Enter your Instagram ID"
               />
+              <p
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_linkedin_id">Linkedin ID</label>
+              <label for="contact_linkedin_id" class="textColor"
+                >Linkedin ID</label
+              >
               <input
                 type="url"
                 name="contact_linkedin_id"
@@ -1173,10 +1513,15 @@
                 id="contact_linkedin_id"
                 placeholder="Enter your Linkedin ID"
               />
+              <p
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_twitter_id">Twitter ID</label>
+              <label for="contact_twitter_id" class="textColor"
+                >Twitter ID</label
+              >
               <input
                 type="url"
                 name="contact_twitter_id"
@@ -1184,10 +1529,13 @@
                 id="contact_twitter_id"
                 placeholder="Enter your Twitter ID"
               />
+              <p
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_github_id">GitHub ID</label>
+              <label for="contact_github_id" class="textColor">GitHub ID</label>
               <input
                 type="url"
                 name="contact_github_id"
@@ -1195,10 +1543,13 @@
                 id="contact_github_id"
                 placeholder="Enter your Github ID"
               />
+              <p
+                style="color: red; font-family: system-ui; margin-top: 5px"
+              ></p>
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_mail_id"
+              <label for="contact_mail_id" class="textColor"
                 >Mail ID
                 <h5 class="d-inline-block text-danger">*</h5></label
               >
@@ -1222,7 +1573,7 @@
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_ph_number"
+              <label for="contact_ph_number" class="textColor"
                 >Phone Number
                 <h5 class="d-inline-block text-danger">*</h5></label
               >
@@ -1248,7 +1599,7 @@
             </div>
 
             <div class="form-group mb-4">
-              <label for="contact_address"
+              <label for="contact_address" class="textColor"
                 >Address
                 <h5 class="d-inline-block text-danger">*</h5></label
               >
@@ -1272,11 +1623,16 @@
             </div>
 
             <button
+              style="position: relative"
               onclick="contact_btn(this.parentElement)"
               type="button"
-              class="btn btn-primary"
+              class="btnStyle"
             >
               Save
+              <i
+                style="position: absolute; right: 10px; top: 10px"
+                class="fa-solid fa-arrow-right text-white"
+              ></i>
             </button>
           </form>
         </article>
@@ -1284,19 +1640,34 @@
     </main>
     <div class="bg-light py-2 footer">
       <div class="container text-center">
-        <p class="text-muted mb-0 py-2">
-          &copy; Resume Builder builded by Venkadesan Murugesan
+        <p style="font-family: sans-serif" class="text-muted mb-0 py-2">
+          &copy; Resume Builder builded by
+          <span class="textColor">Venkadesan Murugesan</span>
         </p>
       </div>
     </div>
 
-    <script src="./bootsrtapFiles/jquery-3.2.1.slim.min.js"></script>
-    <script src="./bootsrtapFiles/bootstrap.min.js"></script>
-    <script src="./bootsrtapFiles/popper.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
     <script src="./scripts/aboutForm.js"></script>
     <script src="./scripts/educationForm.js"></script>
     <script src="./scripts/experienceForm.js"></script>
     <script src="./scripts/skillsForm.js"></script>
     <script src="./scripts/contactDetails.js"></script>
+    <script src="./scripts/commonScript.js"></script>
   </body>
 </html>
