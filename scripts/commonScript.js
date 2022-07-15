@@ -168,15 +168,37 @@ function deleteUserAccount() {
   // }
 }
 document.getElementById("deleteUserAccount").onclick = () => {
-  const pass = "testtest";
-  reauthenticate = (pass) => {
-    var user = firebase.auth().currentUser;
-    var cred = firebase.auth.EmailAuthProvider.credential(
-      user.email,
-      currentPassword
-    );
-    user.reauthenticateWithCredential(cred);
-  };
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   if (user) {
+  //     if (confirm("Are you sure to delete?")) {
+  //       // const credential = promptForCredentials();
+
+  //       // user
+  //       //   .reauthenticateWithCredential(credential)
+  //       //   .then(() => {})
+  //       //   .catch((error) => {});
+  //     }
+  //   } else {
+  //   }
+  // });
+
+  if (confirm("Are you sure to delete?")) {
+    firebase
+      .auth()
+      .currentUser.delete()
+      .catch(function (error) {
+        if (error.code == "auth/requires-recent-login") {
+          alert("Please sign in again to delete your account.");
+          firebase
+            .auth()
+            .signOut()
+            .then(function () {
+              setTimeout(function () {}, 1);
+            });
+        }
+      });
+  }
+
   // const user = firebase.auth().currentUser;
   // const cred = fire.firebase_.auth.EmailAuthProvider.credential(
   //   "test@gmail.com",
