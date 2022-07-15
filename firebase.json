@@ -1,6 +1,5 @@
 {
   "hosting": {
-  "site": "resume-builder-22",
     "public": "public",
     "ignore": [
       "firebase.json",

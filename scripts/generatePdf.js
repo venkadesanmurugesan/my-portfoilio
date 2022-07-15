@@ -17,7 +17,7 @@ var db = firebase.firestore();
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     uid = user.uid;
-    console.log(uid);
+    // console.log(uid);
     var docRef = db.collection("PortfolioDetails").doc(uid);
     docRef.get().then((doc) => {
       if (doc.exists) {
@@ -122,10 +122,10 @@ firebase.auth().onAuthStateChanged((user) => {
       .auth()
       .signOut()
       .then(() => {
-        location.href = "login.html";
+        location.href = "index.html";
       })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
       });
   }
 });

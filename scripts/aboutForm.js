@@ -21,7 +21,6 @@ function postAboutDetails(aboutDetails, uid, aboutForm) {
     })
     .catch((error) => {
       document.getElementById("preLoader").style.display = "none";
-      console.error("Error writing document: ", error);
     });
 }
 

@@ -3,7 +3,7 @@ var db = firebase.firestore();
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       uid = user.uid;
-      console.log(uid);
+      // console.log(uid);
       var docRef = db.collection("PortfolioDetails").doc(uid);
 
       docRef
@@ -89,7 +89,7 @@ var db = firebase.firestore();
               for (let i = 0; i < SkillArrDatas.length; i++) {
                 document.getElementById(
                   "showSkills"
-                ).children[1].innerHTML += `<li class=list-group-item>${SkillArrDatas[i]} <i onclick=delSkillDatas(this,${i}) style=cursor:pointer class="fa-solid fa-square-xmark ml-2"></i></li>`;
+                ).children[1].innerHTML += `<li class="list-group-item">${SkillArrDatas[i]} <i onclick=delSkillDatas(this,${i}) style=cursor:pointer class=" fa-solid fa-square-xmark ml-2"></i></li>`;
               }
             } else {
               skillsForm.classList.remove("d-block");
@@ -109,49 +109,97 @@ var db = firebase.firestore();
             contactForm[6].value = doc.data()["contact_details"]["phone_no"];
             contactForm[7].value = doc.data()["contact_details"]["address"];
           } else {
+            document.getElementById("preLoader").style.display = "none";
             console.log("No such document!");
           }
         })
         .catch((error) => {
-          console.log("Error getting document:", error);
+          // console.log("Error getting document:", error);
         });
     } else {
       firebase
         .auth()
         .signOut()
         .then(() => {
-          location.href = "login.html";
+          location.href = "index.html";
         })
         .catch((error) => {
-          console.error(error);
+          // console.error(error);
         });
     }
   });
 })();
 
 // delete user account
+function deleteUserAccount() {
+  // const cred = fire.firebase_.auth.EmailAuthProvider.credential(
+  //   "test@gmail.com",
+  //   "testtest"
+  // );
+  // user.reauthenticateWithCredential(cred);
+  // firebase.auth().onAuthStateChanged((user) => {
+  //   if (user) {
+  //     if (confirm("Are you sure to delete?")) {
+  //       document.getElementById("preLoader").style.display = "block";
+  //       db.collection("PortfolioDetails")
+  //         .doc(`${user.uid}`)
+  //         .delete()
+  //         .then(() => {
+  //           document.getElementById("preLoader").style.display = "none";
+  // user
+  //   .delete()
+  //   .then(() => {
+  //     alert("Your account is successfully deleted");
+  //     document.getElementById("preLoader").style.display = "none";
+  //   })
+  //             .catch((error) => {
+  //               alert(error.message);
+  //               window.location.href = "./index.html";
+  //             });
+  //         });
+  //     }
+  //   } else {
+  //     firebase
+  //       .auth()
+  //       .signOut()
+  //       .then(() => {
+  //         location.href = "index.html";
+  //       });
+  // }
+}
 document.getElementById("deleteUserAccount").onclick = () => {
-  const user = firebase.auth().currentUser;
-  if (confirm("Are you sure to delete?")) {
-    document.getElementById("preLoader").style.display = "block";
+  const pass = "testtest";
+  reauthenticate = (pass) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      currentPassword
+    );
+    user.reauthenticateWithCredential(cred);
+  };
+  // const user = firebase.auth().currentUser;
+  // const cred = fire.firebase_.auth.EmailAuthProvider.credential(
+  //   "test@gmail.com",
+  //   "testtest"
+  // );
+  // user.reauthenticateWithCredential(cred);
+  // if (confirm("Are you sure to delete?")) {
+  // }
+  // if (confirm("Please Confirm your Login")) {
+  //   window.location.href = "./index.html";
+  // } else {
+  //   return false;
+  // }
 
-    user
-      .delete()
-      .then(() => {
-        document.getElementById("preLoader").style.display = "none";
-        db.collection("PortfolioDetails")
-          .doc(user.uid)
-          .delete()
-          .then(() => {
-            document.getElementById("preLoader").style.display = "none";
-          });
-      })
-      .catch((error) => {
-        if (alert(error.message)) {
-          window.location.href = "./login.html";
-        }
-      });
-  }
+  // let email = "test@gmail.com   ";
+  // let password = "testtest";
+  // // let credential = promptForCredentials(email, password);
+  // const signInCredential = firebase
+  //   .auth()
+  //   .EmailAuthProvider.credential({ email, password });
+  // // Now you can use that to reauthenticate
+  // user.reauthenticateWithCredential(signInCredential);
+  // });
 };
 
 // update user email
@@ -312,14 +360,53 @@ let letter = "";
 function themeChanging(pageTheme) {
   document.getElementById("preLoader").style.display = "none";
   if (pageTheme === "DefaultTheme") {
-    document.body.style = "";
+    document.body.classList.remove("bg-white");
+    document.body.classList.remove("bg-dark");
     document.body.classList.add("bgGradient");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.remove("text-dark");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.remove("text-dark");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.add("text-white");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.add("text-white");
   } else if (pageTheme === "DarkTheme") {
+    document.body.classList.remove("bg-white");
     document.body.classList.remove("bgGradient");
-    document.body.style = "background: black;";
-  } else if (pageTheme === "LightTheme") {
+    document.body.classList.add("bg-dark");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.remove("text-dark");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.remove("text-dark");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.add("text-white");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.add("text-white");
+  } else if (pageTheme === "WhiteTheme") {
     document.body.classList.remove("bgGradient");
-    document.body.style = "background: white;";
+    document.body.classList.remove("bg-dark");
+    document.body.classList.add("bg-white");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.remove("text-white");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.remove("text-white");
+    document
+      .getElementById("typingTextHeading")
+      .children[0].classList.add("text-dark");
+    document
+      .getElementById("headerForm")
+      .children[1].children[0].classList.add("text-dark");
   }
 }
 firebase.auth().onAuthStateChanged((user) => {
@@ -335,8 +422,8 @@ firebase.auth().onAuthStateChanged((user) => {
           document.getElementById("preLoader").style.display = "block";
           if (themeBtn.getAttribute("id") === "darkThemeBtn") {
             themeMode = "DarkTheme";
-          } else if (themeBtn.getAttribute("id") === "lightThemeBtn") {
-            themeMode = "LightTheme";
+          } else if (themeBtn.getAttribute("id") === "whiteThemeBtn") {
+            themeMode = "WhiteTheme";
           } else if (themeBtn.getAttribute("id") === "defaultThemeBtn") {
             themeMode = "DefaultTheme";
           }
@@ -351,7 +438,7 @@ firebase.auth().onAuthStateChanged((user) => {
               themeChanging(themeMode);
             })
             .catch((error) => {
-              console.error("Error writing document: ", error);
+              // console.error("Error writing document: ", error);
             });
         });
       });

@@ -55,7 +55,7 @@ let getDatasShow = () => {
       .then((doc) => {
         if (doc.exists) {
           let eduDatas = doc.data()["education_details"];
-          console.log(eduDatas);
+          // console.log(eduDatas);
           for (let i = 0; i < eduDatas.length; i++) {
             document.getElementById(
               "eduDetailsResult"
@@ -83,7 +83,7 @@ let getDatasShow = () => {
         }
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        // console.log("Error getting document:", error);
       });
   });
 };
@@ -155,7 +155,7 @@ function postEduDatas(eduDatasUpdated, userId) {
     })
     .catch((error) => {
       document.getElementById("preLoader").style.display = "none";
-      console.error("Error adding document: ", error);
+      // console.error("Error adding document: ", error);
     });
 }
 
@@ -401,9 +401,9 @@ function eduAddFormModalSaveDatas(eduForm) {
         }
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        // console.log("Error getting document:", error);
       });
   } else {
-    console.log("No such document!");
+    // console.log("No such document!");
   }
 }

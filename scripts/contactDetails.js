@@ -63,7 +63,7 @@ function postContactDetails(contactObj, uid, contactForm) {
     })
     .catch((error) => {
       document.getElementById("preLoader").style.display = "none";
-      console.error("Error writing document: ", error);
+      // console.error("Error writing document: ", error);
     });
 }
 

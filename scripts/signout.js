@@ -8,15 +8,15 @@ function signout() {
           .auth()
           .signOut()
           .then(() => {
-            location.href = "login.html";
+            location.href = "index.html";
             // console.log(user);
             // Sign-out successful.
           })
           .catch((error) => {
-            console.error(error);
+            // console.error(error);
           });
         var uid = user.uid;
-        console.log(uid);
+        // console.log(uid);
         // ...
       } else {
       }

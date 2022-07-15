@@ -128,12 +128,12 @@ button:focus {
   top: 3px;
 }
 
-#showSkills > ul > li {
+/* #showSkills > ul > li {
   color: var(--textColor);
 }
 #showSkills > ul > li > i {
   color: #8989bb;
-}
+} */
 
 /* settings btn */
 /* #settingBtn {
@@ -257,7 +257,15 @@ button:focus {
     margin-bottom: 82px;
   }
 }
-
+@media screen and (max-width: 334px) {
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+  .modal-footer button {
+    width: 100% !important;
+    margin: 5px 0 !important;
+  }
+}
 /* animations */
 @keyframes typingBlink {
   0% {

@@ -177,7 +177,7 @@ function showExpDatasOnTable() {
         }
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        // console.log("Error getting document:", error);
       });
   });
 }
@@ -199,7 +199,7 @@ function postExpDatas(expDatasUpdated, userId) {
     })
     .catch((error) => {
       document.getElementById("preLoader").style.display = "none";
-      console.error("Error adding document: ", error);
+      // console.error("Error adding document: ", error);
     });
 }
 
@@ -353,7 +353,7 @@ function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
           alert("Successfully Updated!!!");
         })
         .catch((error) => {
-          console.error("Error writing document: ", error);
+          // console.error("Error writing document: ", error);
         });
     } else {
     }
@@ -387,7 +387,7 @@ function expModalDeleteBtn(expTableDelBtn, indexValue) {
         }
       })
       .catch((error) => {
-        console.error("Error writing document: ", error);
+        // console.error("Error writing document: ", error);
       });
   });
 }
@@ -437,7 +437,7 @@ function setNewDatas() {
           }
         })
         .catch((error) => {
-          console.log("Error getting document:", error);
+          // console.log("Error getting document:", error);
         });
     });
   } else {
@@ -489,7 +489,7 @@ function ExpFormModal() {
         .auth()
         .signOut()
         .then(() => {
-          location.href = "login.html";
+          location.href = "index.html";
         });
     }
   });
