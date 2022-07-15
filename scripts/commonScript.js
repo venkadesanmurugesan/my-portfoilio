@@ -189,12 +189,9 @@ document.getElementById("deleteUserAccount").onclick = () => {
       .catch(function (error) {
         if (error.code == "auth/requires-recent-login") {
           alert("Please sign in again to delete your account.");
-          firebase
-            .auth()
-            .signOut()
-            .then(function () {
-              setTimeout(function () {}, 1);
-            });
+          firebase.auth().signOut();
+        } else {
+          db.collection("PortfolioDetails").doc(`${user.uid}`).delete();
         }
       });
   }
