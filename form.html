@@ -35,6 +35,78 @@
     </style>
   </head>
   <body class="">
+    <!-- scroll top button -->
+    <a href="#" class="to-top">
+      <i class="fa fa-arrow-circle-up h3" aria-hidden="true"></i>
+    </a>
+    <!-- start reautherisation verification modal -->
+    <div id="myModal" class="myModal">
+      <div class="myModal-content">
+        <span data-modalClose="close" class="myModalclose">&times;</span>
+
+        <form>
+          <div class="form-group">
+            <label for="reauthEmail" class="textColor h6">Confirm Email</label>
+            <input
+              type="email"
+              class="form-control form-control-sm"
+              id="reauthEmail"
+              required
+            />
+            <p
+              id="reauthEmailErrMsg"
+              style="
+                display: none;
+                color: red;
+                font-family: system-ui;
+                margin-top: 5px;
+              "
+            ></p>
+          </div>
+          <div class="form-group">
+            <label for="reauthPassword" class="textColor h6"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              class="form-control form-control-sm"
+              id="reauthPassword"
+              required
+            />
+            <p
+              id="reauthPasswordErrMsg"
+              style="
+                display: none;
+                color: red;
+                font-family: system-ui;
+                margin-top: 5px;
+              "
+            ></p>
+          </div>
+          <div
+            style="display: none"
+            id="reauthCommonErr"
+            class="card mb-2 p-1 bg-danger text-white"
+          >
+            <p class="card-text p-1"></p>
+          </div>
+          <button
+            style="position: relative"
+            class="btnStyle"
+            type="button"
+            id="reauthBtn"
+          >
+            Verify
+            <i
+              style="position: absolute; right: 10px; top: 10px"
+              class="fa-solid fa-arrow-right text-white"
+            ></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- end reautherisation verification modal -->
+
     <!-- page loader -->
     <div id="preLoader"></div>
 

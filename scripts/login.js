@@ -48,7 +48,7 @@ function signIn(emailLogin, passLogin) {
         document.getElementById("preLoader").style.display = "none";
         document.getElementById("loginCommonErr").style.display = "block";
         document.getElementById("loginCommonErr").children[0].innerText =
-          "Login was unsuccessful, please check your username and password";
+          "Login was unsuccessful, please check your email and password";
 
         return false;
       });
