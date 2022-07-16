@@ -12,6 +12,7 @@ input[type="number"] {
 }
 * {
   font-family: "Reem Kufi", sans-serif;
+  box-sizing: border-box;
 }
 p {
   margin-bottom: 0 !important;
@@ -22,9 +23,18 @@ html {
 ul {
   list-style: none;
 }
-
-html {
-  scroll-behavior: smooth;
+.defaultBackground {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(./img/writing.jpg) no-repeat;
+  animation: bgMoving 5s alternate forwards;
+}
+@keyframes bgMoving {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
 }
 /* common class */
 :root {

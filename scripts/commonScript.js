@@ -375,7 +375,7 @@ function themeChanging(pageTheme) {
   if (pageTheme === "DefaultTheme") {
     document.body.classList.remove("bg-white");
     document.body.classList.remove("bg-dark");
-    document.body.classList.add("bgGradient");
+    document.body.classList.add("defaultBackground");
     document
       .getElementById("typingTextHeading")
       .children[0].classList.remove("text-dark");
@@ -390,7 +390,7 @@ function themeChanging(pageTheme) {
       .children[1].children[0].classList.add("text-white");
   } else if (pageTheme === "DarkTheme") {
     document.body.classList.remove("bg-white");
-    document.body.classList.remove("bgGradient");
+    document.body.classList.remove("defaultBackground");
     document.body.classList.add("bg-dark");
     document
       .getElementById("typingTextHeading")
@@ -405,7 +405,7 @@ function themeChanging(pageTheme) {
       .getElementById("headerForm")
       .children[1].children[0].classList.add("text-white");
   } else if (pageTheme === "WhiteTheme") {
-    document.body.classList.remove("bgGradient");
+    document.body.classList.remove("defaultBackground");
     document.body.classList.remove("bg-dark");
     document.body.classList.add("bg-white");
     document
