@@ -384,7 +384,7 @@
           </div>
         </div>
       </header>
-      <hr />
+      <hr style="background: #515e7d; height: 1.5px" />
       <div class="d-flex align-items-center mb-5" id="typingTextHeading">
         <h2 class="text-white">Enter your</h2>
         <h2 class="typingText textColor ml-2"></h2>
@@ -1480,19 +1480,26 @@
           >
             <div class="form-group">
               <div id="showSkills" class="d-none">
-                <label class="textColor" for="">Your Skills</label>
+                <label
+                  style="text-decoration: underline"
+                  class="textColor"
+                  for=""
+                  >Your Skills</label
+                >
                 <ul class="list-group mb-3 flex-wrap flex-row"></ul>
               </div>
-              <div class="d-flex align-items-center justify-content-between">
-                <span
+              <div class="row ml-0">
+                <button
+                  type="button"
                   onclick="addSkills(document.getElementById('skillInput'),this.nextElementSibling)"
                   style="cursor: pointer"
-                  class="badge badge-dark p-2 bgGradient"
-                  >Add +</span
+                  class="btnStyle2 col-10"
                 >
+                  Add your skills +
+                </button>
                 <i
                   style="cursor: pointer; color: #8989bb"
-                  class="fa-solid fa-square-xmark h3 mb-0 d-none"
+                  class="fa-solid fa-square-xmark h3 mb-0 d-none col-2 text-right"
                 ></i>
               </div>
               <div id="skillInput" class="input-group d-none mt-3">

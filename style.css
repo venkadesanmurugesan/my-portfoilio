@@ -24,9 +24,22 @@ ul {
   list-style: none;
 }
 .defaultBackground {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(./img/writing.jpg) no-repeat;
-  animation: bgMoving 5s alternate forwards;
+  background: linear-gradient(rgb(13 16 86 / 94%), rgb(35 45 51 / 57%)),
+    url(https://burst.shopifycdn.com/photos/crossword-puzzle-pen-in-hand.jpg?width=925&format=pjpg&exif=1&iptc=1)
+      no-repeat;
+  background-attachment: fixed;
+
+  animation: bgMoving 2s alternate forwards;
+
+  background-size: cover;
+}
+#about_form,
+#education_form,
+#experience_form,
+#skills_form,
+#contact_form {
+  box-shadow: 1px 5px 6px 0px #00000059;
+  border-radius: 10px;
 }
 @keyframes bgMoving {
   0% {
@@ -239,6 +252,13 @@ button:focus {
 
 /* form mobile responsiveness */
 @media screen and (max-width: 575px) {
+  #about_form,
+  #education_form,
+  #experience_form,
+  #skills_form,
+  #contact_form {
+    border-radius: 5px;
+  }
   .jumbotron {
     margin: 0 !important;
   }
