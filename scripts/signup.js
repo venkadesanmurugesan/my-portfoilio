@@ -37,11 +37,26 @@ function signUp(signUpEmail, signUpPassword) {
             .doc(userCredential.user.uid)
             .set(
               {
-                about_details: {},
+                about_details: {
+                  first_name: "",
+                  last_name: "",
+                  about_desc: "",
+                },
+                hobbies: [],
+                area_interest: [],
                 education_details: [],
                 experience_details: [],
                 skills: [],
-                contact_details: {},
+                contact_details: {
+                  fb_id: "",
+                  insta_id: "",
+                  linkedin_id: "",
+                  twitter_id: "",
+                  github_id: "",
+                  mail_id: "",
+                  phone_no: "",
+                  address: "",
+                },
                 themes: "DefaultTheme",
               },
               { merge: true }

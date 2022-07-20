@@ -6,12 +6,14 @@ function eduFormModalYearValidation(eduModalForm, eduModalSaveBtn) {
     let EndUpdateDate = new Date(endDate.replace(/-/g, "/"));
     if (startUpdateDate <= EndUpdateDate === true) {
       eduModalSaveBtn.disabled = false;
-      document.getElementById("errMsgForYear").style.display = "none";
-      document.getElementById("errMsgForYearForEdit").style.display = "none";
+      document.getElementById("errMsgForYear").innerText = "";
+      document.getElementById("errMsgForYearForEdit").innerText = "";
     } else {
       eduModalSaveBtn.disabled = true;
-      document.getElementById("errMsgForYear").style.display = "block";
-      document.getElementById("errMsgForYearForEdit").style.display = "block";
+      document.getElementById("errMsgForYear").innerText =
+        "End date can’t be earlier than start date";
+      document.getElementById("errMsgForYearForEdit").innerText =
+        " End date can’t be earlier than start date";
     }
   }
 }
@@ -23,11 +25,9 @@ function addEdu(eduModalForm) {
   document.getElementById(
     "addEduFormModal"
   ).children[0].children[0].children[2].children[1].disabled = false;
-
-  document.querySelectorAll(".addEduErrMsg").forEach((addEduModalErrMsg) => {
-    addEduModalErrMsg.style.display = "none";
+  document.querySelectorAll(".eduErrMsg").forEach((eduErrMsg) => {
+    eduErrMsg.innerText = "";
   });
-  document.getElementById("errMsgForYear").style.display = "none";
   eduModalForm[4].addEventListener("input", () => {
     eduFormModalYearValidation(
       eduModalForm,
@@ -92,54 +92,47 @@ let getDatasShow = () => {
 function formValidation(eduForm) {
   eduForm[0].addEventListener("input", () => {
     if (eduForm[0].value === "") {
-      document.getElementById("addEduModalInstituteErrMsg").style.display =
-        "block";
-      document.getElementById("editEduModalInstituteErrMsg").style.display =
-        "block";
+      document.getElementById("addEduModalInstituteErrMsg").innerText =
+        "Institute Name is required field";
+      document.getElementById("editEduModalInstituteErrMsg").innerText =
+        "Institute Name is required field";
     } else {
-      document.getElementById("addEduModalInstituteErrMsg").style.display =
-        "none";
-      document.getElementById("editEduModalInstituteErrMsg").style.display =
-        "none";
+      document.getElementById("addEduModalInstituteErrMsg").innerText = "";
+      document.getElementById("editEduModalInstituteErrMsg").innerText = "";
     }
   });
 
   eduForm[1].addEventListener("input", () => {
     if (eduForm[1].value === "") {
-      document.getElementById("addEduModalDegreeErrMsg").style.display =
-        "block";
-      document.getElementById("editEduModalDegreeErrMsg").style.display =
-        "block";
+      document.getElementById("addEduModalDegreeErrMsg").innerText =
+        "Degree is required field";
+      document.getElementById("editEduModalDegreeErrMsg").innerText =
+        "Degree is required field";
     } else {
-      document.getElementById("addEduModalDegreeErrMsg").style.display = "none";
-      document.getElementById("editEduModalDegreeErrMsg").style.display =
-        "none";
+      document.getElementById("addEduModalDegreeErrMsg").innerText = "";
+      document.getElementById("editEduModalDegreeErrMsg").innerText = "";
     }
   });
   eduForm[3].addEventListener("input", () => {
     if (eduForm[3].value === "") {
-      document.getElementById("addEduModalStartDateErrMsg").style.display =
-        "block";
-      document.getElementById("editEduModalStartDateErrMsg").style.display =
-        "block";
+      document.getElementById("addEduModalStartDateErrMsg").innerText =
+        "Start Date is required field";
+      document.getElementById("editEduModalStartDateErrMsg").innerText =
+        "Start Date is required field";
     } else {
-      document.getElementById("addEduModalStartDateErrMsg").style.display =
-        "none";
-      document.getElementById("editEduModalStartDateErrMsg").style.display =
-        "none";
+      document.getElementById("addEduModalStartDateErrMsg").innerText = "";
+      document.getElementById("editEduModalStartDateErrMsg").innerText = "";
     }
   });
   eduForm[4].addEventListener("input", () => {
     if (eduForm[4].value === "") {
-      document.getElementById("addEduModalEndDateErrMsg").style.display =
-        "block";
-      document.getElementById("editEduModalEndDateErrMsg").style.display =
-        "block";
+      document.getElementById("addEduModalEndDateErrMsg").innerText =
+        "End Date is required field";
+      document.getElementById("editEduModalEndDateErrMsg").innerText =
+        "End Date is required field";
     } else {
-      document.getElementById("addEduModalEndDateErrMsg").style.display =
-        "none";
-      document.getElementById("editEduModalEndDateErrMsg").style.display =
-        "none";
+      document.getElementById("addEduModalEndDateErrMsg").innerText = "";
+      document.getElementById("editEduModalEndDateErrMsg").innerText = "";
     }
   });
 }
@@ -193,10 +186,9 @@ function eduEditModalSetDatas(eduEditBtn, iterateValue) {
     "onclick",
     `eduEditModalSaveBtn(this,${iterateValue})`
   );
-  document.querySelectorAll(".editEduErrMsg").forEach((editEduModalErrMsg) => {
-    editEduModalErrMsg.style.display = "none";
+  document.querySelectorAll(".eduErrMsg").forEach((eduErrMsg) => {
+    eduErrMsg.innerText = "";
   });
-  document.getElementById("errMsgForYearForEdit").style.display = "none";
   document.getElementById(
     `editEduFormModal${iterateValue + 1}`
   ).children[0].children[0].children[2].children[1].disabled = false;
@@ -279,45 +271,37 @@ function eduEditModalSaveBtn(eduEditButton, iterateValue) {
             $(`#editEduFormModal${iterateValue + 1}`).modal("hide");
           } else {
             if (eduEditModalInputs[0].value === "") {
-              document.getElementById(
-                "editEduModalInstituteErrMsg"
-              ).style.display = "block";
+              document.getElementById("editEduModalInstituteErrMsg").innerText =
+                "Institute Name is required field";
               eduEditModalInputs[0].focus();
             } else {
-              document.getElementById(
-                "editEduModalInstituteErrMsg"
-              ).style.display = "none";
+              document.getElementById("editEduModalInstituteErrMsg").innerText =
+                "";
             }
 
             if (eduEditModalInputs[1].value === "") {
-              document.getElementById(
-                "editEduModalDegreeErrMsg"
-              ).style.display = "block";
+              document.getElementById("editEduModalDegreeErrMsg").innerText =
+                "Degree is required field";
               eduEditModalInputs[1].focus();
             } else {
-              document.getElementById(
-                "editEduModalDegreeErrMsg"
-              ).style.display = "none";
+              document.getElementById("editEduModalDegreeErrMsg").innerText =
+                "";
             }
             if (eduEditModalInputs[3].value === "") {
-              document.getElementById(
-                "editEduModalStartDateErrMsg"
-              ).style.display = "block";
+              document.getElementById("editEduModalStartDateErrMsg").innerText =
+                "Start Date is required field";
               eduEditModalInputs[3].focus();
             } else {
-              document.getElementById(
-                "editEduModalStartDateErrMsg"
-              ).style.display = "none";
+              document.getElementById("editEduModalStartDateErrMsg").innerText =
+                "";
             }
             if (eduEditModalInputs[4].value === "") {
-              document.getElementById(
-                "editEduModalEndDateErrMsg"
-              ).style.display = "block";
+              document.getElementById("editEduModalEndDateErrMsg").innerText =
+                "End Date is required field";
               eduEditModalInputs[4].focus();
             } else {
-              document.getElementById(
-                "editEduModalEndDateErrMsg"
-              ).style.display = "none";
+              document.getElementById("editEduModalEndDateErrMsg").innerText =
+                "";
             }
           }
         }
@@ -362,41 +346,35 @@ function eduAddFormModalSaveDatas(eduForm) {
           eduForm[4].value = "";
         } else {
           if (eduForm[0].value === "") {
-            document.getElementById(
-              "addEduModalInstituteErrMsg"
-            ).style.display = "block";
+            document.getElementById("addEduModalInstituteErrMsg").innerText =
+              " Institute Name is required field";
             eduForm[0].focus();
           } else {
-            document.getElementById(
-              "addEduModalInstituteErrMsg"
-            ).style.display = "none";
+            document.getElementById("addEduModalInstituteErrMsg").innerText =
+              "";
           }
 
           if (eduForm[1].value === "") {
-            document.getElementById("addEduModalDegreeErrMsg").style.display =
-              "block";
+            document.getElementById("addEduModalDegreeErrMsg").innerText =
+              "Degree is required field";
             eduForm[1].focus();
           } else {
-            document.getElementById("addEduModalDegreeErrMsg").style.display =
-              "none";
+            document.getElementById("addEduModalDegreeErrMsg").innerText = "";
           }
           if (eduForm[3].value === "") {
-            document.getElementById(
-              "addEduModalStartDateErrMsg"
-            ).style.display = "block";
+            document.getElementById("addEduModalStartDateErrMsg").innerText =
+              "Start Date is required field";
             eduForm[3].focus();
           } else {
-            document.getElementById(
-              "addEduModalStartDateErrMsg"
-            ).style.display = "none";
+            document.getElementById("addEduModalStartDateErrMsg").innerText =
+              "";
           }
           if (eduForm[4].value === "") {
-            document.getElementById("addEduModalEndDateErrMsg").style.display =
-              "block";
+            document.getElementById("addEduModalEndDateErrMsg").innerText =
+              "End Date is required field";
             eduForm[4].focus();
           } else {
-            document.getElementById("addEduModalEndDateErrMsg").style.display =
-              "none";
+            document.getElementById("addEduModalEndDateErrMsg").innerText = "";
           }
         }
       })

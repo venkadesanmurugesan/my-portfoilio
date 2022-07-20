@@ -17,6 +17,7 @@ var db = firebase.firestore();
             document.getElementById("preLoader").style.display = "none";
             document.getElementById("displayUserName").innerHTML =
               doc.data().about_details.first_name +
+              " " +
               doc.data().about_details.last_name;
 
             // display about details
@@ -25,6 +26,27 @@ var db = firebase.firestore();
             aboutForm[1].value = doc.data()["about_details"].last_name;
             aboutForm[2].value = doc.data()["about_details"].about_desc;
 
+            // display hobbies datas
+            for (let i = 0; i < doc.data()["area_interest"].length; i++) {
+              document.getElementById(
+                "areaOfInterestDataShow"
+              ).innerHTML += `<li id="areaOfInterestRow${i}" style =" display: flex;
+            align-items: center;
+             justify-content: space-between;" class="list-group-item list-group-item-action">${
+               doc.data()["area_interest"][i]
+             }<i onclick="deleteHobbies(this.parentElement.getAttribute('id'),${i})" style = "cursor:pointer" class="fa fa-trash-o delete"></i></li>`;
+            }
+
+            // display area of interest datas
+            for (let i = 0; i < doc.data()["hobbies"].length; i++) {
+              document.getElementById(
+                "hobbiesDataShow"
+              ).innerHTML += `<li id="hobbiesRow${i}" style =" display: flex;
+              align-items: center;
+               justify-content: space-between;" class="list-group-item list-group-item-action">${
+                 doc.data()["hobbies"][i]
+               }<i onclick="deleteHobbies(this.parentElement.getAttribute('id'),${i})" style = "cursor:pointer" class="fa fa-trash-o delete"></i></li>`;
+            }
             // display education details
             let educationForm = document.getElementById("eduDetailsResult");
             for (let i = 0; i < doc.data()["education_details"].length; i++) {
@@ -259,6 +281,7 @@ function updateEmail(updateEmailInput) {
             error.message;
         });
     } else {
+      document.getElementById("preLoader").style.display = "none";
       document
         .getElementById("resetEmailCommonErr")
         .classList.remove("bg-success");
@@ -268,6 +291,7 @@ function updateEmail(updateEmailInput) {
         "Your mail is badly Formatted";
     }
   } else {
+    document.getElementById("preLoader").style.display = "none";
     document.getElementById("resetEmailCommonErr").style.display = "none";
     document.getElementById("resetEmailCommonErr").children[0].innerHTML = "";
     updateEmailInput.nextElementSibling.innerHTML =

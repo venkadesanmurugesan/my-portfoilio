@@ -84,17 +84,16 @@ function expformValidation(expFormInputs) {
 }
 // exp add btn work
 function addExp() {
+  document.querySelectorAll(".expErrMsg").forEach((expErr) => {
+    expErr.innerHTML = "";
+  });
+
   document.getElementById(
     "addExpFormModal"
   ).children[0].children[0].children[2].children[1].disabled = false;
   let expModalFormInputs = document
     .getElementById("experience_modal_form")
     .querySelectorAll("input");
-  document
-    .querySelectorAll(".addExpModalErrMsg")
-    .forEach((addExpModalErrMsg) => {
-      addExpModalErrMsg.innerHTML = "";
-    });
 
   expModalFormInputs[4].addEventListener("input", () => {
     expFormModalYearValidation(
@@ -205,6 +204,9 @@ function postExpDatas(expDatasUpdated, userId) {
 
 // set exp data values to exp modal input
 function expEditModalSetDatas(expEditBtn) {
+  document.querySelectorAll(".expErrMsg").forEach((expErr) => {
+    expErr.innerHTML = "";
+  });
   let expEditBtnGetDataAttribute = expEditBtn
     .getAttribute("data-target")
     .match(/\w/g)
@@ -216,11 +218,6 @@ function expEditModalSetDatas(expEditBtn) {
   expEditModalBtn.setAttribute("id", expEditBtnGetDataAttribute + "btn");
   expEditModalBtn.setAttribute("onclick", "expEditModalSaveAndUpdateBtn(this)");
 
-  document
-    .querySelectorAll(".editExpModalErrMsg")
-    .forEach((addExpModalErrMsg) => {
-      addExpModalErrMsg.innerHTML = "";
-    });
   expformValidation(
     expEditModal.children[0].children[0].children[1].children[0]
   );

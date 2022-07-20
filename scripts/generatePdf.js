@@ -27,15 +27,20 @@ firebase.auth().onAuthStateChanged((user) => {
         let expDoc = doc.data()["experience_details"];
         let skillsDoc = doc.data()["skills"];
         let contactDoc = doc.data()["contact_details"];
+        let hobbiesDoc = doc.data()["hobbies"];
+        let areaInterestDoc = doc.data()["area_interest"];
 
         document.getElementById("titleForUser").innerText =
           aboutDoc["first_name"] + aboutDoc["last_name"] + " | Resume";
 
         document.getElementById("resumeDetails").innerHTML = `
-          <h2 class="text-center"><span>${aboutDoc["first_name"]}</span> <span>${aboutDoc["last_name"]}</span></h2>
+          <h2 class="text-center">
+            <span>${aboutDoc["first_name"]}</span>
+            <span>${aboutDoc["last_name"]}</span>
+          </h2>
           <div class="text-center">
          <p>${contactDoc["address"]}</p>
-         <p>${contactDoc["mail_id"]} | ${contactDoc["phone_id"]}</p>
+         <p>${contactDoc["mail_id"]} | ${contactDoc["phone_no"]}</p>
           </div>
 
           <hr/>
@@ -56,7 +61,26 @@ firebase.auth().onAuthStateChanged((user) => {
          <li>${contactDoc["twitter_id"]}</li>
          </ul>
           </div>
+          <hr/>
+          
+          <div class="d-flex p-2 mb-2 bg-secondary text-white justify-content-between">
+          <h3>Area of interest</h3>
+          <h3>Hobbies</h3>
+          </div>
+        
+       <div class="d-flex justify-content-between">
+      
+       
 
+       <ul style="list-style: square;"  id="areaOfInterest"></ul>
+
+      
+       
+
+        <ul style="list-style: square;"  id="hobbiesShow"></ul>
+       </div>
+        
+          <hr/>
          
           <h3 class="bg-secondary p-2 mb-2 text-white">Education</h3>
          
@@ -75,6 +99,8 @@ firebase.auth().onAuthStateChanged((user) => {
 
           <ul style="list-style: circle;"  id="skills"></ul>
           <hr/>
+
+          
 
          
         `;
@@ -102,6 +128,20 @@ firebase.auth().onAuthStateChanged((user) => {
         for (let i = 0; i < skillsDoc.length; i++) {
           document.getElementById("skills").innerHTML += `
           <li>${skillsDoc[i]}</li>
+         
+          `;
+        }
+
+        for (let i = 0; i < areaInterestDoc.length; i++) {
+          document.getElementById("areaOfInterest").innerHTML += `
+          <li>${areaInterestDoc[i]}</li>
+         
+          `;
+        }
+
+        for (let i = 0; i < hobbiesDoc.length; i++) {
+          document.getElementById("hobbiesShow").innerHTML += `
+          <li>${hobbiesDoc[i]}</li>
          
           `;
         }

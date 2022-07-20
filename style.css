@@ -50,6 +50,11 @@ ul {
   }
 }
 /* common class */
+.errMsg {
+  font-family: monospace;
+  color: red;
+  font-size: smaller;
+}
 :root {
   --bgGradient: linear-gradient(315deg, #8989bb 0%, #a5a4cb 74%);
   --textColor: #5d5da5;
@@ -129,6 +134,7 @@ button:focus {
   background: var(--bgGradient);
   color: var(--whiteTextColor);
 }
+
 /* loader */
 #preLoader {
   /* background-color: var(--bgGradient) !important; */
@@ -252,6 +258,12 @@ button:focus {
 
 /* form mobile responsiveness */
 @media screen and (max-width: 575px) {
+  .myModal-content {
+    width: 90%;
+  }
+  .container {
+    padding-left: 0 !important;
+  }
   #about_form,
   #education_form,
   #experience_form,

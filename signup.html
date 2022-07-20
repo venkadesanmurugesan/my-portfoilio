@@ -74,16 +74,9 @@
                   class="form-control form-control-sm"
                   id="signUpEmail"
                   required
+                  aria-describedby="signUpEmailErrMsg"
                 />
-                <p
-                  id="signUpEmailErrMsg"
-                  style="
-                    display: none;
-                    color: red;
-                    font-family: system-ui;
-                    margin-top: 5px;
-                  "
-                ></p>
+                <span class="errMsg" id="signUpEmailErrMsg"></span>
               </div>
               <div class="form-group">
                 <label for="signUpPassword" class="textColor h6"
@@ -94,17 +87,11 @@
                   class="form-control form-control-sm"
                   id="signUpPassword"
                   required
+                  aria-describedby="signUpPasswordErrMsg"
                 />
-                <p
-                  id="signUpPasswordErrMsg"
-                  style="
-                    display: none;
-                    color: red;
-                    font-family: system-ui;
-                    margin-top: 5px;
-                  "
-                ></p>
+                <span class="errMsg" id="signUpPasswordErrMsg"></span>
               </div>
+
               <div
                 style="display: none"
                 id="signUpCommonErr"

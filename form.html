@@ -52,16 +52,9 @@
               class="form-control form-control-sm"
               id="reauthEmail"
               required
+              aria-describedby="reauthEmailErrMsg"
             />
-            <p
-              id="reauthEmailErrMsg"
-              style="
-                display: none;
-                color: red;
-                font-family: system-ui;
-                margin-top: 5px;
-              "
-            ></p>
+            <span class="errMsg" id="reauthEmailErrMsg"></span>
           </div>
           <div class="form-group">
             <label for="reauthPassword" class="textColor h6"
@@ -72,16 +65,10 @@
               class="form-control form-control-sm"
               id="reauthPassword"
               required
+              aria-describedby="reauthPasswordErrMsg"
             />
-            <p
-              id="reauthPasswordErrMsg"
-              style="
-                display: none;
-                color: red;
-                font-family: system-ui;
-                margin-top: 5px;
-              "
-            ></p>
+
+            <span class="errMsg" id="reauthPasswordErrMsg"></span>
           </div>
           <div
             style="display: none"
@@ -191,11 +178,7 @@
                   aria-describedby="resetEmailInputErr"
                   placeholder="Enter email"
                 />
-                <p
-                  style="font-family: system-ui"
-                  id="resetEmailInputErr"
-                  class="form-text text-danger"
-                ></p>
+                <span class="errMsg" id="resetEmailInputErr"></span>
               </div>
               <div
                 style="display: none"
@@ -271,11 +254,7 @@
                   aria-describedby="resetPasswordInputErr"
                   placeholder="Enter Password"
                 />
-                <p
-                  style="font-family: system-ui"
-                  id="resetPasswordInputErr"
-                  class="form-text text-danger"
-                ></p>
+                <span class="errMsg" id="resetPasswordInputErr"></span>
               </div>
               <div
                 style="display: none"
@@ -323,7 +302,8 @@
         </div>
         <div class="col-lg-8 col-sm-12">
           <h2 class="text-center text-white">
-            Welcome <span id="displayUserName" class="textColor"></span>
+            Welcome <br />
+            <span id="displayUserName" class="textColor"></span>
           </h2>
         </div>
         <div class="col-lg-2 col-sm-12">
@@ -452,7 +432,9 @@
         </li>
       </ul>
 
+      <!-- Start content section -->
       <section class="tab-content" id="portfolio-tab-form">
+        <!-- Start about detail section -->
         <article
           class="tab-pane fade show active"
           id="about-details"
@@ -465,7 +447,7 @@
             style="width: 80%"
             class="card p-5 mt-5 ml-auto mr-auto"
           >
-            <div class="input-group mb-4">
+            <div class="input-group">
               <div class="input-group-prepend">
                 <span class="textColor input-group-text" id=""
                   >First and last name
@@ -478,6 +460,7 @@
                 type="text"
                 class="form-control"
                 placeholder="First Name"
+                aria-describedby="fname_lnameErrMsg"
                 required
               />
               <input
@@ -487,18 +470,10 @@
                 class="form-control"
                 placeholder="Last Name"
                 required
+                aria-describedby="fname_lnameErrMsg"
               />
             </div>
-
-            <p
-              id="firstAndLastNameErrMsg"
-              style="
-                display: none;
-                color: red;
-                font-family: system-ui;
-                margin-top: 5px;
-              "
-            ></p>
+            <span class="errMsg mb-4" id="fname_lnameErrMsg"></span>
 
             <div class="form-group mb-4">
               <label for="about_description" class="textColor"
@@ -513,6 +488,63 @@
               ></textarea>
             </div>
 
+            <div class="form-group mb-4">
+              <label for="areaOfInterest" class="textColor w-100"
+                >Area of Interest
+              </label>
+              <ul id="areaOfInterestDataShow" class="list-group mb-2"></ul>
+              <div id="" class="row ml-0 input-group">
+                <input
+                  name="areaOfInterest"
+                  class="form-control col-12"
+                  id="areaOfInterest"
+                  rows="3"
+                  placeholder="Enter your Interest"
+                  aria-describedby="areaOfInterestErrMsg"
+                />
+
+                <div class="input-group-append">
+                  <button
+                    onclick="addAreaOfInterest()"
+                    type="button"
+                    id=""
+                    class="input-group-text btn bgGradient text-white"
+                  >
+                    Add +
+                  </button>
+                </div>
+              </div>
+              <span class="errMsg" id="areaOfInterestErrMsg"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="about_hobbies" class="textColor w-100"
+                >Hobbies
+              </label>
+              <ul id="hobbiesDataShow" class="list-group mb-2"></ul>
+              <div id="about_hobbies_input_main" class="row ml-0 input-group">
+                <input
+                  name="about_hobbies"
+                  class="form-control col-12"
+                  id="about_hobbies"
+                  rows="3"
+                  placeholder="Enter your Hobbies"
+                  aria-describedby="hobbiesErrMsg"
+                />
+
+                <div class="input-group-append">
+                  <button
+                    onclick="addHobbiesDatas()"
+                    type="button"
+                    id="hobbiesAddBtn"
+                    class="input-group-text btn bgGradient text-white"
+                  >
+                    Add +
+                  </button>
+                </div>
+              </div>
+              <span class="errMsg" id="hobbiesErrMsg"></span>
+            </div>
             <button
               style="position: relative"
               onclick="about_btn(this.parentElement)"
@@ -527,7 +559,9 @@
             </button>
           </form>
         </article>
+        <!-- End about detail section -->
 
+        <!-- Start education detail section -->
         <article
           class="tab-pane fade"
           id="education-details"
@@ -609,18 +643,13 @@
                             class="form-control institute_name"
                             placeholder="Institute Name"
                             required
+                            aria-describedby="addEduModalInstituteErrMsg"
                           />
-                          <p
-                            class="addEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="addEduModalInstituteErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Institute Name is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -634,18 +663,13 @@
                             class="form-control institute_degree"
                             placeholder="Degree"
                             required
+                            aria-describedby="addEduModalDegreeErrMsg"
                           />
-                          <p
-                            class="addEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="addEduModalDegreeErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Degree is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -673,19 +697,14 @@
                               class="form-control edu_start_mon"
                               placeholder="Start Month"
                               required
+                              aria-describedby="addEduModalStartDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="addEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="addEduModalStartDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Start Date is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="mb-4">
@@ -703,30 +722,19 @@
                               class="form-control edu_end_mon"
                               placeholder="End Month"
                               required
+                              aria-describedby="addEduModalEndDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="addEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="addEduModalEndDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            End Date is required field
-                          </p>
+                          ></span>
                         </div>
-                        <p
+                        <span
+                          class="errMsg eduErrMsg float-right"
                           id="errMsgForYear"
-                          style="
-                            color: red;
-                            float: right;
-                            font-family: system-ui;
-                          "
-                        >
-                          End date can’t be earlier than start date
-                        </p>
+                        ></span>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -800,18 +808,13 @@
                             class="form-control institute_name"
                             placeholder="Institute Name"
                             required
+                            aria-describedby="editEduModalInstituteErrMsg"
                           />
-                          <p
-                            class="editEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="editEduModalInstituteErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Institute Name is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -825,18 +828,13 @@
                             class="form-control institute_degree"
                             placeholder="Degree"
                             required
+                            aria-describedby="editEduModalDegreeErrMsg"
                           />
-                          <p
-                            class="editEduErrMsg"
+
+                          <span
+                            class="errMsg eduErrMsg"
                             id="editEduModalDegreeErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Degree is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -864,19 +862,13 @@
                               class="form-control edu_start_mon"
                               placeholder="Start Month"
                               required
+                              aria-describedby="editEduModalStartDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="editEduErrMsg"
+                          <span
+                            class="errMsg eduErrMsg"
                             id="editEduModalStartDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            Start Date is required field
-                          </p>
+                          ></span>
                         </div>
 
                         <div class="mb-4">
@@ -893,30 +885,18 @@
                               list="edu_end_mon_list"
                               class="form-control edu_end_mon"
                               required
+                              aria-describedby="editEduModalEndDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="editEduErrMsg"
+                          <span
+                            class="errMsg eduErrMsg"
                             id="editEduModalEndDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          >
-                            End Date is required field
-                          </p>
+                          ></span>
                         </div>
-                        <p
+                        <span
+                          class="errMsg eduErrMsg float-right"
                           id="errMsgForYearForEdit"
-                          style="
-                            color: red;
-                            float: right;
-                            font-family: system-ui;
-                          "
-                        >
-                          End date can’t be earlier than start date
-                        </p>
+                        ></span>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -950,7 +930,9 @@
             </div>
           </form>
         </article>
+        <!-- End education detail section -->
 
+        <!-- Start Experience detail section -->
         <article
           class="tab-pane fade"
           id="experience-details"
@@ -1034,6 +1016,7 @@
                             id="position"
                             placeholder="Type Or search your Positions ..."
                             required
+                            aria-describedby="addExpPosErrMsg"
                           />
                           <datalist id="pos_options">
                             <option value="Network administrator"></option>
@@ -1042,15 +1025,10 @@
                             <option value="Full-stack developer"></option>
                             <option value="Data scientist"></option>
                           </datalist>
-                          <p
-                            class="addExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="addExpPosErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1063,6 +1041,7 @@
                             class="form-select form-control"
                             aria-label="select Position of company"
                             required
+                            aria-describedby="addExpEmpTypeErrMsg"
                           >
                             <option value="null"></option>
                             <option value="1">Full-time</option>
@@ -1072,15 +1051,11 @@
                             <option value="5">Freelance</option>
                             <option value="6">Trainee</option>
                           </select>
-                          <p
-                            class="addExpModalErrMsg"
+
+                          <span
+                            class="errMsg expErrMsg"
                             id="addExpEmpTypeErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1095,16 +1070,12 @@
                             id="organization_name"
                             placeholder="Organization Name"
                             required
+                            aria-describedby="addExpOrganizationErrMsg"
                           />
-                          <p
-                            class="addExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="addExpOrganizationErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1149,17 +1120,13 @@
                               class="form-control exp_start_mon"
                               placeholder="Start Month"
                               required
+                              aria-describedby="addExpStartDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="addExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="addExpStartDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="mb-4">
@@ -1176,27 +1143,18 @@
                               list="exp_end_mon_list"
                               class="form-control exp_end_mon"
                               required
+                              aria-describedby="addExpEndDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="addExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="addExpEndDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
-                        <p
-                          class="addExpModalErrMsg"
+                        <span
+                          class="errMsg float-right expErrMsg"
                           id="addExpYearErrMsg"
-                          style="
-                            color: red;
-                            float: right;
-                            font-family: system-ui;
-                          "
-                        ></p>
+                        ></span>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -1268,6 +1226,7 @@
                             id="position"
                             placeholder="Type Or search your Positions ..."
                             required
+                            aria-describedby="editExpPosErrMsg"
                           />
                           <datalist id="pos_options">
                             <option value="Network administrator"></option>
@@ -1276,15 +1235,11 @@
                             <option value="Full-stack developer"></option>
                             <option value="Data scientist"></option>
                           </datalist>
-                          <p
-                            class="editExpModalErrMsg"
+
+                          <span
+                            class="errMsg expErrMsg"
                             id="editExpPosErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1297,6 +1252,7 @@
                             class="form-select form-control"
                             aria-label="select Position of company"
                             required
+                            aria-describedby="editExpEmpTypeErrMsg"
                           >
                             <option value=""></option>
                             <option value="1">Full-time</option>
@@ -1306,15 +1262,10 @@
                             <option value="5">Freelance</option>
                             <option value="6">Trainee</option>
                           </select>
-                          <p
-                            class="editExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="editExpEmpTypeErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1329,16 +1280,12 @@
                             id="organization_name"
                             placeholder="Organization Name"
                             required
+                            aria-describedby="editExpOrganizationErrMsg"
                           />
-                          <p
-                            class="editExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="editExpOrganizationErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="form-group mb-4">
@@ -1383,17 +1330,13 @@
                               class="form-control exp_start_mon"
                               placeholder="Start Month"
                               required
+                              aria-describedby="editExpStartDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="editExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="editExpStartDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
 
                         <div class="mb-4">
@@ -1410,27 +1353,18 @@
                               list="exp_end_mon_list"
                               class="form-control exp_end_mon"
                               required
+                              aria-describedby="editExpEndDateErrMsg"
                             />
                           </div>
-                          <p
-                            class="editExpModalErrMsg"
+                          <span
+                            class="errMsg expErrMsg"
                             id="editExpEndDateErrMsg"
-                            style="
-                              color: red;
-                              font-family: system-ui;
-                              margin-top: 5px;
-                            "
-                          ></p>
+                          ></span>
                         </div>
-                        <p
-                          class="editExpModalErrMsg"
+                        <span
+                          class="errMsg expErrMsg float-right"
                           id="editExpYearErrMsg"
-                          style="
-                            color: red;
-                            float: right;
-                            font-family: system-ui;
-                          "
-                        ></p>
+                        ></span>
                       </div>
                     </div>
                     <div class="modal-footer">
@@ -1465,7 +1399,9 @@
             </div>
           </form>
         </article>
+        <!-- End Experience detail section -->
 
+        <!-- Start Skill detail section -->
         <article
           class="tab-pane fade"
           id="skills-details"
@@ -1509,6 +1445,7 @@
                   class="form-control"
                   placeholder="Enter the Skill"
                   required
+                  aria-describedby="skillErrMsg"
                 />
 
                 <div class="input-group-append">
@@ -1520,14 +1457,13 @@
                   </span>
                 </div>
               </div>
-              <p
-                id="skillErrMsg"
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
+              <span class="errMsg" id="skillErrMsg"></span>
             </div>
           </form>
         </article>
+        <!-- End Skill detail section -->
 
+        <!-- Start Contact detail section -->
         <article
           class="tab-pane fade"
           id="contact-details"
@@ -1552,9 +1488,6 @@
                 id="contact_facebook_id"
                 placeholder="Enter your Facebook ID"
               />
-              <p
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1568,9 +1501,6 @@
                 id="contact_instagram_id"
                 placeholder="Enter your Instagram ID"
               />
-              <p
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1584,9 +1514,6 @@
                 id="contact_linkedin_id"
                 placeholder="Enter your Linkedin ID"
               />
-              <p
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1600,9 +1527,6 @@
                 id="contact_twitter_id"
                 placeholder="Enter your Twitter ID"
               />
-              <p
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1614,9 +1538,6 @@
                 id="contact_github_id"
                 placeholder="Enter your Github ID"
               />
-              <p
-                style="color: red; font-family: system-ui; margin-top: 5px"
-              ></p>
             </div>
 
             <div class="form-group mb-4">
@@ -1631,16 +1552,9 @@
                 id="contact_mail_id"
                 placeholder="Enter your Mail ID"
                 required
+                aria-describedby="contactMailIdErrMsg"
               />
-              <p
-                style="
-                  display: none;
-                  color: red;
-                  font-family: system-ui;
-                  margin-top: 5px;
-                "
-                id="contactMailIdErrMsg"
-              ></p>
+              <span class="errMsg" id="contactMailIdErrMsg"></span>
             </div>
 
             <div class="form-group mb-4">
@@ -1657,16 +1571,9 @@
                 id="contact_ph_number"
                 placeholder="Enter your Phone Number"
                 required
+                aria-describedby="contactPhoneErrMsg"
               />
-              <p
-                id="contactPhoneErrMsg"
-                style="
-                  display: none;
-                  color: red;
-                  font-family: system-ui;
-                  margin-top: 5px;
-                "
-              ></p>
+              <span class="errMsg" id="contactPhoneErrMsg"></span>
             </div>
 
             <div class="form-group mb-4">
@@ -1681,16 +1588,9 @@
                 name="contact_address"
                 placeholder="Enter your Current Address"
                 required
+                aria-describedby="contactAddErrMsg"
               />
-              <p
-                id="contactAddErrMsg"
-                style="
-                  display: none;
-                  color: red;
-                  font-family: system-ui;
-                  margin-top: 5px;
-                "
-              ></p>
+              <span class="errMsg" id="contactAddErrMsg"></span>
             </div>
 
             <button
@@ -1707,9 +1607,11 @@
             </button>
           </form>
         </article>
+        <!-- End Contact detail section -->
       </section>
+      <!-- End content section -->
     </main>
-    <div class="bg-white py-2 footer">
+    <div style="z-index: 2" class="bg-white py-2 footer">
       <div class="container text-center">
         <p style="font-family: sans-serif" class="text-muted mb-0 py-2">
           &copy; Resume Builder builded by
