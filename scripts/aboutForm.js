@@ -55,6 +55,16 @@ function about_btn(aboutForm) {
             "Please Check your required field";
         }
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -84,6 +94,16 @@ function postHobbiesDatas(hobbiesArr) {
         showHobbiesDatas(hobbiesArr);
         document.getElementById("about_hobbies").value = "";
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -102,6 +122,16 @@ function deleteHobbies(deleteElementId, iterativeValue) {
         postHobbiesDatas(filteredHobbiesData);
         document.getElementById(deleteElementId).remove();
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -121,6 +151,16 @@ function addHobbiesDatas() {
             "Please fill your Hobbies field before add";
         }
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -153,6 +193,16 @@ function postAreaOfInterestDataShowDatas(areaOfInterestArr) {
           showAreaOfInterestDatas(areaOfInterestArr);
           document.getElementById("areaOfInterest").value = "";
         });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -173,6 +223,16 @@ function deleteAreaOfInterest(deleteElementId, iterativeValue) {
         postAreaOfInterestDataShowDatas(filteredAreaOfInterestData);
         document.getElementById(deleteElementId).remove();
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -192,6 +252,16 @@ function addAreaOfInterest() {
             "Please fill your Interest field before add";
         }
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }

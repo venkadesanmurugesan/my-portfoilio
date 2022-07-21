@@ -141,6 +141,16 @@ function contact_btn(contactForm) {
           }
         }
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }

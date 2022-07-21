@@ -110,17 +110,19 @@ firebase.auth().onAuthStateChanged((user) => {
           <li>${eduDoc[i]["degree"]}</li>
           <li>${eduDoc[i]["instituteName"]}</li>
           <li>${eduDoc[i]["instituteAddress"]}</li>
-          <li>${eduDoc[i]["startYearAndMonth"]} - ${eduDoc[i]["endYearAndMonth"]} </li>
+          <li  class="float-right">${eduDoc[i]["startYearAndMonth"]} - ${eduDoc[i]["endYearAndMonth"]} </li>
+          <li class="text-muted small">${eduDoc[i]["educationDesc"]} </li>
           </ul><hr/>
           `;
         }
 
         for (let i = 0; i < expDoc.length; i++) {
           document.getElementById("expDetails").innerHTML += `<ul class="pl-0">
-          <li class="float-right">${expDoc[i]["expStartMon_year"]} - ${expDoc[i]["expEndMon_year"]}  </li>
           <li>${expDoc[i]["position"]}</li>
           <li>${expDoc[i]["organizationName"]} | ${expDoc[i]["empType"]}</li>
           <li>${expDoc[i]["companyLocation"]}</li>
+          <li class="float-right">${expDoc[i]["expStartMon_year"]} - ${expDoc[i]["expEndMon_year"]}  </li>
+          <li class="text-muted small">${expDoc[i]["jobDescription"]}</li>
           </ul><hr/>
       `;
         }

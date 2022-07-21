@@ -87,7 +87,7 @@ function addExp() {
   document.querySelectorAll(".expErrMsg").forEach((expErr) => {
     expErr.innerHTML = "";
   });
-
+  document.getElementById("job_desc").value = "";
   document.getElementById(
     "addExpFormModal"
   ).children[0].children[0].children[2].children[1].disabled = false;
@@ -143,21 +143,23 @@ function checkBoxForEndYear(checkbox) {
 // datas show in table
 function showExpDatasOnTable() {
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("PortfolioDetails")
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          for (let i = 0; i < doc.data()["experience_details"].length; i++) {
-            document.getElementById(
-              "expDetailsResult"
-            ).innerHTML += `<tr id=expShowTableRow${i + 1}>
-       <td>${doc.data()["experience_details"][i].position}</td>
-       <td>${doc.data()["experience_details"][i].empType}</td>
-       <td>${doc.data()["experience_details"][i].organizationName}</td>
-       <td>${doc.data()["experience_details"][i].companyLocation}</td>
-       <td>${doc.data()["experience_details"][i].expStartMon_year}</td>
-       <td>${doc.data()["experience_details"][i].expEndMon_year}</td>
+    if (user) {
+      db.collection("PortfolioDetails")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            for (let i = 0; i < doc.data()["experience_details"].length; i++) {
+              document.getElementById(
+                "expDetailsResult"
+              ).innerHTML += `<tr id=expShowTableRow${i + 1}>
+            <td>${doc.data()["experience_details"][i].position}</td>
+            <td>${doc.data()["experience_details"][i].organizationName}</td>
+            <td>${doc.data()["experience_details"][i].empType}</td>
+            <td>${doc.data()["experience_details"][i].companyLocation}</td>
+            <td>${doc.data()["experience_details"][i].expStartMon_year}</td>
+            <td>${doc.data()["experience_details"][i].expEndMon_year}</td>
+            <td>${doc.data()["experience_details"][i].jobDescription}</td>
        <td class="d-flex justify-content-between">
                    <button onclick=expEditModalSetDatas(this) id=editExpBtn${
                      i + 1
@@ -166,18 +168,29 @@ function showExpDatasOnTable() {
                    data-backdrop="static" type="button" class="btn btn-info"><i class=" fa-solid fa-pen-to-square"></i>
             </button>
                    <button onclick=expModalDeleteBtn(this,${i}) id=expTableDelBtn${
-              i + 1
-            } type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                i + 1
+              } type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                    </td>
        </tr>`;
+            }
+          } else {
+            console.log("No such document!");
           }
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        // console.log("Error getting document:", error);
-      });
+        })
+        .catch((error) => {
+          // console.log("Error getting document:", error);
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
@@ -237,122 +250,153 @@ function expEditModalSetDatas(expEditBtn) {
   });
 
   firebase.auth().onAuthStateChanged((user) => {
-    let porfolioDocRef = db.collection("PortfolioDetails").doc(user.uid);
-    porfolioDocRef.get().then((doc) => {
-      if (doc.exists) {
-        let expOldDataFromDB = doc.data()["experience_details"];
-        let setDatasToExpModalInputs =
-          expOldDataFromDB[expEditBtnGetDataAttribute.match(/\d/g)[0] - 1];
-        let expModalContents =
-          expEditModal.children[0].children[0].children[1].children[0];
+    if (user) {
+      let porfolioDocRef = db.collection("PortfolioDetails").doc(user.uid);
+      porfolioDocRef.get().then((doc) => {
+        if (doc.exists) {
+          let expOldDataFromDB = doc.data()["experience_details"];
+          let setDatasToExpModalInputs =
+            expOldDataFromDB[expEditBtnGetDataAttribute.match(/\d/g)[0] - 1];
+          let expModalContents =
+            expEditModal.children[0].children[0].children[1].children[0];
 
-        expModalContents.children[0].getElementsByTagName("input")[0].value =
-          setDatasToExpModalInputs["position"];
+          expModalContents.children[0].getElementsByTagName("input")[0].value =
+            setDatasToExpModalInputs["position"];
 
-        expModalContents.children[1].getElementsByTagName("select")[0].options[
           expModalContents.children[1].getElementsByTagName(
             "select"
-          )[0].selectedIndex
-        ].text = setDatasToExpModalInputs["empType"];
+          )[0].options[
+            expModalContents.children[1].getElementsByTagName(
+              "select"
+            )[0].selectedIndex
+          ].text = setDatasToExpModalInputs["empType"];
 
-        expModalContents.children[2].getElementsByTagName("input")[0].value =
-          setDatasToExpModalInputs["organizationName"];
+          expModalContents.children[2].getElementsByTagName("input")[0].value =
+            setDatasToExpModalInputs["organizationName"];
 
-        expModalContents.children[3].getElementsByTagName("input")[0].value =
-          setDatasToExpModalInputs["companyLocation"];
+          expModalContents.children[3].getElementsByTagName("input")[0].value =
+            setDatasToExpModalInputs["companyLocation"];
 
-        expModalContents.children[5].getElementsByTagName("input")[0].value =
-          setDatasToExpModalInputs["expStartMon_year"];
+          expModalContents.children[5].getElementsByTagName("input")[0].value =
+            setDatasToExpModalInputs["expStartMon_year"];
 
-        expModalContents.children[6].getElementsByTagName("input")[0].value =
-          setDatasToExpModalInputs["expEndMon_year"];
-      }
-    });
+          expModalContents.children[6].getElementsByTagName("input")[0].value =
+            setDatasToExpModalInputs["expEndMon_year"];
+
+          document.getElementById("job_desc").value =
+            setDatasToExpModalInputs["jobDescription"];
+        }
+      });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
 // datas update to click the edit btn
 function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
   firebase.auth().onAuthStateChanged((user) => {
-    let expEditModalSaveBtnGetDigitFromBtnId = expEditModalSaveBtn
-      .getAttribute("id")
-      .match(/\d/g)[0];
+    if (user) {
+      let expEditModalSaveBtnGetDigitFromBtnId = expEditModalSaveBtn
+        .getAttribute("id")
+        .match(/\d/g)[0];
 
-    let getExpEditModalContentForUpdate = document.getElementById(
-      `editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`
-    ).children[0].children[0].children[1].children[0];
+      let getExpEditModalContentForUpdate = document.getElementById(
+        `editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`
+      ).children[0].children[0].children[1].children[0];
 
-    if (
-      (getExpEditModalContentForUpdate.children[0].getElementsByTagName(
-        "input"
-      )[0].value &&
-        getExpEditModalContentForUpdate.children[1].getElementsByTagName(
-          "select"
-        )[0].options[
-          getExpEditModalContentForUpdate.children[1].getElementsByTagName(
-            "select"
-          )[0].selectedIndex
-        ].text &&
-        getExpEditModalContentForUpdate.children[2].getElementsByTagName(
+      if (
+        (getExpEditModalContentForUpdate.children[0].getElementsByTagName(
           "input"
         )[0].value &&
-        getExpEditModalContentForUpdate.children[5].getElementsByTagName(
-          "input"
-        )[0].value &&
-        getExpEditModalContentForUpdate.children[6].getElementsByTagName(
-          "input"
-        )[0].value !== "") ||
-      null
-    ) {
-      let expEditModalDatasWithEdit = {
-        position:
-          getExpEditModalContentForUpdate.children[0].getElementsByTagName(
-            "input"
-          )[0].value,
-        empType:
           getExpEditModalContentForUpdate.children[1].getElementsByTagName(
             "select"
           )[0].options[
             getExpEditModalContentForUpdate.children[1].getElementsByTagName(
               "select"
             )[0].selectedIndex
-          ].text,
-        organizationName:
+          ].text &&
           getExpEditModalContentForUpdate.children[2].getElementsByTagName(
             "input"
-          )[0].value,
-        companyLocation:
-          getExpEditModalContentForUpdate.children[3].getElementsByTagName(
-            "input"
-          )[0].value,
-        expStartMon_year:
+          )[0].value &&
           getExpEditModalContentForUpdate.children[5].getElementsByTagName(
             "input"
-          )[0].value,
-        expEndMon_year:
+          )[0].value &&
           getExpEditModalContentForUpdate.children[6].getElementsByTagName(
             "input"
-          )[0].value,
-      };
-      db.collection("PortfolioDetails")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-          let expArrDatas = doc.data()["experience_details"];
+          )[0].value !== "") ||
+        null
+      ) {
+        let expEditModalDatasWithEdit = {
+          position:
+            getExpEditModalContentForUpdate.children[0].getElementsByTagName(
+              "input"
+            )[0].value,
+          empType:
+            getExpEditModalContentForUpdate.children[1].getElementsByTagName(
+              "select"
+            )[0].options[
+              getExpEditModalContentForUpdate.children[1].getElementsByTagName(
+                "select"
+              )[0].selectedIndex
+            ].text,
+          organizationName:
+            getExpEditModalContentForUpdate.children[2].getElementsByTagName(
+              "input"
+            )[0].value,
+          companyLocation:
+            getExpEditModalContentForUpdate.children[3].getElementsByTagName(
+              "input"
+            )[0].value,
+          expStartMon_year:
+            getExpEditModalContentForUpdate.children[5].getElementsByTagName(
+              "input"
+            )[0].value,
+          expEndMon_year:
+            getExpEditModalContentForUpdate.children[6].getElementsByTagName(
+              "input"
+            )[0].value,
+          jobDescription: document.getElementById("edit_job_desc").value,
+        };
+        db.collection("PortfolioDetails")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            let expArrDatas = doc.data()["experience_details"];
 
-          expArrDatas[expEditModalSaveBtnGetDigitFromBtnId - 1] =
-            expEditModalDatasWithEdit;
-          document.getElementById("preLoader").style.display = "block";
-          postExpDatas(expArrDatas, user.uid);
-          $(`#editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`).modal(
-            "hide"
-          );
-          alert("Successfully Updated!!!");
+            expArrDatas[expEditModalSaveBtnGetDigitFromBtnId - 1] =
+              expEditModalDatasWithEdit;
+            document.getElementById("preLoader").style.display = "block";
+            postExpDatas(expArrDatas, user.uid);
+            $(`#editExpFormModal${expEditModalSaveBtnGetDigitFromBtnId}`).modal(
+              "hide"
+            );
+            alert("Successfully Updated!!!");
+          })
+          .catch((error) => {
+            // console.error("Error writing document: ", error);
+          });
+      } else {
+        return false;
+      }
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
         })
         .catch((error) => {
-          // console.error("Error writing document: ", error);
+          // console.error(error);
         });
-    } else {
     }
   });
 }
@@ -360,32 +404,46 @@ function expEditModalSaveAndUpdateBtn(expEditModalSaveBtn) {
 // datas delete in show table and db
 function expModalDeleteBtn(expTableDelBtn, indexValue) {
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("PortfolioDetails")
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let confirmToDel = confirm("Are you sure to Delete?");
-          if (confirmToDel === true) {
-            let expArrDatasToClickDelBtn = doc.data()["experience_details"];
-            document.getElementById(
-              `expShowTableRow${indexValue + 1}`
-            ).innerHTML = "";
-            delete expArrDatasToClickDelBtn[indexValue];
+    if (user) {
+      db.collection("PortfolioDetails")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let confirmToDel = confirm("Are you sure to Delete?");
+            if (confirmToDel === true) {
+              let expArrDatasToClickDelBtn = doc.data()["experience_details"];
+              document.getElementById(
+                `expShowTableRow${indexValue + 1}`
+              ).innerHTML = "";
+              delete expArrDatasToClickDelBtn[indexValue];
 
-            let filteredExpArrDatas = expArrDatasToClickDelBtn.filter((el) => {
-              return el !== null;
-            });
-            document.getElementById("preLoader").style.display = "block";
-            postExpDatas(filteredExpArrDatas, user.uid);
-          } else {
-            return 0;
+              let filteredExpArrDatas = expArrDatasToClickDelBtn.filter(
+                (el) => {
+                  return el !== null;
+                }
+              );
+              document.getElementById("preLoader").style.display = "block";
+              postExpDatas(filteredExpArrDatas, user.uid);
+            } else {
+              return 0;
+            }
           }
-        }
-      })
-      .catch((error) => {
-        // console.error("Error writing document: ", error);
-      });
+        })
+        .catch((error) => {
+          // console.error("Error writing document: ", error);
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
@@ -406,36 +464,49 @@ function setNewDatas() {
     ].text !== ""
   ) {
     firebase.auth().onAuthStateChanged((user) => {
-      db.collection("PortfolioDetails")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            let oldExpData = doc.data()["experience_details"];
-            // console.log(oldExpData.length);
-            let experienceDetails = {
-              position: expModalFormInputs[0].value,
-              organizationName: expModalFormInputs[1].value,
-              expStartMon_year: expModalFormInputs[4].value,
-              expEndMon_year: expModalFormInputs[5].value,
-              companyLocation: expModalFormInputs[2].value,
-              empType: document.getElementById("experience_modal_form")
-                .children[1].children[1].options[
-                document.getElementById("experience_modal_form").children[1]
-                  .children[1].selectedIndex
-              ].text,
-            };
-            let newExpData = experienceDetails;
-            oldExpData.push(newExpData);
-            document.getElementById("preLoader").style.display = "block";
-            postExpDatas(oldExpData, user.uid);
-            $("#addExpFormModal").modal("hide");
-            emptyExpModalValues();
-          }
-        })
-        .catch((error) => {
-          // console.log("Error getting document:", error);
-        });
+      if (user) {
+        db.collection("PortfolioDetails")
+          .doc(user.uid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              let oldExpData = doc.data()["experience_details"];
+              // console.log(oldExpData.length);
+              let experienceDetails = {
+                position: expModalFormInputs[0].value,
+                organizationName: expModalFormInputs[1].value,
+                expStartMon_year: expModalFormInputs[4].value,
+                expEndMon_year: expModalFormInputs[5].value,
+                companyLocation: expModalFormInputs[2].value,
+                empType: document.getElementById("experience_modal_form")
+                  .children[1].children[1].options[
+                  document.getElementById("experience_modal_form").children[1]
+                    .children[1].selectedIndex
+                ].text,
+                jobDescription: document.getElementById("job_desc").value,
+              };
+              let newExpData = experienceDetails;
+              oldExpData.push(newExpData);
+              document.getElementById("preLoader").style.display = "block";
+              postExpDatas(oldExpData, user.uid);
+              $("#addExpFormModal").modal("hide");
+              emptyExpModalValues();
+            }
+          })
+          .catch((error) => {
+            // console.log("Error getting document:", error);
+          });
+      } else {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            location.href = "index.html";
+          })
+          .catch((error) => {
+            // console.error(error);
+          });
+      }
     });
   } else {
     if (expModalFormInputs[0].value === "") {
@@ -500,6 +571,7 @@ function emptyExpModalValues() {
     .forEach((input) => {
       input.value = "";
     });
+  document.getElementById("job_desc").value = "";
   document
     .getElementById("experience_modal_form")
     .querySelectorAll("input")[3].checked = false;

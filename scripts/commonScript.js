@@ -62,6 +62,9 @@ var db = firebase.firestore();
                   <td>${
                     doc.data()["education_details"][i]["endYearAndMonth"]
                   }</td>
+                  <td>${
+                    doc.data()["education_details"][i]["educationDesc"]
+                  }</td>
                      <td class="d-flex justify-content-between">
                      <button onclick=eduEditModalSetDatas(this,${i}) data-keyboard="false"
                      data-backdrop="static" data-toggle="modal"
@@ -86,6 +89,8 @@ var db = firebase.firestore();
          <td>${doc.data()["experience_details"][i].companyLocation}</td>
          <td>${doc.data()["experience_details"][i].expStartMon_year}</td>
          <td>${doc.data()["experience_details"][i].expEndMon_year}</td>
+         <td>${doc.data()["experience_details"][i].jobDescription}</td>
+         
          <td class="d-flex justify-content-between">
                      <button onclick=expEditModalSetDatas(this) id=editExpBtn${
                        i + 1
@@ -154,83 +159,109 @@ var db = firebase.firestore();
 
 // delete user account
 function authAndDeleteUser(user) {
-  document.getElementById("reauthBtn").onclick = () => {
-    document.getElementById("preLoader").style.display = "block";
+  if (user) {
+    document.getElementById("reauthBtn").onclick = () => {
+      document.getElementById("preLoader").style.display = "block";
 
-    let email = String(document.getElementById("reauthEmail").value);
-    let password = String(document.getElementById("reauthPassword").value);
-    var credentials = firebase.auth.EmailAuthProvider.credential(
-      email,
-      password
-    );
-    if ((email && password !== "") || null) {
-      document.getElementById("reauthEmailErrMsg").style.display = "none";
-      document.getElementById("reauthPasswordErrMsg").style.display = "none";
-      user
-        .reauthenticateWithCredential(credentials)
-        .then(() => {
-          document.getElementById("preLoader").style.display = "none";
-          document.getElementById("reauthCommonErr").style.display = "none";
-          document.getElementById("reauthCommonErr").innerText = "";
-          db.collection("PortfolioDetails")
-            .doc(`${user.uid}`)
-            .delete()
-            .then(() => {
-              user.delete().then(() => {
-                document.getElementById("myModal").style.display = "none";
-                window.location.href = "./signup.html";
-              });
-            });
-        })
-        .catch((err) => {
-          document.getElementById("preLoader").style.display = "none";
-          document.getElementById("reauthCommonErr").style.display = "block";
-          document.getElementById("reauthCommonErr").innerText =
-            "Verification was unsuccessful, please check your email and password";
-        });
-    } else {
-      document.getElementById("preLoader").style.display = "none";
-      if (email === "" || null) {
-        document.getElementById("reauthEmailErrMsg").style.display = "block";
-        document.getElementById("reauthEmailErrMsg").innerText =
-          "Confirm Email is required field";
-      } else {
+      let email = String(document.getElementById("reauthEmail").value);
+      let password = String(document.getElementById("reauthPassword").value);
+      var credentials = firebase.auth.EmailAuthProvider.credential(
+        email,
+        password
+      );
+      if ((email && password !== "") || null) {
         document.getElementById("reauthEmailErrMsg").style.display = "none";
-        document.getElementById("reauthEmailErrMsg").innerText = "";
-      }
-      if (password === "" || null) {
-        document.getElementById("reauthPasswordErrMsg").style.display = "block";
-        document.getElementById("reauthPasswordErrMsg").innerText =
-          "Confirm Password is required field";
-      } else {
         document.getElementById("reauthPasswordErrMsg").style.display = "none";
-        document.getElementById("reauthPasswordErrMsg").innerText = "";
+        user
+          .reauthenticateWithCredential(credentials)
+          .then(() => {
+            document.getElementById("preLoader").style.display = "none";
+            document.getElementById("reauthCommonErr").style.display = "none";
+            document.getElementById("reauthCommonErr").innerText = "";
+            db.collection("PortfolioDetails")
+              .doc(`${user.uid}`)
+              .delete()
+              .then(() => {
+                user.delete().then(() => {
+                  document.getElementById("myModal").style.display = "none";
+                  window.location.href = "./signup.html";
+                });
+              });
+          })
+          .catch((err) => {
+            document.getElementById("preLoader").style.display = "none";
+            document.getElementById("reauthCommonErr").style.display = "block";
+            document.getElementById("reauthCommonErr").innerText =
+              "Verification was unsuccessful, please check your email and password";
+          });
+      } else {
+        document.getElementById("preLoader").style.display = "none";
+        if (email === "" || null) {
+          document.getElementById("reauthEmailErrMsg").style.display = "block";
+          document.getElementById("reauthEmailErrMsg").innerText =
+            "Confirm Email is required field";
+        } else {
+          document.getElementById("reauthEmailErrMsg").style.display = "none";
+          document.getElementById("reauthEmailErrMsg").innerText = "";
+        }
+        if (password === "" || null) {
+          document.getElementById("reauthPasswordErrMsg").style.display =
+            "block";
+          document.getElementById("reauthPasswordErrMsg").innerText =
+            "Confirm Password is required field";
+        } else {
+          document.getElementById("reauthPasswordErrMsg").style.display =
+            "none";
+          document.getElementById("reauthPasswordErrMsg").innerText = "";
+        }
       }
-    }
-  };
+    };
+  } else {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        location.href = "index.html";
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
+  }
 }
 document.getElementById("deleteUserAccount").onclick = () => {
   if (confirm("Are you sure to delete?")) {
     firebase.auth().onAuthStateChanged((user) => {
-      var modal = document.getElementById("myModal");
-      modal.style.display = "flex";
+      if (user) {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "flex";
 
-      document
-        .querySelector("[data-modalclose]")
-        .addEventListener("click", () => {
-          document.getElementById("myModal").style.display = "none";
-          document
-            .getElementById("myModal")
-            .querySelectorAll("input")
-            .forEach((input) => {
-              return (input.value = "");
-            });
-          document.getElementById("reauthCommonErr").style.display = "none";
-          document.getElementById("reauthPasswordErrMsg").style.display =
-            "none";
-          document.getElementById("reauthEmailErrMsg").style.display = "none";
-        });
-      authAndDeleteUser(user);
+        document
+          .querySelector("[data-modalclose]")
+          .addEventListener("click", () => {
+            document.getElementById("myModal").style.display = "none";
+            document
+              .getElementById("myModal")
+              .querySelectorAll("input")
+              .forEach((input) => {
+                return (input.value = "");
+              });
+            document.getElementById("reauthCommonErr").style.display = "none";
+            document.getElementById("reauthPasswordErrMsg").style.display =
+              "none";
+            document.getElementById("reauthEmailErrMsg").style.display = "none";
+          });
+        authAndDeleteUser(user);
+      } else {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            location.href = "index.html";
+          })
+          .catch((error) => {
+            // console.error(error);
+          });
+      }
     });
   } else {
     return false;
@@ -480,6 +511,16 @@ firebase.auth().onAuthStateChanged((user) => {
         });
       });
     });
+  } else {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        location.href = "index.html";
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
   }
 });
 

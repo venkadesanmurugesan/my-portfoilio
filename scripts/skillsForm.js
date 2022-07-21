@@ -32,22 +32,34 @@ function addSkills(skillInputElementParent, skillInputClosebtn) {
 // show skill datas in list
 function showSkillDatasInList() {
   firebase.auth().onAuthStateChanged((user) => {
-    var docRef = db.collection("PortfolioDetails").doc(user.uid);
-    docRef.get().then((doc) => {
-      if (doc.data()["skills"] !== []) {
-        document.getElementById("showSkills").classList.remove("d-none");
-        document.getElementById("showSkills").classList.add("d-block");
-        let SkillArrDatas = doc.data()["skills"];
-        for (let i = 0; i < SkillArrDatas.length; i++) {
-          document.getElementById(
-            "showSkills"
-          ).children[1].innerHTML += `<li class="list-group-item ">${SkillArrDatas[i]} <i onclick="delSkillDatas(this,${i})" style="cursor: pointer;" class=" fa-solid fa-square-xmark ml-2"></i></li>`;
+    if (user) {
+      var docRef = db.collection("PortfolioDetails").doc(user.uid);
+      docRef.get().then((doc) => {
+        if (doc.data()["skills"] !== []) {
+          document.getElementById("showSkills").classList.remove("d-none");
+          document.getElementById("showSkills").classList.add("d-block");
+          let SkillArrDatas = doc.data()["skills"];
+          for (let i = 0; i < SkillArrDatas.length; i++) {
+            document.getElementById(
+              "showSkills"
+            ).children[1].innerHTML += `<li class="list-group-item ">${SkillArrDatas[i]} <i onclick="delSkillDatas(this,${i})" style="cursor: pointer;" class=" fa-solid fa-square-xmark ml-2"></i></li>`;
+          }
+        } else {
+          document.getElementById("showSkills").classList.remove("d-block");
+          document.getElementById("showSkills").classList.add("d-none");
         }
-      } else {
-        document.getElementById("showSkills").classList.remove("d-block");
-        document.getElementById("showSkills").classList.add("d-none");
-      }
-    });
+      });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
@@ -55,18 +67,30 @@ function showSkillDatasInList() {
 function postSkillDatas(skillDatasToPost) {
   skillsDatas = skillDatasToPost;
   firebase.auth().onAuthStateChanged((user) => {
-    var docRef = db.collection("PortfolioDetails").doc(user.uid);
-    docRef
-      .set({ skills: skillDatasToPost }, { merge: true })
-      .then(() => {
-        document.getElementById("showSkills").children[1].innerHTML = "";
-        showSkillDatasInList();
-        document.getElementById("preLoader").style.display = "none";
-      })
-      .catch((error) => {
-        document.getElementById("preLoader").style.display = "none";
-        // console.error("Error writing document: ", error);
-      });
+    if (user) {
+      var docRef = db.collection("PortfolioDetails").doc(user.uid);
+      docRef
+        .set({ skills: skillDatasToPost }, { merge: true })
+        .then(() => {
+          document.getElementById("showSkills").children[1].innerHTML = "";
+          showSkillDatasInList();
+          document.getElementById("preLoader").style.display = "none";
+        })
+        .catch((error) => {
+          document.getElementById("preLoader").style.display = "none";
+          // console.error("Error writing document: ", error);
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
@@ -90,6 +114,16 @@ function delSkillDatas(skillDelIcon, skillDataIterateValue) {
           alert("your Skill is Successfully Deleted!!!");
         });
       }
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }
@@ -149,6 +183,16 @@ function saveSkillData(skillInputElementParent) {
           }
         }
       });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
     }
   });
 }

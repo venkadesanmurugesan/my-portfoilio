@@ -22,6 +22,8 @@ function addEdu(eduModalForm) {
   eduModalForm.forEach((item) => {
     item.value = "";
   });
+  document.getElementById("edu_desc").value = "";
+
   document.getElementById(
     "addEduFormModal"
   ).children[0].children[0].children[2].children[1].disabled = false;
@@ -48,43 +50,56 @@ function addEdu(eduModalForm) {
 // get datas and show it in table
 let getDatasShow = () => {
   firebase.auth().onAuthStateChanged((user) => {
-    let portfolioDatas = db.collection("PortfolioDetails").doc(user.uid);
+    if (user) {
+      let portfolioDatas = db.collection("PortfolioDetails").doc(user.uid);
 
-    portfolioDatas
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let eduDatas = doc.data()["education_details"];
-          // console.log(eduDatas);
-          for (let i = 0; i < eduDatas.length; i++) {
-            document.getElementById(
-              "eduDetailsResult"
-            ).innerHTML += `<tr id="eduDataRow${i + 1}">
-                <td>${eduDatas[i]["degree"]}</td>
-               <td>${eduDatas[i]["instituteName"]}</td>
-                <td>${eduDatas[i]["instituteAddress"]}</td>
-                <td>${eduDatas[i]["startYearAndMonth"]}</td>
-                <td>${eduDatas[i]["endYearAndMonth"]}</td>
-                   <td class="d-flex justify-content-between">
-                   <button onclick=eduEditModalSetDatas(this,${i}) data-keyboard="false"
-                   data-backdrop="static" data-toggle="modal"
-                   data-target="#editEduFormModal${i + 1}" id="eduEditBtn${
-              i + 1
-            }" type="button" class="btn btn-info"><i class=" fa-solid fa-pen-to-square"></i>
-            </button>
-                   <button onclick=eduDelDatas(this,${i}) id="eduDelBtn${
-              i + 1
-            }" type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                   </td>
-                 </tr>`;
+      portfolioDatas
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let eduDatas = doc.data()["education_details"];
+            // console.log(eduDatas);
+            for (let i = 0; i < eduDatas.length; i++) {
+              document.getElementById(
+                "eduDetailsResult"
+              ).innerHTML += `<tr id="eduDataRow${i + 1}">
+                  <td>${eduDatas[i]["degree"]}</td>
+                 <td>${eduDatas[i]["instituteName"]}</td>
+                  <td>${eduDatas[i]["instituteAddress"]}</td>
+                  <td>${eduDatas[i]["startYearAndMonth"]}</td>
+                  <td>${eduDatas[i]["endYearAndMonth"]}</td>
+                  <td>${eduDatas[i]["educationDesc"]}</td>
+                     <td class="d-flex justify-content-between">
+                     <button onclick=eduEditModalSetDatas(this,${i}) data-keyboard="false"
+                     data-backdrop="static" data-toggle="modal"
+                     data-target="#editEduFormModal${i + 1}" id="eduEditBtn${
+                i + 1
+              }" type="button" class="btn btn-info"><i class=" fa-solid fa-pen-to-square"></i>
+              </button>
+                     <button onclick=eduDelDatas(this,${i}) id="eduDelBtn${
+                i + 1
+              }" type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                     </td>
+                   </tr>`;
+            }
+          } else {
+            console.log("No such document!");
           }
-        } else {
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        // console.log("Error getting document:", error);
-      });
+        })
+        .catch((error) => {
+          // console.log("Error getting document:", error);
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 };
 
@@ -155,26 +170,38 @@ function postEduDatas(eduDatasUpdated, userId) {
 // delete data from table
 function eduDelDatas(eduTableDelBtn, iterateValue) {
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("PortfolioDetails")
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let eduArrDatasWithDel = doc.data()["education_details"];
-          let confirmation = confirm("Are you sure to delete");
-          if (confirmation === true) {
-            delete eduArrDatasWithDel[iterateValue];
-            let filteredEduArrDatasWithDel = eduArrDatasWithDel.filter(
-              (eduData) => {
-                return eduData !== null;
-              }
-            );
-            document.getElementById("preLoader").style.display = "block";
-            postEduDatas(filteredEduArrDatasWithDel, user.uid);
-            eduTableDelBtn.parentNode.parentNode.remove();
+    if (user) {
+      db.collection("PortfolioDetails")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let eduArrDatasWithDel = doc.data()["education_details"];
+            let confirmation = confirm("Are you sure to delete");
+            if (confirmation === true) {
+              delete eduArrDatasWithDel[iterateValue];
+              let filteredEduArrDatasWithDel = eduArrDatasWithDel.filter(
+                (eduData) => {
+                  return eduData !== null;
+                }
+              );
+              document.getElementById("preLoader").style.display = "block";
+              postEduDatas(filteredEduArrDatasWithDel, user.uid);
+              eduTableDelBtn.parentNode.parentNode.remove();
+            }
           }
-        }
-      });
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
@@ -211,108 +238,142 @@ function eduEditModalSetDatas(eduEditBtn, iterateValue) {
   });
   formValidation(eduEditModalInputs);
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("PortfolioDetails")
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let eduEditArrData = doc.data()["education_details"];
-          let eduEditModalInputs =
-            eduEditModal.children[0].children[0].querySelectorAll("input");
-          eduEditModalInputs[0].value =
-            eduEditArrData[iterateValue]["instituteName"];
-          eduEditModalInputs[1].value = eduEditArrData[iterateValue]["degree"];
-          eduEditModalInputs[2].value =
-            eduEditArrData[iterateValue]["instituteAddress"];
-          eduEditModalInputs[3].value =
-            eduEditArrData[iterateValue]["startYearAndMonth"];
-          eduEditModalInputs[4].value =
-            eduEditArrData[iterateValue]["endYearAndMonth"];
-        }
-      });
+    if (user) {
+      db.collection("PortfolioDetails")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let eduEditArrData = doc.data()["education_details"];
+            let eduEditModalInputs =
+              eduEditModal.children[0].children[0].querySelectorAll("input");
+            eduEditModalInputs[0].value =
+              eduEditArrData[iterateValue]["instituteName"];
+            eduEditModalInputs[1].value =
+              eduEditArrData[iterateValue]["degree"];
+            eduEditModalInputs[2].value =
+              eduEditArrData[iterateValue]["instituteAddress"];
+            eduEditModalInputs[3].value =
+              eduEditArrData[iterateValue]["startYearAndMonth"];
+            eduEditModalInputs[4].value =
+              eduEditArrData[iterateValue]["endYearAndMonth"];
+
+            document.getElementById("edit_edu_desc").value =
+              eduEditArrData[iterateValue]["educationDesc"];
+          }
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
 // post datas to db when click the edit modal save button
 function eduEditModalSaveBtn(eduEditButton, iterateValue) {
   firebase.auth().onAuthStateChanged((user) => {
-    db.collection("PortfolioDetails")
-      .doc(user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          let eduEditArrData = doc.data()["education_details"];
+    if (user) {
+      db.collection("PortfolioDetails")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            let eduEditArrData = doc.data()["education_details"];
 
-          let eduEditModal = document.getElementById(
-            `editEduFormModal${iterateValue + 1}`
-          );
-          let eduEditModalInputs =
-            eduEditModal.children[0].children[0].querySelectorAll("input");
-          let eduEditModalUpdatedDatas = {
-            instituteName: eduEditModalInputs[0].value,
-            degree: eduEditModalInputs[1].value,
-            instituteAddress: eduEditModalInputs[2].value,
-            startYearAndMonth: eduEditModalInputs[3].value,
-            endYearAndMonth: eduEditModalInputs[4].value,
-          };
-          if (
-            (eduEditModalInputs[0].value &&
-              eduEditModalInputs[1].value &&
-              eduEditModalInputs[3].value &&
-              eduEditModalInputs[4].value !== "") ||
-            null
-          ) {
-            eduEditArrData[iterateValue] = eduEditModalUpdatedDatas;
-            document.getElementById("preLoader").style.display = "block";
+            let eduEditModal = document.getElementById(
+              `editEduFormModal${iterateValue + 1}`
+            );
+            let eduEditModalInputs =
+              eduEditModal.children[0].children[0].querySelectorAll("input");
+            let eduEditModalUpdatedDatas = {
+              instituteName: eduEditModalInputs[0].value,
+              degree: eduEditModalInputs[1].value,
+              instituteAddress: eduEditModalInputs[2].value,
+              startYearAndMonth: eduEditModalInputs[3].value,
+              endYearAndMonth: eduEditModalInputs[4].value,
+              educationDesc: document.getElementById("edit_edu_desc").value,
+            };
+            if (
+              (eduEditModalInputs[0].value &&
+                eduEditModalInputs[1].value &&
+                eduEditModalInputs[3].value &&
+                eduEditModalInputs[4].value !== "") ||
+              null
+            ) {
+              eduEditArrData[iterateValue] = eduEditModalUpdatedDatas;
+              document.getElementById("preLoader").style.display = "block";
 
-            postEduDatas(eduEditArrData, user.uid);
-            alert("Successfully Updated!!!");
+              postEduDatas(eduEditArrData, user.uid);
+              alert("Successfully Updated!!!");
 
-            $(`#editEduFormModal${iterateValue + 1}`).modal("hide");
-          } else {
-            if (eduEditModalInputs[0].value === "") {
-              document.getElementById("editEduModalInstituteErrMsg").innerText =
-                "Institute Name is required field";
-              eduEditModalInputs[0].focus();
+              $(`#editEduFormModal${iterateValue + 1}`).modal("hide");
             } else {
-              document.getElementById("editEduModalInstituteErrMsg").innerText =
-                "";
-            }
+              if (eduEditModalInputs[0].value === "") {
+                document.getElementById(
+                  "editEduModalInstituteErrMsg"
+                ).innerText = "Institute Name is required field";
+                eduEditModalInputs[0].focus();
+              } else {
+                document.getElementById(
+                  "editEduModalInstituteErrMsg"
+                ).innerText = "";
+              }
 
-            if (eduEditModalInputs[1].value === "") {
-              document.getElementById("editEduModalDegreeErrMsg").innerText =
-                "Degree is required field";
-              eduEditModalInputs[1].focus();
-            } else {
-              document.getElementById("editEduModalDegreeErrMsg").innerText =
-                "";
-            }
-            if (eduEditModalInputs[3].value === "") {
-              document.getElementById("editEduModalStartDateErrMsg").innerText =
-                "Start Date is required field";
-              eduEditModalInputs[3].focus();
-            } else {
-              document.getElementById("editEduModalStartDateErrMsg").innerText =
-                "";
-            }
-            if (eduEditModalInputs[4].value === "") {
-              document.getElementById("editEduModalEndDateErrMsg").innerText =
-                "End Date is required field";
-              eduEditModalInputs[4].focus();
-            } else {
-              document.getElementById("editEduModalEndDateErrMsg").innerText =
-                "";
+              if (eduEditModalInputs[1].value === "") {
+                document.getElementById("editEduModalDegreeErrMsg").innerText =
+                  "Degree is required field";
+                eduEditModalInputs[1].focus();
+              } else {
+                document.getElementById("editEduModalDegreeErrMsg").innerText =
+                  "";
+              }
+              if (eduEditModalInputs[3].value === "") {
+                document.getElementById(
+                  "editEduModalStartDateErrMsg"
+                ).innerText = "Start Date is required field";
+                eduEditModalInputs[3].focus();
+              } else {
+                document.getElementById(
+                  "editEduModalStartDateErrMsg"
+                ).innerText = "";
+              }
+              if (eduEditModalInputs[4].value === "") {
+                document.getElementById("editEduModalEndDateErrMsg").innerText =
+                  "End Date is required field";
+                eduEditModalInputs[4].focus();
+              } else {
+                document.getElementById("editEduModalEndDateErrMsg").innerText =
+                  "";
+              }
             }
           }
-        }
-      });
+        });
+    } else {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          location.href = "index.html";
+        })
+        .catch((error) => {
+          // console.error(error);
+        });
+    }
   });
 }
 
 // education modal save button
 function eduAddFormModalSaveDatas(eduForm) {
-  const userId = firebase.auth().currentUser.uid;
-  if (userId) {
+  const user = firebase.auth().currentUser;
+  if (user) {
+    const userId = user.uid;
     var portfolioDatas = db.collection("PortfolioDetails").doc(userId);
 
     portfolioDatas
@@ -331,6 +392,7 @@ function eduAddFormModalSaveDatas(eduForm) {
             instituteAddress: eduForm[2].value,
             startYearAndMonth: eduForm[3].value,
             endYearAndMonth: eduForm[4].value,
+            educationDesc: document.getElementById("edu_desc").value,
           };
           let newEduData = educationDetails;
           oldEduData.push(newEduData);
@@ -344,6 +406,7 @@ function eduAddFormModalSaveDatas(eduForm) {
           eduForm[2].value = "";
           eduForm[3].value = "";
           eduForm[4].value = "";
+          document.getElementById("edu_desc").value = "";
         } else {
           if (eduForm[0].value === "") {
             document.getElementById("addEduModalInstituteErrMsg").innerText =
@@ -382,6 +445,14 @@ function eduAddFormModalSaveDatas(eduForm) {
         // console.log("Error getting document:", error);
       });
   } else {
-    // console.log("No such document!");
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        location.href = "index.html";
+      })
+      .catch((error) => {
+        // console.error(error);
+      });
   }
 }

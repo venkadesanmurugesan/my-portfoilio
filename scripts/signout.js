@@ -19,6 +19,7 @@ function signout() {
         // console.log(uid);
         // ...
       } else {
+        return false;
       }
     });
   }
