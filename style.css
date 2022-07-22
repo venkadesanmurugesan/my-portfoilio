@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap");
+@font-face {
+  font-family: oxygenFont;
+  src: url(./Oxygen/Oxygen-Regular.ttf);
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -11,7 +14,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 * {
-  font-family: "Reem Kufi", sans-serif;
+  font-family: oxygenFont;
   box-sizing: border-box;
 }
 p {

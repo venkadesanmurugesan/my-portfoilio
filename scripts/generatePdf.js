@@ -34,51 +34,22 @@ firebase.auth().onAuthStateChanged((user) => {
           aboutDoc["first_name"] + aboutDoc["last_name"] + " | Resume";
 
         document.getElementById("resumeDetails").innerHTML = `
-          <h2 class="text-center">
+          <h2 class="text-left">
             <span>${aboutDoc["first_name"]}</span>
             <span>${aboutDoc["last_name"]}</span>
           </h2>
-          <div class="text-center">
-         <p>${contactDoc["address"]}</p>
-         <p>${contactDoc["mail_id"]} | ${contactDoc["phone_no"]}</p>
+          <div class="text-left">
+         <p class="text-muted small">${contactDoc["address"]}</p>
+         <p class="text-muted small">${contactDoc["mail_id"]} | ${contactDoc["phone_no"]}</p>
           </div>
 
           <hr/>
-          <div class="d-flex p-2 mb-2 bg-secondary text-white justify-content-between">
-          <h3>About me</h3>
-          <h3>Media Contacts</h3>
-          </div>
-
-          <div class="d-flex justify-content-between">
-         <ul class="pl-0">
-         <li>${aboutDoc["about_desc"]}</li>
+          <h3 class="bg-secondary p-2 mb-2 text-white">Profile</h3>
+          <ul class="pl-0 pr-5">
+         <li  class="text-justify">${aboutDoc["about_desc"]}</li>
          </ul>
-         <ul class="pl-0">
-         <li>${contactDoc["linkedin_id"]}</li>
-         <li>${contactDoc["github_id"]}</li>
-         <li>${contactDoc["insta_id"]}</li>
-         <li>${contactDoc["fb_id"]}</li>
-         <li>${contactDoc["twitter_id"]}</li>
-         </ul>
-          </div>
-          <hr/>
-          
-          <div class="d-flex p-2 mb-2 bg-secondary text-white justify-content-between">
-          <h3>Area of interest</h3>
-          <h3>Hobbies</h3>
-          </div>
-        
-       <div class="d-flex justify-content-between">
-      
-       
-
-       <ul style="list-style: square;"  id="areaOfInterest"></ul>
-
-      
-       
-
-        <ul style="list-style: square;"  id="hobbiesShow"></ul>
-       </div>
+         
+     
         
           <hr/>
          
@@ -101,16 +72,43 @@ firebase.auth().onAuthStateChanged((user) => {
           <hr/>
 
           
+          <div class="d-flex p-2 mb-2 bg-secondary text-white justify-content-between">
+          <h3>Area of interest</h3>
+          <h3>Hobbies</h3>
+          </div>
+        
+       <div class="d-flex justify-content-between">
+      
+       
+
+       <ul class=" pr-2" style="list-style: square;"  id="areaOfInterest"></ul>
+
+      
+       
+
+        <ul style="list-style: square;"  id="hobbiesShow"></ul>
+       </div>
+       <hr/>
+
+          <h3 class="bg-secondary p-2 mb-2 text-white">Media Contacts</h3>
+          <ul class="pl-0 ">
+         <li><b>Linkedin Profile - </b><a style="text-decoration: underline;" class="text-dark" href="${contactDoc["linkedin_id"]}" target="_blank">${contactDoc["linkedin_id"]}</a></li>
+         <li><b>Github Profile - </b><a style="text-decoration: underline;" class="text-dark" href="${contactDoc["github_id"]}" target="_blank">${contactDoc["github_id"]}</a></li>
+         <li><b>Instagram Profile - </b><a style="text-decoration: underline;" class="text-dark" href="${contactDoc["insta_id"]}" target="_blank">${contactDoc["insta_id"]}</a></li>
+         <li><b>Facebook Profile - </b><a style="text-decoration: underline;" class="text-dark" href="${contactDoc["fb_id"]}" target="_blank">${contactDoc["fb_id"]}</a></li>
+         <li><b>Twitter Profile - </b><a style="text-decoration: underline;" class="text-dark" href="${contactDoc["twitter_id"]}" target="_blank">${contactDoc["twitter_id"]}</a></li>
+         </ul>
+          
 
          
         `;
 
         for (let i = 0; i < eduDoc.length; i++) {
           document.getElementById("eduDetails").innerHTML += `<ul class="pl-0 ">
-          <li>${eduDoc[i]["degree"]}</li>
-          <li>${eduDoc[i]["instituteName"]}</li>
-          <li>${eduDoc[i]["instituteAddress"]}</li>
-          <li  class="float-right">${eduDoc[i]["startYearAndMonth"]} - ${eduDoc[i]["endYearAndMonth"]} </li>
+          <li  class="float-right h6">${eduDoc[i]["startYearAndMonth"]} - ${eduDoc[i]["endYearAndMonth"]} </li>
+          <li class="h6 font-weight-bold">${eduDoc[i]["degree"]}</li>
+          <li class="h6" >${eduDoc[i]["instituteName"]}</li>
+          <li class="h6" >${eduDoc[i]["instituteAddress"]}</li>
           <li class="text-muted small">${eduDoc[i]["educationDesc"]} </li>
           </ul><hr/>
           `;
@@ -118,11 +116,11 @@ firebase.auth().onAuthStateChanged((user) => {
 
         for (let i = 0; i < expDoc.length; i++) {
           document.getElementById("expDetails").innerHTML += `<ul class="pl-0">
-          <li>${expDoc[i]["position"]}</li>
-          <li>${expDoc[i]["organizationName"]} | ${expDoc[i]["empType"]}</li>
-          <li>${expDoc[i]["companyLocation"]}</li>
-          <li class="float-right">${expDoc[i]["expStartMon_year"]} - ${expDoc[i]["expEndMon_year"]}  </li>
-          <li class="text-muted small">${expDoc[i]["jobDescription"]}</li>
+          <li class="float-right h6">${expDoc[i]["expStartMon_year"]} - ${expDoc[i]["expEndMon_year"]}  </li>
+          <li class="h6 font-weight-bold">${expDoc[i]["position"]}</li>
+          <li class="h6" >${expDoc[i]["organizationName"]} | ${expDoc[i]["empType"]}</li>
+          <li class="h6" >${expDoc[i]["companyLocation"]}</li>
+          <li  class="text-muted small">${expDoc[i]["jobDescription"]}</li>
           </ul><hr/>
       `;
         }
