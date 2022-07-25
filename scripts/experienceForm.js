@@ -283,7 +283,7 @@ function expEditModalSetDatas(expEditBtn) {
           expModalContents.children[6].getElementsByTagName("input")[0].value =
             setDatasToExpModalInputs["expEndMon_year"];
 
-          document.getElementById("job_desc").value =
+          document.getElementById("edit_job_desc").value =
             setDatasToExpModalInputs["jobDescription"];
         }
       });
